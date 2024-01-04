@@ -24,7 +24,6 @@ public class PlayerDashState : PlayerState
     public override void Update()
     {
         base.Update();
-        Debug.Log("I'm dashing!!");
 
         if (xInput == 0 ) //I added this line on my own...
             player.SetVelocity(player.dashSpeed * player.dashDir, 0);//I added this line on my own...

@@ -22,7 +22,23 @@ public class PlayerWallslideState : PlayerState
     {
         base.Update();
 
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            stateMachine.ChangeState(player.walljumpState);
+            return;
+        }
+            
 
+        WallslideMovement();
+
+
+        if (!player.IsWallDetected() || player.IsGroundDetected())
+            stateMachine.ChangeState(player.idleState);
+    }
+
+
+    private void WallslideMovement()
+    {
         if (yInput == -1)
             player.SetVelocity(xInput, -3.5f * player.wallslideSpeed);
 
@@ -31,8 +47,5 @@ public class PlayerWallslideState : PlayerState
 
         else
             player.SetVelocity(xInput, -player.wallslideSpeed);
-
-        if (!player.IsWallDetected() || player.IsGroundDetected())
-            stateMachine.ChangeState(player.idleState);
     }
 }

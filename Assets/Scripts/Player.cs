@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public float jumpForce = 15f;
     [Tooltip("while player is in the air, the horizontal moveSpeed is multiplied by airSpeedModifier")]
     public float airSpeedModifier = 0.8f;
-    public float wallslideSpeed = 6f;
+    
 
     [Header("Dash Info")]
     public float dashSpeed = 30f;
@@ -21,6 +21,13 @@ public class Player : MonoBehaviour
     private float dashUsageTimer;
     public float dashDir { get; private set; } //making is public 
     //get but private set allows it to be public, but NOT VISIBLE in inspector(?)
+
+    [Header("Wallslide/Walljump Info")]
+    public float wallslideSpeed = 6f;
+    [Tooltip("When a player does a wall jump, they will continue to travel horizontally for this many seconds before their xVelocity drops to 0.")]
+    public float walljumpMaxDuration = 3f;
+    [Tooltip("When a player does a wall jump, they will have to wait this many seconds before they can change their horizontal direction.")]
+    public float wallJumpMinDuration = 0.1f;
 
 
     [Header("CollisionInfo")]
@@ -51,7 +58,7 @@ public class Player : MonoBehaviour
     public PlayerJumpState jumpState { get; private set; }
     public PlayerDashState dashState { get; private set; }
     public PlayerWallslideState wallslideState { get; private set; }
-
+    public PlayerWalljumpState walljumpState { get; private set; }
 
     #endregion
 
@@ -68,6 +75,7 @@ public class Player : MonoBehaviour
         //synonymous in our case
         dashState = new PlayerDashState(this, stateMachine, "Dash");
         wallslideState = new PlayerWallslideState(this, stateMachine, "Wallslide");
+        walljumpState = new PlayerWalljumpState(this, stateMachine, "Jump");
     }
 
     private void Start()
@@ -88,9 +96,12 @@ public class Player : MonoBehaviour
 
     private void CheckForDashInput()
     {
+        if (IsWallDetected())
+            return; //you cannot dash if you're standing point blank against a wall
+
         dashUsageTimer -= Time.deltaTime;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift) && dashUsageTimer < 0)
+        if (Input.GetKey(KeyCode.LeftShift) && dashUsageTimer < 0)
         {
             dashUsageTimer = dashCooldown;
             dashDir = Input.GetAxisRaw("Horizontal");
