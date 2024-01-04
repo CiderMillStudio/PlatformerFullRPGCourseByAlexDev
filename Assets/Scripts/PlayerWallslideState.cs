@@ -27,13 +27,18 @@ public class PlayerWallslideState : PlayerState
             stateMachine.ChangeState(player.walljumpState);
             return;
         }
-            
+
+        if (!player.IsWallDetected() || player.IsGroundDetected())
+        {
+            stateMachine.ChangeState(player.idleState);
+            return;
+
+        }
 
         WallslideMovement();
 
 
-        if (!player.IsWallDetected() || player.IsGroundDetected())
-            stateMachine.ChangeState(player.idleState);
+
     }
 
 
