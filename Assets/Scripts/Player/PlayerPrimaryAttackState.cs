@@ -32,7 +32,6 @@ public class PlayerPrimaryAttackState : PlayerState
         comboCounter++;
         player.anim.SetInteger("attackComboCounter", comboCounter);
         lastTimeAttacked = Time.time; //welp, this is a new time function!!
-        Debug.Log(lastTimeAttacked);
         player.StartCoroutine("BusyFor", 0.1f); //0.1f seconds is enough to                                              
     }                                           //block unwanted movement!
 
