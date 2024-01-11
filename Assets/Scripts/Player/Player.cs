@@ -34,6 +34,8 @@ public class Player : Entity
     public float attackComboWindow = 2;
     public float attackDashTime = 0.07f;
     public Vector2[] attackDashSpeedModifiers;
+    public float counterAttackDuration = 0.2f;
+
     #endregion
 
     #region Wallslide and Walljump info
@@ -56,6 +58,8 @@ public class Player : Entity
     public PlayerWallslideState wallslideState { get; private set; }
     public PlayerWalljumpState walljumpState { get; private set; }
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
+    public PlayerCounterAttackState counterAttackState { get; private set; }
+    
 
     #endregion
 
@@ -76,6 +80,8 @@ public class Player : Entity
         wallslideState = new PlayerWallslideState(this, stateMachine, "Wallslide");
         walljumpState = new PlayerWalljumpState(this, stateMachine, "Jump");
         primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
+        counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+        
     }
 
     protected override void Start()

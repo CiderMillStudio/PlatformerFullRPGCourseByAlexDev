@@ -8,6 +8,8 @@ public class EnemySkeleton : Enemy
     public SkeletonIdleState idleState { get; private set; }
     public SkeletonMoveState moveState { get; private set; }
     public SkeletonBattleState battleState { get; private set; }
+    public SkeletonAttackState attackState { get; private set; }
+    public SkeletonStunnedState stunnedState { get; private set; }
 
 
     #endregion
@@ -18,6 +20,9 @@ public class EnemySkeleton : Enemy
         idleState = new SkeletonIdleState(this, stateMachine, "Idle", this);
         moveState = new SkeletonMoveState(this, stateMachine, "isMoving", this);
         battleState = new SkeletonBattleState(this, stateMachine, "isMoving", this);
+        attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
+        stunnedState = new SkeletonStunnedState(this, stateMachine, "Stunned", this);
+        
         /*We're gonna use "isMoving" for Battle State because when Battle state
          Activates, the first thing the skeleton does is start moving more 
          quickly towards the player !! */
@@ -34,4 +39,17 @@ public class EnemySkeleton : Enemy
         base.Update();
 
     }
+
+    public override bool CanBeStunned() //only EnemySkeleton has info about its states,
+    {                                       //that's why we override here!
+        if (base.CanBeStunned())
+        {
+            stateMachine.ChangeState(stunnedState); //<-- this code would be inaccessible
+                                                    //in our Enemy.cs base script!
+            return true;
+        }
+        return false;
+    }
+
+
 }

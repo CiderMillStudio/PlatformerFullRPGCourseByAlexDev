@@ -12,6 +12,7 @@ public class EnemyState
 
     protected float stateTimer;
     protected bool triggerCalled;
+    protected bool middleTrigger1Called;
     protected Rigidbody2D rb;
 
     public EnemyState(Enemy _enemyBase, EnemyStateMachine _stateMachine, 
@@ -25,7 +26,8 @@ public class EnemyState
     public virtual void Update()
     {
         stateTimer -= Time.deltaTime;
-        
+
+
     }
 
     public virtual void Enter()
@@ -34,6 +36,10 @@ public class EnemyState
 
         triggerCalled = false;
         enemyBase.anim.SetBool(animBoolName, true);
+        if (stateTimer < 0)
+        {
+            stateTimer = 0;
+        }
     
     }
 
@@ -41,6 +47,13 @@ public class EnemyState
     {
         enemyBase.anim.SetBool(animBoolName, false);
     }
+    public virtual void AnimationFinishTrigger()
+    {
+        triggerCalled = true;
+    }
+
+    public virtual void AnimationMiddleTrigger1()
+    { middleTrigger1Called = true; }
 
 
 

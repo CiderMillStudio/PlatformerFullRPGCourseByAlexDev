@@ -16,7 +16,6 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        Debug.Log("I SEE YOU!");
         player = GameObject.Find("Player").transform;
 
         
@@ -30,13 +29,31 @@ public class SkeletonBattleState : EnemyState
     public override void Update()
     {
         base.Update();
-        if (enemy.IsPlayerInRange())
+        
+
+        if (enemy.IsPlayerDetected())
         {
-            Debug.Log("I ATTACK!!!");
-            enemy.ZeroVelocity();
-            return;
+            stateTimer = enemy.battleTime;
+
+
+            if (enemy.IsPlayerInRange())
+            {
+                if (CanAttack())
+                {
+                    stateMachine.ChangeState(enemy.attackState);
+                }
+            }
         }
-        else if (player.position.x > enemy.transform.position.x)
+
+        else if (stateTimer < 0 || Vector2.Distance(enemy.transform.position, player.transform.position) > enemy.stopAttackDistance)
+        {
+            stateMachine.ChangeState(enemy.idleState);
+        }
+
+        
+        
+
+        if (player.position.x > enemy.transform.position.x)
         {
             moveDirection = 1;
         }
@@ -48,5 +65,16 @@ public class SkeletonBattleState : EnemyState
         enemy.SetVelocity(enemy.attackSpeedModifier * enemy.moveSpeed * moveDirection, 
             rb.velocity.y);
 
+
+    }
+
+    private bool CanAttack()
+    {
+        if (enemy.lastTimeAttacked + enemy.attackCooldown < Time.time)
+        {
+            enemy.lastTimeAttacked = Time.time;
+            return true;
+        }
+        return false;
     }
 }

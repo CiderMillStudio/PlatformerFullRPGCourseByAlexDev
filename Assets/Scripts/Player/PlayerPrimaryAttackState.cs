@@ -16,8 +16,12 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        xInput = 0; /*WE ADDED THIS IN LECTURE 59 due to a bug, which fixed Alex's 
+                     attack direction. I don't think it will have any impact on my 
+                        code (I never had a bug!) but I don't think this could possibly 
+                        hurt in anyway. */
 
-        player.ZeroVelocity();
+        player.SetZeroVelocity();
 
         if (comboCounter > 2 || Time.time - lastTimeAttacked >= player.attackComboWindow)
         {

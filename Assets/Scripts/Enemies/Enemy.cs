@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +11,18 @@ public class Enemy : Entity
 
     [SerializeField] protected LayerMask whatIsPlayer;
 
+
+    [Header("Stun Info")]
+    public float stunDuration = 1f;
+    public Vector2 stunDirection;
+    protected bool canBeStunned;
+    [SerializeField] protected GameObject counterImage;
+
     [Header("Move Info")]
     public float moveSpeed = 2f;
     public float idleTime = 2f;
+    public float battleTime = 4f;
+    public float stopAttackDistance = 10f;
 
     [Header("Attack Info")]
     public float battleRange = 6f;
@@ -20,6 +30,8 @@ public class Enemy : Entity
     public float attackSpeedModifier = 2f;
     public Transform BattleRangeCheck;
     public Transform AttackDistanceCheck;
+    public float attackCooldown = 1.2f;
+    [HideInInspector] public float lastTimeAttacked;
     
     public EnemyStateMachine stateMachine { get; private set; }
 
@@ -32,7 +44,32 @@ public class Enemy : Entity
     protected override void Update()
     {
         base.Update();
+
         stateMachine.currentState.Update();
+
+    }
+
+    public virtual void OpenCounterAttackWindow() // doing public virtual void just in case we need to override it later.
+    {
+        canBeStunned = true;
+        counterImage.SetActive(true);
+    }
+
+    public virtual void CloseCounterAttackWindow()
+    {
+        canBeStunned = false;
+        counterImage.SetActive(false);
+    }
+
+    public virtual bool CanBeStunned() //since "protected", we may override it in
+                                           //EnemySkeleton.cs!
+    {
+        if (canBeStunned)
+        {
+            CloseCounterAttackWindow();
+            return true;
+        }
+        return false;
     }
 
     protected override void OnDrawGizmos()
@@ -48,6 +85,10 @@ public class Enemy : Entity
             new Vector3(AttackDistanceCheck.position.x + facingDir * attackDistance,
                 AttackDistanceCheck.position.y));
     }
+
+    public void AnimationFinishTrigger() => stateMachine.currentState.AnimationFinishTrigger();
+    public void AnimationMiddleTrigger1() => stateMachine.currentState.AnimationMiddleTrigger1();
+ 
 
     public virtual RaycastHit2D IsPlayerDetected() => Physics2D.Raycast(BattleRangeCheck.position, 
         new Vector2(facingDir, 0), battleRange, whatIsPlayer);
