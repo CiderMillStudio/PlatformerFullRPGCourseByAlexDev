@@ -16,7 +16,8 @@ public class SkeletonBattleState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        player = GameObject.Find("Player").transform;
+        player = PlayerManager.instance.player.transform; //using singletons to our advantage!
+        //player = GameObject.Find("Player").transform; //THIS IS VERY RESOURCE HEAVY
 
         
     }

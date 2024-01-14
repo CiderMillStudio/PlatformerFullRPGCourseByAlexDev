@@ -23,8 +23,8 @@ public class Player : Entity
     [Header("Dash Info")]
     public float dashSpeed = 30f;
     public float dashDuration = 0.5f;
-    [SerializeField] private float dashCooldown;
-    private float dashUsageTimer;
+    // [SerializeField] private float dashCooldown; No need for this anymore!!!
+    // private float dashUsageTimer;
     public float dashDir { get; private set; } //making is public get but private set allows it to be public, but NOT VISIBLE in inspector(?)
     #endregion                                       
 
@@ -59,11 +59,17 @@ public class Player : Entity
     public PlayerWalljumpState walljumpState { get; private set; }
     public PlayerPrimaryAttackState primaryAttackState { get; private set; }
     public PlayerCounterAttackState counterAttackState { get; private set; }
-    
+    public PlayerAimSwordState aimSwordState { get; private set; }
+    public PlayerCatchSwordState catchSwordState { get; private set; }
+
+
 
     #endregion
 
     public bool isBusy { get; private set; }
+
+    public SkillManager skill {  get; private set; }
+    public GameObject sword; 
 
     protected override void Awake()
     {
@@ -81,6 +87,9 @@ public class Player : Entity
         walljumpState = new PlayerWalljumpState(this, stateMachine, "Jump");
         primaryAttackState = new PlayerPrimaryAttackState(this, stateMachine, "Attack");
         counterAttackState = new PlayerCounterAttackState(this, stateMachine, "CounterAttack");
+        aimSwordState = new PlayerAimSwordState(this, stateMachine, "AimSword");
+        catchSwordState = new PlayerCatchSwordState(this, stateMachine, "CatchSword");
+
         
     }
 
@@ -88,6 +97,7 @@ public class Player : Entity
     {
         base.Start();
         stateMachine.Initialize(idleState);
+        skill = SkillManager.instance;
     }
 
     protected override void Update()
@@ -95,6 +105,16 @@ public class Player : Entity
         base.Update();
         CheckForDashInput();
         stateMachine.currentState.Update();
+    }
+
+    public void AssignNewSword(GameObject _newSword)
+    {
+        sword = _newSword;
+    }
+
+    public void DestroySword() 
+    {
+        Destroy(sword);
     }
 
     public IEnumerator BusyFor(float _seconds)
@@ -111,13 +131,11 @@ public class Player : Entity
         if (IsWallDetected())
             return; //you cannot dash if you're standing point blank against a wall
 
-        dashUsageTimer -= Time.deltaTime;
 
-        if (Input.GetKey(KeyCode.LeftShift) && dashUsageTimer < 0)
+        if (Input.GetKey(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill()) 
         {
-            dashUsageTimer = dashCooldown;
-            dashDir = Input.GetAxisRaw("Horizontal");
 
+            dashDir = Input.GetAxisRaw("Horizontal");
             if (dashDir == 0)
                 dashDir = facingDir;
 
@@ -141,6 +159,8 @@ public class Player : Entity
         stateMachine.currentState.AnimationMiddleTrigger1();
     }
     #endregion
+
+
 
 
 

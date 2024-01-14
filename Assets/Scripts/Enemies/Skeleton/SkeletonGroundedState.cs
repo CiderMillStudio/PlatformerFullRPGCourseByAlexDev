@@ -16,7 +16,8 @@ public class SkeletonGroundedState : EnemyState
     public override void Enter()
     {
         base.Enter();
-        player = GameObject.Find("Player").transform;
+        player = PlayerManager.instance.player.transform; //much better!
+        //player = GameObject.Find("Player").transform; //Resource heavy!!
     }
 
     public override void Exit()
