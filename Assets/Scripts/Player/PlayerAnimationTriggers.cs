@@ -36,4 +36,6 @@ public class PlayerAnimationTriggers : MonoBehaviour
     {
         SkillManager.instance.swordThrow.CreateSword();
     }
+
+
 }

@@ -18,11 +18,14 @@ public class SwordSkillController : MonoBehaviour
     private bool canRotate; //probably won't use this much
     private bool isReturning;
 
-    public bool isBouncing; //temporarily setting isBouncing to true and AmountOfBounce to 4 (for testing purposes)
-    public int AmountOfBounce = 4; //how many times it can bounce between targets
-    public List<Transform> enemyTargets;
+
+    [Header("Bounce Info")]
+    private bool isBouncing; //temporarily setting isBouncing to true and AmountOfBounce to 4 (for testing purposes).
+                                   //These values will later be controlled by "upgrades" that you can use to upgrade this skill
+    private int amountOfBounce; //how many times it can bounce between targets
+    private List<Transform> enemyTargets;
     private int targetIndex;
-    public float bounceSpeed; //speed at which sword travels between enemies
+    private float bounceSpeed; //speed at which sword travels between enemies
 
     private void Awake()
     {
@@ -39,6 +42,15 @@ public class SwordSkillController : MonoBehaviour
         returnSpeed = _returnSpeed;
         canRotate = true;
         anim.SetBool("Rotate", true);
+    }
+
+    public void SetUpBounce(bool _isBouncing, int _amountOfBounce, float _bounceSpeed)
+    {
+        isBouncing = _isBouncing;
+        amountOfBounce = _amountOfBounce;
+        bounceSpeed = _bounceSpeed;
+        enemyTargets = new List<Transform>(); //YOU NEED TO INSTANTIATE PRIVATE ENTITIES!!! Public entities get made automatically (bias much?),
+                                              //and if you don't instantiate the private ones, you'll get ERRORS!!
     }
 
     public void ReturnSword()
@@ -63,32 +75,38 @@ public class SwordSkillController : MonoBehaviour
             if (Vector2.Distance(transform.position, player.transform.position) < 1f)
             {
                 isReturning = false;
-                player.DestroySword();
+                player.CatchTheSword();
             }
         }
 
-        if (isBouncing && enemyTargets.Count > 0)
+        BounceLogic();
+
+    }
+
+    private void BounceLogic()
+    {
+        if (!isBouncing || enemyTargets.Count <= 0)
         {
-            transform.position = Vector2.MoveTowards(transform.position, enemyTargets[targetIndex].position, bounceSpeed * Time.deltaTime);
-
-            if (Vector2.Distance(transform.position, enemyTargets[targetIndex].position) < 0.1f)
-            {
-                targetIndex++;
-                AmountOfBounce--;
-
-                if (AmountOfBounce <= 0)
-                {
-                    isBouncing = false;
-                    isReturning = true;
-                }
-
-                if (targetIndex >= enemyTargets.Count)
-                    targetIndex = 0;
-
-
-            }
+            return;
         }
+        transform.position = Vector2.MoveTowards(transform.position, enemyTargets[targetIndex].position, bounceSpeed * Time.deltaTime);
 
+        if (Vector2.Distance(transform.position, enemyTargets[targetIndex].position) < 0.1f)
+        {
+            targetIndex++;
+            amountOfBounce--;
+
+            if (amountOfBounce <= 0)
+            {
+                isBouncing = false;
+                isReturning = true;
+            }
+
+            if (targetIndex >= enemyTargets.Count)
+                targetIndex = 0;
+
+
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -100,7 +118,7 @@ public class SwordSkillController : MonoBehaviour
 
         if (collision.GetComponent<Enemy>() != null)
         {
-            isBouncing = true;
+            //isBouncing = true; I think this will be set to FALSE by default up TOP, and then when we unlock the skill "bounce" upgrade, it will be set to true by some external function.
             if (isBouncing && enemyTargets.Count <= 0)
             {
                 Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 10f);
@@ -134,7 +152,7 @@ public class SwordSkillController : MonoBehaviour
 
 
         anim.SetBool("Rotate", false);
-        transform.parent = collision.transform;
+        transform.parent = collision.transform; //stick to object!
 
 
     }

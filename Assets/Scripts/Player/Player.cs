@@ -16,6 +16,7 @@ public class Player : Entity
     public float jumpForce = 15f;
     [Tooltip("while player is in the air, the horizontal moveSpeed is multiplied by airSpeedModifier")]
     public float airSpeedModifier = 0.8f;
+    public float swordReturnImpact = 9f;
    
     #endregion 
 
@@ -69,7 +70,7 @@ public class Player : Entity
     public bool isBusy { get; private set; }
 
     public SkillManager skill {  get; private set; }
-    public GameObject sword; 
+    public GameObject sword { get; private set; }
 
     protected override void Awake()
     {
@@ -112,10 +113,16 @@ public class Player : Entity
         sword = _newSword;
     }
 
-    public void DestroySword() 
+    public void CatchTheSword() 
     {
+        stateMachine.ChangeState(catchSwordState);
         Destroy(sword);
     }
+
+/*    public void SwordCaught()
+    {
+        stateMachine.ChangeState(idleState);
+    }*/
 
     public IEnumerator BusyFor(float _seconds)
     {
