@@ -1076,6 +1076,7 @@ MonoBehaviour:
   moveSpeed: 12
   jumpForce: 13
   airSpeedModifier: 0.8
+  swordReturnImpact: 9
   dashSpeed: 30
   dashDuration: 0.2
   attackComboWindow: 0.15
@@ -1088,7 +1089,6 @@ MonoBehaviour:
   wallslideSpeed: 2.5
   walljumpMaxDuration: 3
   wallJumpMinDuration: 0.2
-  sword: {fileID: 0}
 --- !u!4 &642842863
 Transform:
   m_ObjectHideFlags: 0
@@ -8263,9 +8263,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldown: 0
+  swordType: 0
+  amountOfBounce: 5
+  bounceSwordGravity: 6
+  bounceSpeed: 20
   swordPrefab: {fileID: 6297994155034255777, guid: b0986c573f4a5a64ebf1b780b8dce3ab, type: 3}
   launchForce: {x: 30, y: 30}
-  swordGravity: 4
+  regularSwordGravity: 3
   returnSpeed: 12
   numberOfDots: 20
   spaceBetweenDots: 0.1
