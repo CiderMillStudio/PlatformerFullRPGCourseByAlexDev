@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum SwordType //enums: basically a list of elements, and each type has an associated index number, bout how does this differ from lists? Notice how we're making the enum OUTSIDE of the class?
@@ -12,12 +13,7 @@ public class SwordSkill : Skill
 {
 
     public SwordType swordType = SwordType.Regular;
-    
-    [Header("Bounce Info")]
-    [SerializeField] private int amountOfBounce;
-    [SerializeField] private float bounceSwordGravity = 6f;
-    [SerializeField] private float bounceSpeed = 20f;
-    
+
 
     [Header("Skill Info")]
     [SerializeField] private GameObject swordPrefab;
@@ -25,8 +21,28 @@ public class SwordSkill : Skill
     private float swordGravity = 3;
     [SerializeField] private float regularSwordGravity = 3f;
     [SerializeField] private float returnSpeed = 8f;
+    [SerializeField] private float freezeTimeDuration = 0.9f;
 
     private Vector2 finalDirection;
+
+    [Header("Bounce Info")]
+    [SerializeField] private int bounceAmount;
+    [SerializeField] private float bounceSwordGravity = 6f;
+    [SerializeField] private float bounceSpeed = 20f;
+
+    [Header("Pierce Info")]
+    [SerializeField] private int pierceAmount;
+    [SerializeField] private float pierceSwordGravity;
+
+    [Header("Spin Info")]
+    [SerializeField] private float hitCoolown = 0.35f;
+    [SerializeField] private float maxTravelDistance = 7f;
+    [SerializeField] private float spinDuration = 2f;
+    [SerializeField] private float spinGravity = 1f;
+    
+    
+
+
 
     [Header("Aim Dots")]
     [SerializeField] private int numberOfDots;
@@ -42,33 +58,55 @@ public class SwordSkill : Skill
     protected override void Start()
     {
         base.Start();
+
         GenerateDots();
-        swordGravity = regularSwordGravity;
+
+        SetupGravity();
+    }
+
+    private void SetupGravity()
+    {
+        if (swordType == SwordType.Regular)
+        {
+            swordGravity = regularSwordGravity;
+        }
+        else if (swordType == SwordType.Bounce)
+        {
+            swordGravity = bounceSwordGravity;
+        }
+        else if (swordType == SwordType.Pierce)
+        {
+            swordGravity = pierceSwordGravity;
+        }
+        else if (swordType == SwordType.Spin)
+        {
+            swordGravity = spinGravity;
+        }
     }
 
     public void CreateSword()
     {
+        SetupGravity(); //TALK ABOut THIS LATER!
+
         GameObject newSword = Instantiate(swordPrefab, player.transform.position,
             transform.rotation);
 
         SwordSkillController newSwordScript = newSword.GetComponent<SwordSkillController>();
 
         if (swordType == SwordType.Bounce)
-        {
-            swordGravity = bounceSwordGravity;
-            newSwordScript.SetUpBounce(true, amountOfBounce, bounceSpeed);
-        }
+            newSwordScript.SetUpBounce(true, bounceAmount, bounceSpeed);
+        //{ swordGravity = bounceSwordGravity; }
+        else if (swordType == SwordType.Pierce)
+            newSwordScript.SetupPierce(pierceAmount);
+        else if (swordType == SwordType.Spin)
+            newSwordScript.SetupSpin(true, maxTravelDistance, spinDuration, hitCoolown);
 
-        if (swordType == SwordType.Regular)
-        {
-            swordGravity = regularSwordGravity;
-        }
 
         player.AssignNewSword(newSword);
 
  
 
-        newSwordScript.SetUpSword(finalDirection, swordGravity, player, returnSpeed); //Turns out Alex was right!
+        newSwordScript.SetUpSword(finalDirection, swordGravity, player, returnSpeed, freezeTimeDuration); //Turns out Alex was right!
 
         DotsActive(false);
 
@@ -112,6 +150,8 @@ public class SwordSkill : Skill
 
     private void GenerateDots()
     {
+        SetupGravity();
+
         dots = new GameObject[numberOfDots];
         for (int i = 0; i < numberOfDots; i++)
         {
@@ -123,10 +163,7 @@ public class SwordSkill : Skill
 
     private Vector2 DotsPosition(float t)  //PHYSICS!!! 
     {
-        if (swordType == SwordType.Regular)
-            swordGravity = regularSwordGravity;
-        if (swordType == SwordType.Bounce)
-            swordGravity = bounceSwordGravity;
+        SetupGravity();
 
 
         Vector2 position = (Vector2)player.transform.position + new Vector2(

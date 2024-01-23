@@ -200,9 +200,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.46, y: 0.04}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.18
 --- !u!114 &3671806826264078239
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,7 +215,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b7d1cd0218139a4899f37fe0a922be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isBouncing: 1
-  AmountOfBounce: 4
-  enemyTargets: []
-  bounceSpeed: 20
+  pierceAmount: 0

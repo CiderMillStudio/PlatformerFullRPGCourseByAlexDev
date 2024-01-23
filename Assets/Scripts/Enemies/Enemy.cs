@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : Entity
@@ -23,6 +24,7 @@ public class Enemy : Entity
     public float idleTime = 2f;
     public float battleTime = 4f;
     public float stopAttackDistance = 10f;
+    private float defaultMoveSpeed;
 
     [Header("Attack Info")]
     public float battleRange = 6f;
@@ -39,6 +41,7 @@ public class Enemy : Entity
     {
         base.Awake();
         stateMachine = new EnemyStateMachine();
+        defaultMoveSpeed = moveSpeed;
     }
 
     protected override void Update()
@@ -49,6 +52,30 @@ public class Enemy : Entity
 
     }
 
+    public virtual void FreezeTime(bool _timeFrozen)
+    {
+        if (_timeFrozen)
+        {
+            moveSpeed = 0;
+            anim.speed = 0;
+        }
+        else
+        {
+            moveSpeed = defaultMoveSpeed; //because different enemy types will have different 
+            anim.speed = 1;
+        }
+    }
+
+    protected virtual IEnumerator FreezeTimeFor(float _seconds)
+    {
+        FreezeTime(true);
+        
+        yield return new WaitForSeconds(_seconds);
+
+        FreezeTime(false);
+    }
+
+    #region Counter Attack Window
     public virtual void OpenCounterAttackWindow() // doing public virtual void just in case we need to override it later.
     {
         canBeStunned = true;
@@ -60,6 +87,8 @@ public class Enemy : Entity
         canBeStunned = false;
         counterImage.SetActive(false);
     }
+    #endregion
+
 
     public virtual bool CanBeStunned() //since "protected", we may override it in
                                            //EnemySkeleton.cs!
