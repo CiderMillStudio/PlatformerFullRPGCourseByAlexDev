@@ -17,13 +17,13 @@ public class CloneSkill : Skill
     [SerializeField] private bool canAttack;
 
 
-    public void CreateClone(Transform _clonePosition)
+    public void CreateClone(Transform _clonePosition, Vector3 _offset)
     {
         GameObject newClone = Instantiate(clonePrefab);
 
         newClone.GetComponent<CloneSkillController>().SetUpClone(_clonePosition, 
             cloneDuration, fadeOutModifier, canAttack, 
-                PlayerManager.instance.player.attackCheckRadius);
+                PlayerManager.instance.player.attackCheckRadius, _offset);
     }
 
     

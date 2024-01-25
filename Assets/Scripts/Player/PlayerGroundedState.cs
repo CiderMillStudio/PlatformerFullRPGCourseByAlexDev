@@ -24,6 +24,8 @@ public class PlayerGroundedState : PlayerState
     {
         base.Update();
 
+
+
         if (!player.IsGroundDetected())
             stateMachine.ChangeState(player.airState);
 
@@ -44,7 +46,8 @@ public class PlayerGroundedState : PlayerState
                 stateMachine.ChangeState(player.aimSwordState);
         }
 
-            
+        if (Input.GetKeyDown(KeyCode.R))
+            stateMachine.ChangeState(player.blackholeState); //NEW
 
     }
 

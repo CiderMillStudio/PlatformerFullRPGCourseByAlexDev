@@ -37,14 +37,14 @@ public class CloneSkillController : MonoBehaviour
 
     public void SetUpClone(Transform _newTransform, float _cloneDuration, 
         float _fadeOutModifier, bool canAttack, 
-            float _attackCheckRadius) //sets up position and other stuff
+            float _attackCheckRadius, Vector3 _offset) //sets up position and other stuff
     {
         if (canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
         
         cloneTimer = _cloneDuration;
         attackCheckRadius = _attackCheckRadius;
-        transform.position = _newTransform.position;
+        transform.position = _newTransform.position + _offset; 
         fadeOutModifier = _fadeOutModifier;
 
         FaceClosestTarget();

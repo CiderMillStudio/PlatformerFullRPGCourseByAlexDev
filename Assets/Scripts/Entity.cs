@@ -20,6 +20,9 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
     public EntityFX fx { get; private set; }
 
+    public SpriteRenderer sr { get; private set; }
+
+
     #endregion
 
     #region Knockback
@@ -41,8 +44,9 @@ public class Entity : MonoBehaviour
     protected virtual void Start()
     {
         anim = GetComponentInChildren<Animator>();
-        fx = GetComponentInChildren<EntityFX>();
+        fx = GetComponentInChildren<EntityFX>(); 
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponentInChildren<SpriteRenderer>();
     }
 
     protected virtual void Update()
@@ -130,6 +134,14 @@ public class Entity : MonoBehaviour
             wallCheck.position.y));
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
+    }
+
+    public void MakeTransparent(bool _transparent)
+    {
+        if (_transparent)
+            sr.color = Color.clear;
+        else
+            sr.color = Color.white;
     }
 
 
