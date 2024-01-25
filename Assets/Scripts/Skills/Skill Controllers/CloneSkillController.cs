@@ -37,7 +37,7 @@ public class CloneSkillController : MonoBehaviour
 
     public void SetUpClone(Transform _newTransform, float _cloneDuration, 
         float _fadeOutModifier, bool canAttack, 
-            float _attackCheckRadius, Vector3 _offset) //sets up position and other stuff
+            float _attackCheckRadius, Vector3 _offset, Transform _closestEnemy) //sets up position and other stuff
     {
         if (canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
@@ -47,8 +47,8 @@ public class CloneSkillController : MonoBehaviour
         transform.position = _newTransform.position + _offset; 
         fadeOutModifier = _fadeOutModifier;
 
+        closestEnemy = _closestEnemy;
         FaceClosestTarget();
-
 
         //if (PlayerManager.instance.player.facingDir < 0)
         //sr.flipX = true;
@@ -89,22 +89,7 @@ public class CloneSkillController : MonoBehaviour
 
     private void FaceClosestTarget() //So cool!
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 100);
-        float closestDistance = Mathf.Infinity;
-
-        foreach (var hit in colliders)
-        {
-            if (hit.GetComponent<Enemy>() != null)
-            {
-                float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
-
-                if (distanceToEnemy < closestDistance)
-                { 
-                    closestDistance = distanceToEnemy;
-                    closestEnemy = hit.transform;
-                }
-            }
-        }
+        
         
         if (closestEnemy != null)
         {

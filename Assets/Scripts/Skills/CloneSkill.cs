@@ -23,7 +23,7 @@ public class CloneSkill : Skill
 
         newClone.GetComponent<CloneSkillController>().SetUpClone(_clonePosition, 
             cloneDuration, fadeOutModifier, canAttack, 
-                PlayerManager.instance.player.attackCheckRadius, _offset);
+                PlayerManager.instance.player.attackCheckRadius, _offset, FindClosestEnemy(newClone.transform));
     }
 
     
