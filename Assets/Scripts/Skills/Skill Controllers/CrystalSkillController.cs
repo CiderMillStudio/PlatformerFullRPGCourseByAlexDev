@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class CrystalSkillController : MonoBehaviour
@@ -21,6 +22,8 @@ public class CrystalSkillController : MonoBehaviour
                                      //or if the player prematurely presses the crystal skill hotkey.
 
     private Transform closestTarget;
+
+    [SerializeField] private LayerMask whatIsEnemy;
     
 
     
@@ -98,5 +101,21 @@ public class CrystalSkillController : MonoBehaviour
         if (!canExplode) { return; }
 
         transform.localScale = Vector2.Lerp(transform.localScale, new Vector2(maxSize, maxSize), growSpeed * Time.deltaTime);
+    }
+
+    public void ChooseRandomEnemy()
+    {
+        float radius = SkillManager.instance.blackhole.GetBlackHoleRadius();
+
+
+        Collider2D[] colliders =
+            Physics2D.OverlapCircleAll(transform.position, radius, whatIsEnemy);
+
+        if (colliders.Length>0)
+        {
+            closestTarget = colliders[Random.Range(0, colliders.Length)].transform;
+        }
+
+        
     }
 }

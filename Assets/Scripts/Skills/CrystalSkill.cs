@@ -8,6 +8,9 @@ public class CrystalSkill : Skill
     [SerializeField] private float crystalDuration;
     private GameObject currentCrystal;
 
+
+    [SerializeField] private bool cloneLeftBehindAfterTeleportation;
+
     [Header("Explosive Crystal")]
     [SerializeField] private bool canExplode;
     [SerializeField] private float maxSize;
@@ -33,24 +36,46 @@ public class CrystalSkill : Skill
 
         if (currentCrystal == null)
         {
-            currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
-            CrystalSkillController currentCrystalScript = currentCrystal.GetComponent<CrystalSkillController>();
-
-            currentCrystalScript.SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, moveSpeed, maxSize, growSpeed, FindClosestEnemy(currentCrystal.transform));
+            CreateCrystal();
         }
         else
         {
             if (!canMoveToEnemy)
             {
                 Vector2 playerPos = player.transform.position;
-
                 player.transform.position = currentCrystal.transform.position;
-
                 currentCrystal.transform.position = playerPos;
+
+                if (cloneLeftBehindAfterTeleportation)
+                {
+                    SkillManager.instance.clone.CreateClone(currentCrystal.transform, Vector3.zero);
+                    Destroy(currentCrystal);
+                }
+                else
+                {
+                    currentCrystal.GetComponent<CrystalSkillController>()?.FinishCrystal();
+                }
+
             }
 
-            currentCrystal.GetComponent<CrystalSkillController>()?.FinishCrystal();
         }
+    }
+
+    public void CreateCrystal()
+    {
+        currentCrystal = Instantiate(crystalPrefab, player.transform.position, Quaternion.identity);
+        CrystalSkillController currentCrystalScript = currentCrystal.GetComponent<CrystalSkillController>();
+
+        currentCrystalScript.SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, moveSpeed,
+            maxSize, growSpeed, FindClosestEnemy(currentCrystal.transform));
+
+
+
+    }
+
+    public void CurrentCrystalChooseRandomTarget()
+    {
+        currentCrystal.GetComponent<CrystalSkillController>().ChooseRandomEnemy();
     }
 
     private bool CanUseMultiCrystal()

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class CloneSkillController : MonoBehaviour
@@ -16,6 +17,10 @@ public class CloneSkillController : MonoBehaviour
 
     private Transform closestEnemy;
     private bool flipped;
+
+    private bool canDuplicateClone;
+    private int facingDir = 1;
+    private float chanceToDuplicateClone;
 
     private void Awake()
     {
@@ -37,7 +42,8 @@ public class CloneSkillController : MonoBehaviour
 
     public void SetUpClone(Transform _newTransform, float _cloneDuration, 
         float _fadeOutModifier, bool canAttack, 
-            float _attackCheckRadius, Vector3 _offset, Transform _closestEnemy) //sets up position and other stuff
+            float _attackCheckRadius, Vector3 _offset, Transform _closestEnemy, 
+                bool _canDuplicateClone, float _chanceToDuplicateClone) //sets up position and other stuff
     {
         if (canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
@@ -48,6 +54,10 @@ public class CloneSkillController : MonoBehaviour
         fadeOutModifier = _fadeOutModifier;
 
         closestEnemy = _closestEnemy;
+
+        canDuplicateClone = _canDuplicateClone;
+        chanceToDuplicateClone = _chanceToDuplicateClone;
+        
         FaceClosestTarget();
 
         //if (PlayerManager.instance.player.facingDir < 0)
@@ -82,8 +92,29 @@ public class CloneSkillController : MonoBehaviour
             if (hit.GetComponent<Enemy>() != null)
             {
                 hit.GetComponent<Enemy>().Damage();
+
+                if (canDuplicateClone)
+                {
+                    int randomRoll = Random.Range(1, 101);
+
+                    if (randomRoll <= chanceToDuplicateClone)
+                    {
+                        StartCoroutine(DuplicateCloneWithDelay(hit.transform));
+                    }
+                        
+                }
             }
         }
+    }
+
+    
+    private IEnumerator DuplicateCloneWithDelay(Transform _transform)
+    {
+        yield return new WaitForSeconds(0.3f);
+
+
+        SkillManager.instance.clone.CreateClone(_transform, new Vector3(1.5f * facingDir, 0));
+
     }
 
 
@@ -95,6 +126,7 @@ public class CloneSkillController : MonoBehaviour
         {
             if (closestEnemy.position.x < transform.position.x)
             {
+                facingDir = -1;
                 transform.Rotate(0, 180, 0);
                 flipped = true;
             }

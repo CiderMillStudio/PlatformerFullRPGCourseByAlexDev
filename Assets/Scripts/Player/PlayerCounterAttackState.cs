@@ -1,10 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
-    public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine, 
+
+    private bool cloneCreated;
+
+
+    public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine,
         string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
@@ -13,7 +15,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Enter();
         stateTimer = player.counterAttackDuration;
-        player.anim.SetBool("SuccessfulCounterAttack", false); 
+        player.anim.SetBool("SuccessfulCounterAttack", false);
         //we must add this here
         //just in case it doesn't get set back to false from previous success.
     }
@@ -22,6 +24,7 @@ public class PlayerCounterAttackState : PlayerState
     {
         base.Exit();
         player.anim.SetBool("SuccessfulCounterAttack", false); //this was very important
+        cloneCreated = false;
     }
 
     public override void Update()
@@ -40,12 +43,22 @@ public class PlayerCounterAttackState : PlayerState
                 {
                     stateTimer = 10f; //this just needs to last a long time
                     player.anim.SetBool("SuccessfulCounterAttack", true);
+
+                    if (!cloneCreated)
+                    {
+                        cloneCreated = true;
+                        player.skill.clone.CreateCloneOnCounterAttack(hit.transform);
+                    }
+
                 }
             }
         }
 
         if (stateTimer < 0 || triggerCalled)
             player.stateMachine.ChangeState(player.idleState);
-            
+
     }
+
+
+
 }
