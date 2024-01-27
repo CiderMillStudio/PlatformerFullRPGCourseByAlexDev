@@ -37,6 +37,10 @@ public class Enemy : Entity
     
     public EnemyStateMachine stateMachine { get; private set; }
 
+    public string lastAnimBoolName {  get; private set; } //whenever the enemy changes animation states,
+                                                          //lastAnimBoolName changes accordingly so that later when we enter
+                                                          //deadState, we can stop the animation that was played last.
+
     protected override void Awake()
     {
         base.Awake();
@@ -50,6 +54,11 @@ public class Enemy : Entity
 
         stateMachine.currentState.Update();
 
+    }
+
+    public virtual void AssignLastAnimName(string _animBoolName)
+    {
+        lastAnimBoolName = _animBoolName;
     }
 
     public virtual void FreezeTime(bool _timeFrozen)

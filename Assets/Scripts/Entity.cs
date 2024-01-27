@@ -22,6 +22,8 @@ public class Entity : MonoBehaviour
 
     public SpriteRenderer sr { get; private set; }
 
+    public CharacterStats stats { get; private set; } 
+
 
     #endregion
 
@@ -36,6 +38,8 @@ public class Entity : MonoBehaviour
     public int facingDir { get; private set; } = 1;
     protected bool facingRight = true;
 
+    public CapsuleCollider2D cd { get; private set; }//NEW!!!!!!!!!
+
     protected virtual void Awake()
     {
         
@@ -47,6 +51,8 @@ public class Entity : MonoBehaviour
         fx = GetComponentInChildren<EntityFX>(); 
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponentInChildren<SpriteRenderer>();
+        stats = GetComponent<CharacterStats>();
+        cd = GetComponent<CapsuleCollider2D>(); 
     }
 
     protected virtual void Update()
@@ -54,7 +60,7 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void Damage()
+    public virtual void DamageEffect()
     {
             float dice = Random.Range(0, 9); //if you want to make stuns random
             bool willStun = dice <= 2;
@@ -142,6 +148,11 @@ public class Entity : MonoBehaviour
             sr.color = Color.clear;
         else
             sr.color = Color.white;
+    }
+
+    public virtual void Die()
+    {
+        //overridden in player and in enemy scripts
     }
 
 

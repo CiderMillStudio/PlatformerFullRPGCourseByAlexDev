@@ -11,6 +11,8 @@ public class EnemySkeleton : Enemy
     public SkeletonAttackState attackState { get; private set; }
     public SkeletonStunnedState stunnedState { get; private set; }
 
+    public SkeletonDeadState deadState { get; private set; }
+
 
     #endregion
 
@@ -22,6 +24,8 @@ public class EnemySkeleton : Enemy
         battleState = new SkeletonBattleState(this, stateMachine, "isMoving", this);
         attackState = new SkeletonAttackState(this, stateMachine, "Attack", this);
         stunnedState = new SkeletonStunnedState(this, stateMachine, "Stunned", this);
+        deadState = new SkeletonDeadState(this, stateMachine, "Idle", this); //it doesn't matter which animBoolNAme you use, it's just gonna use the lastAnimBoolName
+
         
         /*We're gonna use "isMoving" for Battle State because when Battle state
          Activates, the first thing the skeleton does is start moving more 
@@ -51,5 +55,11 @@ public class EnemySkeleton : Enemy
         return false;
     }
 
+    public override void Die()
+    {
+        base.Die();
 
+        stateMachine.ChangeState(deadState);
+
+    }
 }
