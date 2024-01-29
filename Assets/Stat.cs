@@ -26,6 +26,11 @@ public class Stat //DOES NOT INHERIT FROM MONOBEHAVIOR!!!!
         return finalValue;
     }
 
+    public void SetDefaultValue (int _value) // N E W  ! ! ! ! ! !
+    {
+        baseValue = _value;
+    }
+
     public void AddModifier(int _modifier) //useful when equipping weapons, armor, etc..
     {
         modifiers.Add(_modifier);

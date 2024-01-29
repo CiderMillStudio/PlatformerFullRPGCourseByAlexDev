@@ -779,6 +779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d85cc2d46e887e9498b1ce5d044bf547, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
   strength:
     baseValue: 0
     modifiers: 
@@ -791,8 +792,17 @@ MonoBehaviour:
   vitality:
     baseValue: 0
     modifiers: 
+  damage:
+    baseValue: 10
+    modifiers: 
+  critChance:
+    baseValue: 10
+    modifiers: 
+  critPower:
+    baseValue: 150
+    modifiers: 
   maxHealth:
-    baseValue: 5
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0
@@ -800,10 +810,21 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
-  damage:
-    baseValue: 10
+  magicResistance:
+    baseValue: 0
     modifiers: 
-  currentHealth: 0
+  fireDamage:
+    baseValue: 12
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  lightningDamage:
+    baseValue: 0
+    modifiers: 
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
 --- !u!1 &661929852
 GameObject:
   m_ObjectHideFlags: 0
@@ -8947,6 +8968,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7000a90c29134ad43b7298e5eac80b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
   strength:
     baseValue: 0
     modifiers: 
@@ -8959,8 +8981,17 @@ MonoBehaviour:
   vitality:
     baseValue: 0
     modifiers: 
+  damage:
+    baseValue: 10
+    modifiers: 
+  critChance:
+    baseValue: 10
+    modifiers: 
+  critPower:
+    baseValue: 150
+    modifiers: 
   maxHealth:
-    baseValue: 4
+    baseValue: 1000
     modifiers: 
   armor:
     baseValue: 0
@@ -8968,10 +8999,21 @@ MonoBehaviour:
   evasion:
     baseValue: 0
     modifiers: 
-  damage:
-    baseValue: 5
+  magicResistance:
+    baseValue: 0
     modifiers: 
-  currentHealth: 0
+  fireDamage:
+    baseValue: 0
+    modifiers: 
+  iceDamage:
+    baseValue: 0
+    modifiers: 
+  lightningDamage:
+    baseValue: 0
+    modifiers: 
+  isIgnited: 0
+  isChilled: 0
+  isShocked: 0
 --- !u!1 &1775624631
 GameObject:
   m_ObjectHideFlags: 0
