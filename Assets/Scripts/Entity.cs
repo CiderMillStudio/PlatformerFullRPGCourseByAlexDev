@@ -36,9 +36,19 @@ public class Entity : MonoBehaviour
     #endregion
 
     public int facingDir { get; private set; } = 1;
+
     protected bool facingRight = true;
 
-    public CapsuleCollider2D cd { get; private set; }//NEW!!!!!!!!!
+    public CapsuleCollider2D cd { get; private set; }
+
+
+
+
+    public System.Action onFlipped; //NEW!!!!!
+
+
+
+
 
     protected virtual void Awake()
     {
@@ -96,6 +106,9 @@ public class Entity : MonoBehaviour
         facingDir = -facingDir;
         facingRight = !facingRight;
         transform.Rotate(0, 180, 0);
+
+        if (onFlipped != null) //NEW !!!! delete this line to see a coocoo error (player doesn't have a healthbarUI, so nothing to flip!)
+            onFlipped(); //NEW!!
     }
 
     public virtual void FlipController(float _x)

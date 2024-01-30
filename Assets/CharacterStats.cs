@@ -4,9 +4,8 @@ using UnityEngine;
 public class CharacterStats : MonoBehaviour
 {
 
-
-    [SerializeField] private int currentHealth;
-
+    public int currentHealth;
+    
     [Header("Major Stats")]
 
     public Stat strength; //1 pt increase damage by 1 and crit.power by 1%
@@ -45,13 +44,14 @@ public class CharacterStats : MonoBehaviour
     private int igniteDamage;
 
 
-
+    public System.Action onHealthChanged;
 
 
 
     protected virtual void Start()
     {
-        currentHealth = maxHealth.GetValue();
+        currentHealth = GetMaxHealthValue();
+        Debug.Log("character stats called");
         critPower.SetDefaultValue(150);
 
     }
@@ -71,7 +71,8 @@ public class CharacterStats : MonoBehaviour
         if (igniteDamageTimer < 0 && isIgnited)
         {
             Debug.Log("Take burn damage " + igniteDamage);
-            currentHealth -= igniteDamage;
+
+            DecreaseHealthBy(igniteDamage);
             
             if (currentHealth <= 0)
             {
@@ -189,19 +190,19 @@ public class CharacterStats : MonoBehaviour
         if (_ignite)
         {
             isIgnited = _ignite;
-            ignitedTimer = 100f;
+            ignitedTimer = 3f;
         }
 
         if (_chill)
         {
             isChilled = _chill;
-            chilledTimer = 100f;
+            chilledTimer = 3f;
         }
 
         if (_shock)
         {
             isShocked = _shock;
-            shockedTimer = 100f;
+            shockedTimer = 3f;
         }
     }
     
@@ -210,7 +211,7 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void TakeDamage(int _damage)
     {
-        currentHealth -= _damage;
+        DecreaseHealthBy(_damage);
 
         Debug.Log("TakeDamage(): " +_damage);
 
@@ -220,6 +221,14 @@ public class CharacterStats : MonoBehaviour
         {
             Die();
         }
+    }
+
+    protected virtual void DecreaseHealthBy(int _damage)
+    {
+        currentHealth -= _damage;
+
+        if (onHealthChanged != null)
+            onHealthChanged();
     }
 
     protected virtual void Die()
@@ -279,4 +288,34 @@ public class CharacterStats : MonoBehaviour
 
         return Mathf.RoundToInt(critDamage);
     }
+
+    public int GetMaxHealthValue()
+    {
+        return (maxHealth.GetValue() + (5 * vitality.GetValue()));
+    }    
 }
+
+
+//notes on slider: (attached a Slider UI object to an Enemy Skeleton)
+//1) deleted the "Handle Slide Area" gameobject inside the Slider gameobject.
+//2) dragged UI_HealthBar png file to "Source Image" component of the Image component of the 'Background'
+//gameobject of the slider.
+//3) change Canvas Render mode to WorldSpace
+//4) change sorting layer to Player, because we always want to see these healthbars of enemy and player.
+//5) Change canvas scale to 0.005 for x, y, and z. Set Rect Transform Pos X and Pos Y to 0, 0.
+//6) Rename Canvas gameobject to "Enemy_Status_UI", this is where we'll show health and ailments.
+//7) Resize it to your liking using the Rect Tool (press 'T' on keyboard)
+//8) in Slider, in the "Rect Transform" component, use the centering tool (while pressing alt AND shift) to
+//choose the bottom right corner option. Now, the HealthBar png image will take up the whole rect transform, 
+//as to how big you make it.
+//9) in the "FillArea" game object, open "Fill" and use the Rect Transform ('T') tool to make the Fill color 
+//occupy the whole Slider box.
+//10) change Fill "Image" color to Red, or whatever color you'd like (we're making it red because we're making a health bar).
+//Also, delete the UI_Sprite that autopopulates the "Source Image" section of the Fill "Image" component
+//11) if the UI_HealthBar is invisible because it's being blocked by the Fill of the Fill Area gameobject,
+//just drag the "Background" child of the slider BELOW the "Fill Area" child in the heirarchy, now the bar frame should be visible.
+//12) Make sure the slider value is set to 1.0
+//13) Check the Slider game obeject, and in the "slider" component, ensure that Fill Rect is set to "Fill (Rect Transform)"
+//14) but there's a problem!! when the skeleton reverses direction (turns around), the whole EnemySkeleton (and all its children,
+//including the UI slider) flips directions!!!!) We can solve this with something called "EVENTS!" idk what this is...
+//Talk about Events, and Script Execution Orders!
