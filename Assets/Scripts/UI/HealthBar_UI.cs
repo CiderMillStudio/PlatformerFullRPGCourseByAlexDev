@@ -25,7 +25,6 @@ public class HealthBar_UI : MonoBehaviour
         myStats.onHealthChanged += UpdateHealthUI;
 
         UpdateHealthUI();
-        Debug.Log("healthbar UI called");
     }
 
     private void Update()

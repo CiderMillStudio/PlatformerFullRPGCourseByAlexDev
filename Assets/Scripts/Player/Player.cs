@@ -17,6 +17,8 @@ public class Player : Entity
     [Tooltip("while player is in the air, the horizontal moveSpeed is multiplied by airSpeedModifier")]
     public float airSpeedModifier = 0.8f;
     public float swordReturnImpact = 9f;
+    private float defaultMoveSpeed;
+    private float defaultJumpForce;
    
     #endregion 
 
@@ -27,6 +29,7 @@ public class Player : Entity
     // [SerializeField] private float dashCooldown; No need for this anymore!!!
     // private float dashUsageTimer;
     public float dashDir { get; private set; } //making is public get but private set allows it to be public, but NOT VISIBLE in inspector(?)
+    private float defaultDashSpeed;
     #endregion                                       
 
     #region Attack Info
@@ -105,6 +108,9 @@ public class Player : Entity
         base.Start();
         stateMachine.Initialize(idleState);
         skill = SkillManager.instance;
+        defaultMoveSpeed = moveSpeed;
+        defaultJumpForce = jumpForce;
+        defaultDashSpeed = dashSpeed;
     }
 
     protected override void Update()
@@ -118,6 +124,32 @@ public class Player : Entity
         {
             skill.crystal.CanUseSkill();
         }    
+    }
+
+    public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
+    {
+        // base.SlowEntityBy(_slowPercentage, _slowDuration); //for some reason, we DON'T need the base script here.
+
+        moveSpeed = moveSpeed * (1 - _slowPercentage);
+        jumpForce = jumpForce * (1 - _slowPercentage);
+        dashSpeed = dashSpeed * (1 - _slowPercentage);
+
+        anim.speed = anim.speed * (1 - _slowPercentage);
+
+        Invoke("ReturnDefaultSpeed", _slowDuration);
+
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+
+        moveSpeed = defaultMoveSpeed;
+        jumpForce = defaultJumpForce;
+        dashSpeed = defaultDashSpeed;
+
+        //anim.speed = 1; Don't need this line as long as it's present in the base.ReturnDefaultSpeed (in Entity.cs)
+
     }
 
     public void AssignNewSword(GameObject _newSword)

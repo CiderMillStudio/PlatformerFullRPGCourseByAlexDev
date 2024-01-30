@@ -1,11 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class CharacterStats : MonoBehaviour
 {
 
-    public int currentHealth;
     
+
+    #region Major Stats
     [Header("Major Stats")]
 
     public Stat strength; //1 pt increase damage by 1 and crit.power by 1%
@@ -13,23 +15,33 @@ public class CharacterStats : MonoBehaviour
     public Stat intelligence; //1 pt increase magic damage by 1 and magic resistance by 1%.. or 3%? (just FYI We won't be making a bunch of spells)
     public Stat vitality; //1 pt increase health by 3 or 5 points?
 
+    #endregion
+
+    #region Offensive Stats
     [Header("Offensive Stats")]
     public Stat damage;
     public Stat critChance;
     public Stat critPower;   //default value 150 (%)
 
+    #endregion
 
-
+    #region Defensive Stats
     [Header("Defensive Stats")]
     public Stat maxHealth;
     public Stat armor;
     public Stat evasion;
     public Stat magicResistance;
 
+    #endregion
+
+    #region Magic Stats
     [Header("Magic Stats")]
     public Stat fireDamage;
     public Stat iceDamage;
     public Stat lightningDamage;
+
+
+    [SerializeField] private float ailmentsDuration = 4f;
 
     public bool isIgnited; //does damage over time
     public bool isChilled; //reduce armor by 20%~
@@ -42,17 +54,27 @@ public class CharacterStats : MonoBehaviour
     private float igniteDamageCooldown = 0.3f;
     private float igniteDamageTimer;
     private int igniteDamage;
+    [SerializeField] private GameObject shockThunderstrikePrefab;
+    private int shockDamage; //amount of damage done when thunder strikes closest enemy.
 
+    #endregion;
+    
+    public int currentHealth;
+
+    private EntityFX fx;
 
     public System.Action onHealthChanged;
+
+    protected bool isDead = false;
 
 
 
     protected virtual void Start()
     {
+        fx = GetComponentInChildren<EntityFX>();
         currentHealth = GetMaxHealthValue();
-        Debug.Log("character stats called");
         critPower.SetDefaultValue(150);
+        
 
     }
 
@@ -67,30 +89,18 @@ public class CharacterStats : MonoBehaviour
 
         if (ignitedTimer < 0)
             isIgnited = false;
-        
-        if (igniteDamageTimer < 0 && isIgnited)
-        {
-            Debug.Log("Take burn damage " + igniteDamage);
 
-            DecreaseHealthBy(igniteDamage);
-            
-            if (currentHealth <= 0)
-            {
-                Die();
-            }
 
-            igniteDamageTimer = igniteDamageCooldown;
-        }
-
-        if (chilledTimer < 0 )
+        if (chilledTimer < 0)
             isChilled = false;
 
-        if (shockedTimer < 0 )
+        if (shockedTimer < 0)
             isShocked = false;
 
+        if (isIgnited)
+            ApplyIgniteDamage();
 
     }
-
 
 
     public virtual void DoDamage(CharacterStats _targetStats)
@@ -108,11 +118,44 @@ public class CharacterStats : MonoBehaviour
             //Debug.Log("total crit damage is: " + totalDamage);
         }
 
-        _targetStats.TakeDamage(totalDamage); //right now, we're commenting this out to test magical damage.
-        DoMagicalDamage(_targetStats);
+        _targetStats.TakeDamage(totalDamage); 
+
+        //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
+        //DoMagicalDamage(_targetStats);
 
     }
 
+    public virtual void TakeDamage(int _damage)
+    {
+        DecreaseHealthBy(_damage);
+
+        GetComponent<Entity>().DamageImpact(); //We deleted DamageEffect() EVERYWHERE else, except for here!
+        fx.StartCoroutine("FlashFX");
+
+        //Debug.Log("TakeDamage(): " +_damage);
+
+
+
+        if (currentHealth <= 0 && !isDead) 
+        {
+            Die();
+        }
+    }
+
+    protected virtual void DecreaseHealthBy(int _damage)
+    {
+        currentHealth -= _damage;
+
+        if (onHealthChanged != null)
+            onHealthChanged();
+    }
+
+    protected virtual void Die()
+    {
+        isDead = true;
+    }
+
+    #region Magical Damage and Ailments
     public virtual void DoMagicalDamage(CharacterStats _targetStats)
     {
         int _fireDamage = fireDamage.GetValue();
@@ -129,11 +172,16 @@ public class CharacterStats : MonoBehaviour
         //e.g. if fire, shock, and chill damage is dealt by a sword, but "fire damage" happens to be the highest
         //damage type dealt by the sword attack, the "isIgnited" ailment will be applied, but not the other ailments.
 
-        if(Mathf.Max(_fireDamage, _iceDamage, _lightningDamage) <= 0) //avoids infinite while loop.
+        if (Mathf.Max(_fireDamage, _iceDamage, _lightningDamage) <= 0) //avoids infinite while loop.
         {
             return;
         }
 
+        AttemptToApplyAilments(_targetStats, _fireDamage, _iceDamage, _lightningDamage);
+    }
+
+    private void AttemptToApplyAilments(CharacterStats _targetStats, int _fireDamage, int _iceDamage, int _lightningDamage)
+    {
         bool canApplyIgnite = _fireDamage > _iceDamage && _fireDamage > _lightningDamage;
         bool canApplyChill = _iceDamage > _fireDamage && _iceDamage > _lightningDamage;
         bool canApplyShock = _lightningDamage > _fireDamage && _lightningDamage > _iceDamage;
@@ -163,15 +211,153 @@ public class CharacterStats : MonoBehaviour
             }
         }
 
-        if(canApplyIgnite)
+        if (canApplyIgnite)
         {
             _targetStats.SetupIgniteDamage(Mathf.RoundToInt(_fireDamage * 0.20f));
         }
+
+        if (canApplyShock)
+            _targetStats.SetupShockStrikeDamage(Mathf.RoundToInt(_lightningDamage * 0.20f));
 
         _targetStats.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
     }
 
     public void SetupIgniteDamage(int _damage) => igniteDamage = _damage;
+    public void SetupShockStrikeDamage(int _damage) => shockDamage = _damage;
+
+    
+    public void ApplyAilments(bool _ignite, bool _chill, bool _shock)
+    {
+
+        bool canApplyIgnite = !isIgnited && !isChilled && !isShocked;
+        bool canApplyChill = !isIgnited && !isChilled && !isShocked;
+        bool canApplyShock = !isIgnited && !isChilled;
+
+        
+/*        if (isIgnited || isChilled || isShocked)
+        {
+            return;
+        }*/
+
+        if (_ignite && canApplyIgnite)
+        {
+            isIgnited = _ignite;
+            ignitedTimer = ailmentsDuration;
+            fx.IgniteFxFor(ailmentsDuration);
+        }
+
+        if (_chill && canApplyChill)
+        {
+            isChilled = _chill;
+            chilledTimer = ailmentsDuration;
+
+            float slowPercentage = 0.4f; //represents 40% decrease in moveSpeed (set up in player.cs or enemy.cs or
+                                         //specificEnemy.cs)
+
+            GetComponent<Entity>().SlowEntityBy(slowPercentage, ailmentsDuration);
+            fx.ChillFxFor(ailmentsDuration);
+        }
+
+        if (_shock && canApplyShock)
+        {
+
+            if (!isShocked)
+            {
+                ApplyShock(_shock);
+            }
+
+            else
+            {
+                if (GetComponent<Player>()) // != null) // if an enemy hits a shocked PLAYER, no thunderbolt should be made.
+                    return;
+
+                HitNearestTargetWithNewShockStrike();
+
+            }
+
+        }
+    }
+
+    private void ApplyIgniteDamage()
+    {
+        if (igniteDamageTimer < 0)
+        {
+
+            DecreaseHealthBy(igniteDamage);
+
+            if (currentHealth <= 0 && !isDead)
+            {
+                Die();
+            }
+
+            igniteDamageTimer = igniteDamageCooldown;
+        }
+    }
+    public void ApplyShock(bool _shock)
+    {
+        if (isShocked)
+            return; 
+
+        isShocked = _shock;
+        shockedTimer = ailmentsDuration;
+
+        fx.ShockFxFor(ailmentsDuration);
+    }
+
+    private void HitNearestTargetWithNewShockStrike()
+    {
+        //first, find nearest enemy target.
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 100);
+        float closestDistance = Mathf.Infinity;
+
+        Transform closestEnemy = null;
+
+        foreach (var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+            {
+                float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
+
+                if (distanceToEnemy < closestDistance && hit.transform != this.transform)
+                {
+                    closestDistance = distanceToEnemy;
+                    closestEnemy = hit.transform;
+                }
+
+                if (!closestEnemy)
+                    closestEnemy = transform;
+            }
+        }
+
+
+        //next, instantiate and setup shock strike
+
+        if (closestEnemy != null) 
+        {
+
+            GameObject newShockStrike = Instantiate(shockThunderstrikePrefab, transform.position, Quaternion.identity);
+            ShockStrikeController newShockStrikeScript = newShockStrike.GetComponent<ShockStrikeController>();
+            newShockStrikeScript.Setup(shockDamage, closestEnemy.GetComponent<CharacterStats>()); //PASSING INFO TO THUNDERBOLT!
+        }
+    }
+    #endregion
+
+    #region Stat Calculations
+    private int CheckTargetArmor(CharacterStats _targetStats, int _totalDamage)
+    {
+        if (_targetStats.isChilled)
+        {
+            _totalDamage -= Mathf.RoundToInt(_targetStats.armor.GetValue() * 0.8f);
+            //Debug.Log("Total damage of Chilled Entity: " + _totalDamage);
+        }
+        else
+            _totalDamage -= _targetStats.armor.GetValue();
+
+        _totalDamage = Mathf.Clamp(_totalDamage, 0, int.MaxValue); //this lines prevent target being healed if armor is too high
+        //Debug.Log("Total damage after clamp : " + _totalDamage);
+        return _totalDamage;
+    }
 
     private int CheckTargetResistance(CharacterStats _targetStats, int totalMagicalDamage)
     {
@@ -180,76 +366,6 @@ public class CharacterStats : MonoBehaviour
         return totalMagicalDamage;
     }
 
-    public void ApplyAilments(bool _ignite, bool _chill, bool _shock)
-    {
-        if (isIgnited || isChilled || isShocked)
-        {
-            return;
-        }
-
-        if (_ignite)
-        {
-            isIgnited = _ignite;
-            ignitedTimer = 3f;
-        }
-
-        if (_chill)
-        {
-            isChilled = _chill;
-            chilledTimer = 3f;
-        }
-
-        if (_shock)
-        {
-            isShocked = _shock;
-            shockedTimer = 3f;
-        }
-    }
-    
-
-
-
-    public virtual void TakeDamage(int _damage)
-    {
-        DecreaseHealthBy(_damage);
-
-        Debug.Log("TakeDamage(): " +_damage);
-
-        
-
-        if (currentHealth <= 0) 
-        {
-            Die();
-        }
-    }
-
-    protected virtual void DecreaseHealthBy(int _damage)
-    {
-        currentHealth -= _damage;
-
-        if (onHealthChanged != null)
-            onHealthChanged();
-    }
-
-    protected virtual void Die()
-    {
-
-    }
-
-    private int CheckTargetArmor(CharacterStats _targetStats, int _totalDamage)
-    {
-        if (_targetStats.isChilled)
-        {
-            _totalDamage -= Mathf.RoundToInt(_targetStats.armor.GetValue() * 0.8f);
-            Debug.Log("Total damage of Chilled Entity: " + _totalDamage);
-        }
-        else
-            _totalDamage -= _targetStats.armor.GetValue();
-
-        _totalDamage = Mathf.Clamp(_totalDamage, 0, int.MaxValue); //this lines prevent target being healed if armor is too high
-        Debug.Log("Total damage after clamp : " + _totalDamage);
-        return _totalDamage;
-    }
     private bool TargetCanAvoidAttack(CharacterStats _targetStats)
     {
         int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
@@ -292,30 +408,6 @@ public class CharacterStats : MonoBehaviour
     public int GetMaxHealthValue()
     {
         return (maxHealth.GetValue() + (5 * vitality.GetValue()));
-    }    
+    }
+    #endregion
 }
-
-
-//notes on slider: (attached a Slider UI object to an Enemy Skeleton)
-//1) deleted the "Handle Slide Area" gameobject inside the Slider gameobject.
-//2) dragged UI_HealthBar png file to "Source Image" component of the Image component of the 'Background'
-//gameobject of the slider.
-//3) change Canvas Render mode to WorldSpace
-//4) change sorting layer to Player, because we always want to see these healthbars of enemy and player.
-//5) Change canvas scale to 0.005 for x, y, and z. Set Rect Transform Pos X and Pos Y to 0, 0.
-//6) Rename Canvas gameobject to "Enemy_Status_UI", this is where we'll show health and ailments.
-//7) Resize it to your liking using the Rect Tool (press 'T' on keyboard)
-//8) in Slider, in the "Rect Transform" component, use the centering tool (while pressing alt AND shift) to
-//choose the bottom right corner option. Now, the HealthBar png image will take up the whole rect transform, 
-//as to how big you make it.
-//9) in the "FillArea" game object, open "Fill" and use the Rect Transform ('T') tool to make the Fill color 
-//occupy the whole Slider box.
-//10) change Fill "Image" color to Red, or whatever color you'd like (we're making it red because we're making a health bar).
-//Also, delete the UI_Sprite that autopopulates the "Source Image" section of the Fill "Image" component
-//11) if the UI_HealthBar is invisible because it's being blocked by the Fill of the Fill Area gameobject,
-//just drag the "Background" child of the slider BELOW the "Fill Area" child in the heirarchy, now the bar frame should be visible.
-//12) Make sure the slider value is set to 1.0
-//13) Check the Slider game obeject, and in the "slider" component, ensure that Fill Rect is set to "Fill (Rect Transform)"
-//14) but there's a problem!! when the skeleton reverses direction (turns around), the whole EnemySkeleton (and all its children,
-//including the UI slider) flips directions!!!!) We can solve this with something called "EVENTS!" idk what this is...
-//Talk about Events, and Script Execution Orders!

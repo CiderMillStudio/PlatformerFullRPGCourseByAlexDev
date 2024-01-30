@@ -42,7 +42,8 @@ public class CloneSkill : Skill
         
         newClone.GetComponent<CloneSkillController>().SetUpClone(_clonePosition, 
             cloneDuration, fadeOutModifier, canAttack, 
-                PlayerManager.instance.player.attackCheckRadius, _offset, FindClosestEnemy(newClone.transform), canDuplicateClone, chanceToDuplicateClone);
+                PlayerManager.instance.player.attackCheckRadius, _offset, FindClosestEnemy(newClone.transform), 
+                canDuplicateClone, chanceToDuplicateClone, player);
     }
 
     public void CreateCloneOnDashStart()

@@ -56,9 +56,24 @@ public class Enemy : Entity
 
     }
 
-    public virtual void AssignLastAnimName(string _animBoolName)
+    public virtual void AssignLastAnimName(string _animBoolName) => lastAnimBoolName = _animBoolName;
+
+    public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
     {
-        lastAnimBoolName = _animBoolName;
+        // base.SlowEntityBy(_slowPercentage, _slowDuration); As in player's override version, we don't need the base
+        moveSpeed = moveSpeed * (1 - _slowPercentage);
+        anim.speed = anim.speed * (1 - _slowPercentage);
+
+        Invoke("ReturnDefaultSpeed", _slowDuration);
+
+    }
+
+    protected override void ReturnDefaultSpeed()
+    {
+        base.ReturnDefaultSpeed();
+        moveSpeed = defaultMoveSpeed;
+
+        //as in player's version of the override, we don't need to reset anim.speed because that happens in the base version.
     }
 
     public virtual void FreezeTime(bool _timeFrozen)

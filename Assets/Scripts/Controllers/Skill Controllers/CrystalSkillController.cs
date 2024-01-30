@@ -7,8 +7,10 @@ public class CrystalSkillController : MonoBehaviour
 {
 
     private Animator anim => GetComponent<Animator>(); // HUH!?! No need for START statement!?
+    private Player player;
 
     private CircleCollider2D cd => GetComponent<CircleCollider2D>();
+    
     
     private float crystalExistTimer;
     private bool canExplode;
@@ -27,8 +29,10 @@ public class CrystalSkillController : MonoBehaviour
     
 
     
-    public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed, float _maxSize, float _growSpeed, Transform _closestTarget)
+    public void SetupCrystal(float _crystalDuration, bool _canExplode, bool _canMove, float _moveSpeed, 
+        float _maxSize, float _growSpeed, Transform _closestTarget, Player _player)
     {
+        player = _player;
         crystalExistTimer = _crystalDuration;
         canExplode = _canExplode;
         canMove = _canMove;
@@ -36,6 +40,7 @@ public class CrystalSkillController : MonoBehaviour
         maxSize = _maxSize;
         growSpeed = _growSpeed;
         closestTarget = _closestTarget;
+
 
     }
 
@@ -96,7 +101,7 @@ public class CrystalSkillController : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().DamageEffect();
+                player.stats.DoMagicalDamage(hit.GetComponent<CharacterStats>());
             }
         }
     }    

@@ -67,7 +67,7 @@ public class CrystalSkill : Skill
         CrystalSkillController currentCrystalScript = currentCrystal.GetComponent<CrystalSkillController>();
 
         currentCrystalScript.SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, moveSpeed,
-            maxSize, growSpeed, FindClosestEnemy(currentCrystal.transform));
+            maxSize, growSpeed, FindClosestEnemy(currentCrystal.transform), player);
 
 
 
@@ -95,7 +95,7 @@ public class CrystalSkill : Skill
                 crystalsLeft.Remove(crystalToSpawn);
 
                 newCrystal.GetComponent<CrystalSkillController>().SetupCrystal(crystalDuration, canExplode, canMoveToEnemy, 
-                    moveSpeed, maxSize, growSpeed, FindClosestEnemy(newCrystal.transform));
+                    moveSpeed, maxSize, growSpeed, FindClosestEnemy(newCrystal.transform), player);
 
                 if (crystalsLeft.Count <= 0)
                 {

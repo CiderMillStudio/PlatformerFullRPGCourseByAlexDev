@@ -70,15 +70,19 @@ public class Entity : MonoBehaviour
 
     }
 
-    public virtual void DamageEffect()
+    public virtual void SlowEntityBy(float _slowPercentage, float _slowDuration)
     {
-            float dice = Random.Range(0, 9); //if you want to make stuns random
-            bool willStun = dice <= 2;
-            fx.StartCoroutine("FlashFX");
-            StartCoroutine("HitKnockback");
-
-
+        //enemies and player have different movespeed, so we must
+        //override this function in Enemy (perhaps in subtypes of enemy) scripts and Player script.
     }
+
+    protected virtual void ReturnDefaultSpeed()
+    {
+        anim.speed = 1;
+    }
+
+    public virtual void DamageImpact() => StartCoroutine("HitKnockback");
+
 
     protected virtual IEnumerator HitKnockback()
     {
@@ -155,17 +159,20 @@ public class Entity : MonoBehaviour
         Gizmos.DrawWireSphere(attackCheck.position, attackCheckRadius);
     }
 
-    public void MakeTransparent(bool _transparent)
-    {
-        if (_transparent)
-            sr.color = Color.clear;
-        else
-            sr.color = Color.white;
-    }
+
 
     public virtual void Die()
     {
         //overridden in player and in enemy scripts
+        if (GetComponent<Player>() == null)
+            Invoke("SelfDestroyAfterDeath", 10f); //after ten seconds, the enemy will have fallen down very
+                                                    //low in the map. (given we're using a super mario style death).
+                                                    //this only happens to enemies or NPCs, not the player.
+    }
+
+    private void SelfDestroyAfterDeath()
+    {
+        Destroy(gameObject);
     }
 
 

@@ -26,7 +26,7 @@ public class Stat //DOES NOT INHERIT FROM MONOBEHAVIOR!!!!
         return finalValue;
     }
 
-    public void SetDefaultValue (int _value) // N E W  ! ! ! ! ! !
+    public void SetDefaultValue (int _value) 
     {
         baseValue = _value;
     }

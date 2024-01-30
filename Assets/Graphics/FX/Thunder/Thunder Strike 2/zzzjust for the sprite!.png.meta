@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 96aeec0df8d9a9c41b6ad67ce63a900a
+guid: e8a632e9a1432c041a666dda45433e26
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -164,8 +164,8 @@ TextureImporter:
         y: 28
         width: 64
         height: 228
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 9
+      pivot: {x: 0.38294744, y: 0.5099564}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -282,27 +282,6 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
-    - serializedVersion: 2
-      name: Thunder_7
-      rect:
-        serializedVersion: 2
-        x: 450
-        y: 27
-        width: 60
-        height: 228
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c59bca9ae6692a74aa07f07c0ca54ae5
-      internalID: 1049355738
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -321,7 +300,6 @@ TextureImporter:
       Thunder_4: -1279459630
       Thunder_5: -677814432
       Thunder_6: -804551923
-      Thunder_7: 1049355738
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

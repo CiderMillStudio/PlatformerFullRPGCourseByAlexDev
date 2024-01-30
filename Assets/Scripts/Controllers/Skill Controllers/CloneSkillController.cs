@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using TMPro;
 using Unity.Burst.CompilerServices;
 using UnityEngine;
@@ -8,7 +9,8 @@ public class CloneSkillController : MonoBehaviour
 {
     private SpriteRenderer sr;
     private Animator anim;
-    private Rigidbody2D rb; 
+    private Rigidbody2D rb;
+    private Player player;
     
     private float fadeOutModifier;
     private float cloneTimer;
@@ -43,11 +45,12 @@ public class CloneSkillController : MonoBehaviour
     public void SetUpClone(Transform _newTransform, float _cloneDuration, 
         float _fadeOutModifier, bool canAttack, 
             float _attackCheckRadius, Vector3 _offset, Transform _closestEnemy, 
-                bool _canDuplicateClone, float _chanceToDuplicateClone) //sets up position and other stuff
+                bool _canDuplicateClone, float _chanceToDuplicateClone, Player _player) //sets up position and other stuff
     {
         if (canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
         
+        player = _player;
         cloneTimer = _cloneDuration;
         attackCheckRadius = _attackCheckRadius;
         transform.position = _newTransform.position + _offset; 
@@ -91,7 +94,10 @@ public class CloneSkillController : MonoBehaviour
         {
             if (hit.GetComponent<Enemy>() != null)
             {
-                hit.GetComponent<Enemy>().DamageEffect();
+                //hit.GetComponent<Enemy>().DamageEffect(); no longer needed because we have line below!
+
+                player.stats.DoDamage(hit.GetComponent<CharacterStats>());
+
 
                 if (canDuplicateClone)
                 {

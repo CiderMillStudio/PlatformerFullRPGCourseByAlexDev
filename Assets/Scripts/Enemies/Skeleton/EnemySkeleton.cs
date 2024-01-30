@@ -60,6 +60,9 @@ public class EnemySkeleton : Enemy
         base.Die();
 
         stateMachine.ChangeState(deadState);
+        
 
     }
+
+    
 }
