@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI; //!!!! !!! ! ! !!! NEEDED TO ADD THIS MANUALLY!!!
 
-public class HealthBar_UI : MonoBehaviour
+public class UI_HealthBar : MonoBehaviour
 {
     private Entity entity;
 
