@@ -96,7 +96,7 @@ Transform:
   m_GameObject: {fileID: 1317514369851888436}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.32, y: -1.66, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -224,6 +224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7000a90c29134ad43b7298e5eac80b74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  listOfStats: []
   strength:
     baseValue: 0
     modifiers: 
@@ -234,22 +235,22 @@ MonoBehaviour:
     baseValue: 0
     modifiers: 
   vitality:
-    baseValue: 10
+    baseValue: 0
     modifiers: 
   damage:
-    baseValue: 25
-    modifiers: 
-  critChance:
     baseValue: 10
     modifiers: 
+  critChance:
+    baseValue: 0
+    modifiers: 
   critPower:
-    baseValue: 150
+    baseValue: 0
     modifiers: 
   maxHealth:
     baseValue: 50
     modifiers: 
   armor:
-    baseValue: 0
+    baseValue: 2
     modifiers: 
   evasion:
     baseValue: 0
@@ -272,6 +273,8 @@ MonoBehaviour:
   isShocked: 0
   shockThunderstrikePrefab: {fileID: 2146538237896387988, guid: 5b58648136c5473429769b0ab75a8805, type: 3}
   currentHealth: 0
+  level: 1
+  percentageModifier: 0.4
 --- !u!1 &1435294327295286807
 GameObject:
   m_ObjectHideFlags: 0

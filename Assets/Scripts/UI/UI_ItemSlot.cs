@@ -9,7 +9,7 @@ using Unity.VisualScripting;   //Don't forget these!!
 public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
 {
 
-    [SerializeField] private Image itemImage;
+    [SerializeField] protected Image itemImage;
     [SerializeField] private TextMeshProUGUI itemText;
     [SerializeField] private Image defaultSlotImage;
 
@@ -40,6 +40,7 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
             
             
         }
+
     }
 
     public void SetDefaultSlotImage() //Wady's creativity might get the best of him.
@@ -50,13 +51,16 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
         
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public virtual void OnPointerDown(PointerEventData eventData)
     {
         /*if (itemImage.sprite == null)  //I commented these lines out because Alex does not have them, want to be consistent
             return;
 
         if (item.data.itemType != ItemType.Equipment)
             return;*/
+
+        if (itemImage.sprite == null)
+            return;
         
         if (item.data.itemType == ItemType.Equipment)
         {

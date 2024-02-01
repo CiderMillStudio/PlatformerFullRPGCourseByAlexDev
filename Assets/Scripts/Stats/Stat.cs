@@ -38,7 +38,7 @@ public class Stat //DOES NOT INHERIT FROM MONOBEHAVIOR!!!!
 
     public void RemoveModifier(int _modifier) //useful when un-equipping weapons, armor, etc..
     {
-        modifiers.RemoveAt(_modifier);
+        modifiers.Remove(_modifier);
     }
 
 

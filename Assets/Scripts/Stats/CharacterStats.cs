@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEngine.Rendering.VirtualTexturing.Debugging;
@@ -5,7 +6,7 @@ using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 public class CharacterStats : MonoBehaviour
 {
 
-    
+    public List<Stat> listOfStats;
 
     #region Major Stats
     [Header("Major Stats")]
@@ -68,7 +69,28 @@ public class CharacterStats : MonoBehaviour
     protected bool isDead = false;
 
 
+    private void Awake()
+    {
+        listOfStats = new List<Stat>();
+        listOfStats.Add(strength);
+        listOfStats.Add(agility);
+        listOfStats.Add(intelligence);
+        listOfStats.Add(vitality);
 
+        listOfStats.Add(damage);
+        listOfStats.Add(critChance);
+        listOfStats.Add(critPower);
+
+        listOfStats.Add(maxHealth);
+        listOfStats.Add(armor);
+        listOfStats.Add(evasion);
+        listOfStats.Add(magicResistance);
+
+        listOfStats.Add(fireDamage);
+        listOfStats.Add(iceDamage);
+        listOfStats.Add(lightningDamage);
+
+    }
     protected virtual void Start()
     {
         fx = GetComponentInChildren<EntityFX>();

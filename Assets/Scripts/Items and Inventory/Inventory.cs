@@ -85,17 +85,20 @@ public class Inventory : MonoBehaviour
 
             equipment.Add(newItem);
             equipmentDictionary.Add(newEquipment, newItem);
+            newEquipment.AddModifiers();
             RemoveItem(newEquipment); //"RemoveItem" refers to Removing the item from our inventory, because we're moving it INTO an equipment slot
 
             UpdateSlotUI();
 
     }
 
-    private void UnequipItem(ItemDataEquipment itemToRemove)
+    public void UnequipItem(ItemDataEquipment itemToRemove) //Changed this method to PUBLIC from PRIVATE 2/1/24 at 6:02pm
     {
         if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
         {
+            //AddItem(itemToRemove); //ADDED THIS LINE 2/1/24 at 6:05pm. Deleted this line at 6:07pm
             equipment.Remove(value);
+            itemToRemove.RemoveModifiers();
             equipmentDictionary.Remove(itemToRemove);
         }
     }
@@ -122,6 +125,21 @@ public class Inventory : MonoBehaviour
     private void UpdateSlotUI()
     {
         
+        
+        for (int i = 0; i < inventoryItemSlots.Length; i++)
+        {
+            inventoryItemSlots[i].CleanUpSlot();
+        }
+        for (int i = 0; i < stashItemSlots.Length; i++)
+        {
+            stashItemSlots[i].CleanUpSlot();
+        }
+        for (int i = 0; i < equipmentSlots.Length; i++) //Maybe delete?
+        {
+            equipmentSlots[i].CleanUpSlot();
+        }
+
+
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
             foreach (KeyValuePair<ItemDataEquipment, InventoryItem> equippedItem in equipmentDictionary)
@@ -134,20 +152,6 @@ public class Inventory : MonoBehaviour
 
             }
         }
-        
-        
-        
-        
-        for (int i = 0; i < inventoryItemSlots.Length; i++)
-        {
-            inventoryItemSlots[i].CleanUpSlot();
-        }
-
-        for (int i = 0; i < stashItemSlots.Length; i++)
-        {
-            stashItemSlots[i].CleanUpSlot();
-        }
-
 
 
 
