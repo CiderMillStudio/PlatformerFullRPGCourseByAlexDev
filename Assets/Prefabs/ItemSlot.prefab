@@ -60,7 +60,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.4745098}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -91,9 +91,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImage: {fileID: 3784086931577626640}
   itemText: {fileID: 1368120003746067180}
+  defaultSlotImage: {fileID: 2728461401270038545, guid: 4fdf1b18b25dfb0498d8ba3525ea147d, type: 3}
   item:
-    data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
-    stackSize: 2
+    data: {fileID: 0}
+    stackSize: 0
 --- !u!1 &5415987583914929174
 GameObject:
   m_ObjectHideFlags: 0

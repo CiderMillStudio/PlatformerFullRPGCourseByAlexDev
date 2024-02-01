@@ -3,9 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-[CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Item/Moosey")] //(try "Data/Item/MooseyMoose")
+public enum ItemType
+{
+    Material,
+    Equipment
+
+}
+
+[CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Item")] //(try "Data/Item/MooseyMoose")
 public class ItemData : ScriptableObject //INHERIT FROM S.O.!!
 {
+    public ItemType itemType;
     public string itemName;
     public Sprite icon;
+
 }
