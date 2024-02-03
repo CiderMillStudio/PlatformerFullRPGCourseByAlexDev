@@ -10,7 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9597a9aba56bfd74a8a1cf65e59286d0, type: 3}
-  m_Name: Iron
+  m_Name: Rope
   m_EditorClassIdentifier: 
-  itemName: Iron
-  icon: {fileID: 1025795234, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemType: 0
+  itemName: Rope
+  icon: {fileID: 861423284, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 26.9

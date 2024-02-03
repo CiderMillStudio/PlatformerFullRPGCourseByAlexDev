@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9597a9aba56bfd74a8a1cf65e59286d0, type: 3}
   m_Name: Moon
   m_EditorClassIdentifier: 
+  itemType: 0
   itemName: Moon
   icon: {fileID: -723952554, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
+  dropChance: 4.6

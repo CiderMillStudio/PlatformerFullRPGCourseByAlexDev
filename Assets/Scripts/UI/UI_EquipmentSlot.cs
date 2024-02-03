@@ -14,7 +14,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
 
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (itemImage.sprite == null)
+        if (itemImage.sprite == null) //wady's brilliance
             return;
 
         Inventory.instance.UnequipItem(item.data as ItemDataEquipment);

@@ -6,10 +6,13 @@ public class PlayerStats : CharacterStats
 {
     private Player player;
 
+    private PlayerItemDrop myPlayerItemDropSystem;
+
     protected override void Start()
     {
         base.Start();
         player = GetComponent<Player>();
+        myPlayerItemDropSystem = GetComponent<PlayerItemDrop>();
     }
 
     public override void TakeDamage(int _damage)
@@ -23,6 +26,7 @@ public class PlayerStats : CharacterStats
         base.Die();
 
         player.Die();
+        myPlayerItemDropSystem.GenerateDrop();
     }
 
 }

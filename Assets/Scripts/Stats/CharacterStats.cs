@@ -59,14 +59,14 @@ public class CharacterStats : MonoBehaviour
     private int shockDamage; //amount of damage done when thunder strikes closest enemy.
 
     #endregion;
-    
+
     public int currentHealth;
 
     private EntityFX fx;
 
     public System.Action onHealthChanged;
 
-    protected bool isDead = false;
+    public bool isDead { get; private set; }
 
 
     private void Awake()

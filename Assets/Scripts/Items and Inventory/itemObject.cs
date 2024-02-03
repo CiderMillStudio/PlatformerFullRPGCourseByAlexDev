@@ -2,26 +2,54 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class itemObject : MonoBehaviour
+public class ItemObject : MonoBehaviour
 {
+
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] private ItemData itemData; //itemData is a scriptable object data type that defines the properties of specific items
 
     private void OnValidate() //this is called anytime you change anything in the object in Unity
     {
-        GetComponent<SpriteRenderer>().sprite = itemData.icon;
-        gameObject.name = "Item Object - " + itemData.name;
+        SetupVisuals();
     }
-
-
-    private void OnTriggerEnter2D(Collider2D collision)
+     
+    private void SetupVisuals()
     {
-        if (collision.GetComponent<Player>() != null)
+        if (itemData != null)
         {
-            Inventory.instance.AddItem(itemData); //NEW!!
-
-            Destroy(gameObject);
+            GetComponent<SpriteRenderer>().sprite = itemData.icon;
+            gameObject.name = "Item Object - " + itemData.name;
+        }
+        else
+        {
+            gameObject.name = "Item Object - Empty";
         }
     }
 
 
+    public void SetupItem(ItemData _itemData, Vector2 _velocity)
+    {
+       
+        itemData = _itemData;
+        
+        rb.velocity = _velocity;
+
+
+        SetupVisuals();
+    }
+
+
+    /*    private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<Player>() != null)
+            {
+                PickupItem();
+            }
+        }*/   //We removed this OnTriggerEnter2D on 2/2/2024, replacing the functionality in ItemObjectTrigger;
+
+    public void PickupItem()
+    {
+        Inventory.instance.AddItem(itemData);
+        Destroy(gameObject);
+    }
 }

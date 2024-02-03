@@ -50,7 +50,8 @@ public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.
 
     #endregion
 
-
+    [Header("Craft Requirements")] 
+    public List<InventoryItem> craftingMaterials; //this is the recipe for any given equipment item
 
 
 

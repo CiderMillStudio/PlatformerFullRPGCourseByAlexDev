@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance; // PUBLIC STATIC
 
+    public List<ItemData> startingItems;
 
     public List<InventoryItem> inventory; //was inventoryItems
     public Dictionary<ItemData, InventoryItem> inventoryDictionary; //Dictionary = Paired {Key + Value} data types
@@ -20,17 +21,18 @@ public class Inventory : MonoBehaviour
     public List<InventoryItem> equipment;
     public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
 
+
+
     
 
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
-    [SerializeField] private Transform stashSlotParent; //NEw
+    [SerializeField] private Transform stashSlotParent;
     [SerializeField] private Transform equipmentSlotParent;
 
     private UI_ItemSlot[] inventoryItemSlots;
-    private UI_ItemSlot[] stashItemSlots; //NEW
+    private UI_ItemSlot[] stashItemSlots; 
     private UI_EquipmentSlot[] equipmentSlots;
-
 
     private void Awake()
     {
@@ -51,13 +53,22 @@ public class Inventory : MonoBehaviour
 
         equipment = new List<InventoryItem>();
         equipmentDictionary = new Dictionary<ItemDataEquipment, InventoryItem>();
-                
+
         inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>(); //Creates an array of all the itemSlots in the inventory UI
         stashItemSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
 
+        AddStartingItems();
     }
-    
+
+    private void AddStartingItems()
+    {
+        for (int i = 0; i < startingItems.Count; i++)
+        {
+            AddItem(startingItems[i]);
+        }
+    }
+
     public void EquipItem(ItemData _item) //let's pretent _item = wooden sword's ItemData.
     {
 
@@ -96,10 +107,10 @@ public class Inventory : MonoBehaviour
     {
         if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
         {
-            //AddItem(itemToRemove); //ADDED THIS LINE 2/1/24 at 6:05pm. Deleted this line at 6:07pm
             equipment.Remove(value);
             itemToRemove.RemoveModifiers();
             equipmentDictionary.Remove(itemToRemove);
+            UpdateSlotUI(); //DELETE MAYBE
         }
     }
 
@@ -134,7 +145,7 @@ public class Inventory : MonoBehaviour
         {
             stashItemSlots[i].CleanUpSlot();
         }
-        for (int i = 0; i < equipmentSlots.Length; i++) //Maybe delete?
+        for (int i = 0; i < equipmentSlots.Length; i++) //Maybe delete? this is something that wady added 2/2/2024
         {
             equipmentSlots[i].CleanUpSlot();
         }
@@ -254,10 +265,58 @@ public class Inventory : MonoBehaviour
 
     }
 
+    public bool CanCraft(ItemDataEquipment _itemToCraft, List<InventoryItem> _requiredMaterials)
+    {
+        List<InventoryItem> materialsToRemove = new List<InventoryItem>();
+
+        for (int i = 0; i < _requiredMaterials.Count; i++)
+        {
+            if (stashDictionary.TryGetValue(_requiredMaterials[i].data, out InventoryItem stashValue))
+            {
+                if (stashValue.stackSize < _requiredMaterials[i].stackSize) //this line saved me many lines of code
+                {
+                    int difference = _requiredMaterials[i].stackSize - stashValue.stackSize;
+                    Debug.Log("You need " + difference.ToString() +  " more " + _requiredMaterials[i].data.itemName + 
+                        " to craft " + _itemToCraft.itemName); //e.g. "You need 3 more Iron to craft Iron Armor"
+
+                    return false;
+                }
+                else
+                {
+                    materialsToRemove.Add(_requiredMaterials[i]); //just fixed this!
+                }
+            }
+
+            else // if you have ZERO of the required materials (e.g. recipe calls for 5 stone, but you have zero!)
+            {
+                Debug.Log("You don't have any " + _requiredMaterials[i].data.itemName + "s! Go find some!");
+                return false;
+            }
+
+        }
+
+        for (int i = 0; i < materialsToRemove.Count; i++) 
+        {
+            int numberOfItemsToConsume = materialsToRemove[i].stackSize;
+            for (int j = 0; j <  numberOfItemsToConsume; j++)
+            {
+                RemoveItem(materialsToRemove[i].data);
+            }
+            
+        }
+
+        AddItem(_itemToCraft);
+
+        Debug.Log("Here's your hand-crafted " + _itemToCraft.itemName);
+
+        return true;
+    }
+
+
+    public List<InventoryItem> GetEquipmentList() => equipment;
 
 
 
-
-
+    public List<InventoryItem> GetStashList() => stash;
 
 }
