@@ -12,17 +12,21 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
     [SerializeField] protected Image itemImage;
     [SerializeField] private TextMeshProUGUI itemText;
     [SerializeField] private Image defaultSlotImage;
+    protected PlayerItemDrop playerItemDropSystem;
 
 
     public InventoryItem item;
-    
 
+    private void Start()
+    {
+        //need PlayerItemDrop in the event the player decides to discard items, which cause them to be dropped into the world
+        playerItemDropSystem = PlayerManager.instance.player.GetComponent<PlayerItemDrop>(); 
+    }
 
     public void UpdateSlot(InventoryItem _newItem) //Updates the slot (its image and its itemAmount integer value) that
                                                    //this instance of UI_ItemSlot is responsible for managing.
     {
         item = _newItem;
-
         itemImage.color = Color.white;
 
         if (item != null)
@@ -37,8 +41,6 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
             {
                 itemText.text = "";
             }
-            
-            
         }
 
     }
@@ -53,19 +55,19 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
-        /*if (itemImage.sprite == null)  //I commented these lines out because Alex does not have them, want to be consistent
-            return;
-
-        if (item.data.itemType != ItemType.Equipment)
-            return;*/
-
         if (itemImage.sprite == null)
             return;
+
+
+        if (Input.GetKey(KeyCode.LeftControl))
+        {
+            playerItemDropSystem.SingleItemDrop(item.data);
+            Inventory.instance.RemoveItem(item.data);
+            return;
+        }
         
         if (item.data.itemType == ItemType.Equipment)
-        {
             Inventory.instance.EquipItem(item.data);            
-        }
 
     }
 

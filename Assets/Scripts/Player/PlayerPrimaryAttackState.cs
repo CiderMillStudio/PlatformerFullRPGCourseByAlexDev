@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerPrimaryAttackState : PlayerState
 {
-    private int comboCounter;
+    public int comboCounter; //  2/5/2023 just set this to PUBLIC from PRIVATE! (so we can access it from IceAndFireEffect.cs)
 
     private float lastTimeAttacked; //how long ago was the last attack?
     public PlayerPrimaryAttackState(Player _player, PlayerStateMachine _stateMachine, 

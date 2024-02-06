@@ -15,6 +15,11 @@ public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.
 {
     public EquipmentType equipmentType;
 
+    public float itemCooldown;
+
+    public ItemEffect[] itemEffects;
+
+    #region Stats (The Grand Encyclopedia of Stats)
     #region Major Stats
     [Header("Major Stats")]
 
@@ -50,11 +55,19 @@ public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.
 
     #endregion
 
+    #endregion
+
     [Header("Craft Requirements")] 
     public List<InventoryItem> craftingMaterials; //this is the recipe for any given equipment item
 
 
-
+    public void Effect(Transform _respawnTransform)
+    {
+        foreach (ItemEffect itemEffect in itemEffects)
+        {
+            itemEffect.ExecuteEffect(_respawnTransform);
+        }
+    }
     public void AddModifiers()
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();

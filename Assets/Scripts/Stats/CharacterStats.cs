@@ -1,11 +1,11 @@
+using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.Rendering.VirtualTexturing.Debugging;
 
 public class CharacterStats : MonoBehaviour
 {
 
+    #region List of Stats (el grande encyclopedia!)
     public List<Stat> listOfStats;
 
     #region Major Stats
@@ -60,6 +60,8 @@ public class CharacterStats : MonoBehaviour
 
     #endregion;
 
+    #endregion
+
     public int currentHealth;
 
     private EntityFX fx;
@@ -96,7 +98,7 @@ public class CharacterStats : MonoBehaviour
         fx = GetComponentInChildren<EntityFX>();
         currentHealth = GetMaxHealthValue();
         critPower.SetDefaultValue(150);
-        
+
 
     }
 
@@ -124,6 +126,21 @@ public class CharacterStats : MonoBehaviour
 
     }
 
+    public virtual void IncreaseStatBy(int _modifier, float _duration, Stat _statToModify)
+    {
+        StartCoroutine(StatModCoroutine(_modifier, _duration, _statToModify));
+    }
+
+    private IEnumerator StatModCoroutine(int _modifier, float _duration, Stat _statToModify)
+    {
+        _statToModify.AddModifier(_modifier);
+
+        yield return new WaitForSeconds(_duration);
+
+        _statToModify.RemoveModifier(_modifier);
+    }
+
+
 
     public virtual void DoDamage(CharacterStats _targetStats)
     {
@@ -140,7 +157,7 @@ public class CharacterStats : MonoBehaviour
             //Debug.Log("total crit damage is: " + totalDamage);
         }
 
-        _targetStats.TakeDamage(totalDamage); 
+        _targetStats.TakeDamage(totalDamage);
 
         //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
         //DoMagicalDamage(_targetStats);
@@ -158,7 +175,7 @@ public class CharacterStats : MonoBehaviour
 
 
 
-        if (currentHealth <= 0 && !isDead) 
+        if (currentHealth <= 0 && !isDead)
         {
             Die();
         }
@@ -171,6 +188,17 @@ public class CharacterStats : MonoBehaviour
         if (onHealthChanged != null)
             onHealthChanged();
     }
+
+    public void IncreaseHealthBy(int _healAmount)
+    {
+        currentHealth += _healAmount;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth.GetValue());
+
+        if (onHealthChanged != null)
+            onHealthChanged();
+    }
+
+
 
     protected virtual void Die()
     {
@@ -210,28 +238,29 @@ public class CharacterStats : MonoBehaviour
 
         while (!canApplyIgnite && !canApplyChill && !canApplyShock)
         {
-            if (Random.value < 0.5f && _fireDamage > 0) //Random.value gives you a random float value between 0 and 1
+            if (Random.value < 0.35f && _fireDamage > 0) //Random.value gives you a random float value between 0 and 1
             {
                 canApplyIgnite = true;
                 _targetStats.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
                 Debug.Log("Applied Ignite");
-                return;
+                break;
             }
             if (Random.value < 0.5f && _iceDamage > 0)
             {
                 canApplyChill = true;
                 _targetStats.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
                 Debug.Log("Applied Chill");
-                return;
+                break;
             }
-            if (Random.value < 0.5f && _lightningDamage > 0)
+            if (Random.value < 0.65f && _lightningDamage > 0)
             {
                 canApplyShock = true;
                 _targetStats.ApplyAilments(canApplyIgnite, canApplyChill, canApplyShock);
                 Debug.Log("Applied Shock");
-                return;
+                break;
             }
         }
+
 
         if (canApplyIgnite)
         {
@@ -247,7 +276,7 @@ public class CharacterStats : MonoBehaviour
     public void SetupIgniteDamage(int _damage) => igniteDamage = _damage;
     public void SetupShockStrikeDamage(int _damage) => shockDamage = _damage;
 
-    
+
     public void ApplyAilments(bool _ignite, bool _chill, bool _shock)
     {
 
@@ -255,11 +284,11 @@ public class CharacterStats : MonoBehaviour
         bool canApplyChill = !isIgnited && !isChilled && !isShocked;
         bool canApplyShock = !isIgnited && !isChilled;
 
-        
-/*        if (isIgnited || isChilled || isShocked)
-        {
-            return;
-        }*/
+
+        /*        if (isIgnited || isChilled || isShocked)
+                {
+                    return;
+                }*/
 
         if (_ignite && canApplyIgnite)
         {
@@ -307,6 +336,7 @@ public class CharacterStats : MonoBehaviour
 
             DecreaseHealthBy(igniteDamage);
 
+
             if (currentHealth <= 0 && !isDead)
             {
                 Die();
@@ -318,7 +348,7 @@ public class CharacterStats : MonoBehaviour
     public void ApplyShock(bool _shock)
     {
         if (isShocked)
-            return; 
+            return;
 
         isShocked = _shock;
         shockedTimer = ailmentsDuration;
@@ -355,7 +385,7 @@ public class CharacterStats : MonoBehaviour
 
         //next, instantiate and setup shock strike
 
-        if (closestEnemy != null) 
+        if (closestEnemy != null)
         {
 
             GameObject newShockStrike = Instantiate(shockThunderstrikePrefab, transform.position, Quaternion.identity);
@@ -409,10 +439,10 @@ public class CharacterStats : MonoBehaviour
     {
         int totalCriticalChance = critChance.GetValue() + agility.GetValue();
 
-        if (Random.Range(0,100) <= totalCriticalChance)
+        if (Random.Range(0, 100) <= totalCriticalChance)
         {
             return true;
-        }    
+        }
 
         return false;
     }
@@ -431,5 +461,7 @@ public class CharacterStats : MonoBehaviour
     {
         return (maxHealth.GetValue() + (5 * vitality.GetValue()));
     }
+
+
     #endregion
 }

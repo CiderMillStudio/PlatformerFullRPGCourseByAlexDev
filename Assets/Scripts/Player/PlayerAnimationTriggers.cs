@@ -28,11 +28,20 @@ public class PlayerAnimationTriggers : MonoBehaviour
             {
                 EnemyStats _target = hit.GetComponent<EnemyStats>();
 
-                player.stats.DoDamage(_target);
+                if (_target != null)
+                    player.stats.DoDamage(_target);
                 
                 //hit.GetComponent<Enemy>().Damage();
+                
+                // inventory, get weapon, call item effect:
+                Inventory.instance.GetEquipment(EquipmentType.Weapon)?.Effect(_target.transform);
             }
         }
+
+        // we chose to implement item effects HERE instead of DoDamage()
+        // (in characterStats) because DoDamage is called even for abilities,
+        // not just for weapon damage. Since we want to exclusively call item effects when
+        // WEAPONS are used, we'll call ItemEffect here.
 
     }
     

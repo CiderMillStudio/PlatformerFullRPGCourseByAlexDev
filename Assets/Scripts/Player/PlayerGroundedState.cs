@@ -32,7 +32,7 @@ public class PlayerGroundedState : PlayerState
         if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected())
             stateMachine.ChangeState(player.jumpState);
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0) && !Input.GetKey(KeyCode.LeftControl)) //if player is removing items, they will not enter attack state!!!
         {
             stateMachine.ChangeState(player.primaryAttackState);
             return;

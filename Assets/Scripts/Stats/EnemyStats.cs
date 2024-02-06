@@ -57,6 +57,6 @@ public class EnemyStats : CharacterStats
         base.Die();
         enemy.Die();
 
-        myDropSystem.GenerateDrop();
+        myDropSystem.GenerateDropUponDeath();
     }
 }

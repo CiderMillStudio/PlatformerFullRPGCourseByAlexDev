@@ -123,7 +123,10 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.F))
         {
             skill.crystal.CanUseSkill();
-        }    
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+            Inventory.instance.UseFlask();
     }
 
     public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
@@ -184,7 +187,7 @@ public class Player : Entity
             return; //you cannot dash if you're standing point blank against a wall
 
 
-        if (Input.GetKey(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill()) 
+        if (Input.GetKey(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill() && !stats.isDead) 
         {
 
             dashDir = Input.GetAxisRaw("Horizontal");

@@ -12,7 +12,17 @@ public class PlayerItemDrop : ItemDrop
     [SerializeField] private float chanceToLoseMaterials;
 
 
-    public override void GenerateDrop() //My Generate Drop (Player version) is rather custom, so if things break later on, suspect the GEnerate Drop
+    public void SingleItemDrop(ItemData _itemToBeDropped) 
+    {
+        DropItem(_itemToBeDropped, true);
+
+        //This is wady's custom script that allows players to
+        //remove items from their inventory and stash, and
+        //dropped into the game world (in case the player wants to pick up the
+        //item later)
+    }
+
+    public override void GenerateDropUponDeath() //My Generate Drop (Player version) is rather custom, so if things break later on, suspect the GEnerate Drop
     {
         Inventory inventory = Inventory.instance;
 
@@ -38,7 +48,7 @@ public class PlayerItemDrop : ItemDrop
         {
             if (Random.Range(0,100) <= chanceToLoseEquipment)
             {
-                DropItem(item.data);
+                DropItem(item.data, false);
                 inventory.UnequipItem(item.data as ItemDataEquipment);
             }
         }
@@ -51,7 +61,7 @@ public class PlayerItemDrop : ItemDrop
                 for (int i = 0; i < Random.Range(0, item.stackSize); i++)
                 {
                         inventory.RemoveItem(item.data);
-                        DropItem(item.data);
+                        DropItem(item.data, false);
                 }
                     
             }

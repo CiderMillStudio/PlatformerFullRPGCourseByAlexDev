@@ -10,6 +10,7 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance; // PUBLIC STATIC
 
+    #region Inventory Lists and Dictionaries
     public List<ItemData> startingItems;
 
     public List<InventoryItem> inventory; //was inventoryItems
@@ -21,10 +22,9 @@ public class Inventory : MonoBehaviour
     public List<InventoryItem> equipment;
     public Dictionary<ItemDataEquipment, InventoryItem> equipmentDictionary;
 
+    #endregion
 
-
-    
-
+    #region Inventory Slot Types
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
@@ -33,6 +33,10 @@ public class Inventory : MonoBehaviour
     private UI_ItemSlot[] inventoryItemSlots;
     private UI_ItemSlot[] stashItemSlots; 
     private UI_EquipmentSlot[] equipmentSlots;
+
+    #endregion
+
+    private float lastTimeUsedFlask;
 
     private void Awake()
     {
@@ -110,7 +114,7 @@ public class Inventory : MonoBehaviour
             equipment.Remove(value);
             itemToRemove.RemoveModifiers();
             equipmentDictionary.Remove(itemToRemove);
-            UpdateSlotUI(); //DELETE MAYBE
+            //UpdateSlotUI(); //DELETE MAYBE --> Yes definitely, was resulting in an error. Error resolved once this was commented out.
         }
     }
 
@@ -312,11 +316,48 @@ public class Inventory : MonoBehaviour
         return true;
     }
 
-
     public List<InventoryItem> GetEquipmentList() => equipment;
-
-
 
     public List<InventoryItem> GetStashList() => stash;
 
+    public ItemDataEquipment GetEquipment(EquipmentType _equipmentType)
+    {
+        ItemDataEquipment equippedItem = null;
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> item in equipmentDictionary)
+        {
+
+            if (item.Key.equipmentType == _equipmentType)
+            {
+                equippedItem = item.Key;
+            }
+
+        }
+
+        return equippedItem;
+    }
+
+    public void UseFlask()
+    {
+        ItemDataEquipment currentFlask = GetEquipment(EquipmentType.Flask);
+
+        if (currentFlask == null)
+            return;
+
+        //See if we can use flask
+        //set up cool down for flask use
+        bool canUseFlask = Time.time > lastTimeUsedFlask + currentFlask.itemCooldown;
+
+        if (canUseFlask)
+        {
+            currentFlask.Effect(null);
+            lastTimeUsedFlask = Time.time;
+        }
+        else
+        {
+            Debug.Log("Flask on Cooldown");
+        }
+
+
+    }
 }

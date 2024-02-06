@@ -7,7 +7,7 @@ public class ItemObject : MonoBehaviour
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private ItemData itemData; //itemData is a scriptable object data type that defines the properties of specific items
-
+    public bool canBePickedUp = false;
     private void OnValidate() //this is called anytime you change anything in the object in Unity
     {
         SetupVisuals();
@@ -49,7 +49,10 @@ public class ItemObject : MonoBehaviour
 
     public void PickupItem()
     {
-        Inventory.instance.AddItem(itemData);
-        Destroy(gameObject);
+        if (canBePickedUp)
+        {
+            Inventory.instance.AddItem(itemData);
+            Destroy(gameObject);
+        }
     }
 }

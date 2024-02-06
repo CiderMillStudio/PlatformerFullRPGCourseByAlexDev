@@ -17,7 +17,7 @@ public class ItemDrop : MonoBehaviour
 
 
 
-    public virtual void GenerateDrop()
+    public virtual void GenerateDropUponDeath()
     {
         for (int i = 0; i < possibleDrops.Length; i++)
         {
@@ -34,19 +34,29 @@ public class ItemDrop : MonoBehaviour
             if (Random.value < dropChanceModifier)
             {
             dropList.Remove(randomItem);
-            DropItem(randomItem);
+            DropItem(randomItem, false);
             }
 
         }
     }
 
 
-    protected void DropItem(ItemData _itemData) //public because this needs to be called by the enemy
+    protected void DropItem(ItemData _itemData, bool _alwaysDropForwards) //public because this needs to be called by the enemy
     {
         GameObject newDrop = Instantiate(dropPrefab, transform.position, Quaternion.identity);
 
-        Vector2 randomVelocity = new Vector2(Random.Range(-5, 6), Random.Range(12, 15));
+        if (!_alwaysDropForwards)
+        {
+            Vector2 randomVelocity = new Vector2(Random.Range(-5, 6), Random.Range(12, 15));
+            newDrop.GetComponent<ItemObject>().SetupItem(_itemData, randomVelocity);
+        }
 
-        newDrop.GetComponent<ItemObject>().SetupItem(_itemData, randomVelocity);
+        else
+        {
+            float facingDir = GetComponent<Entity>().facingDir;
+            Vector2 randomForwardVelocity = new Vector2(Random.Range(3, 6) * facingDir, Random.Range(7, 10));
+            newDrop.GetComponent<ItemObject>().SetupItem(_itemData, randomForwardVelocity);
+        }
+
     }
 }

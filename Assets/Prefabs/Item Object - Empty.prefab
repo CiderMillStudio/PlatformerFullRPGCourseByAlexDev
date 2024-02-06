@@ -174,6 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 9151884229883878072}
   itemData: {fileID: 0}
+  canBePickedUp: 0
 --- !u!1 &8202693802651031128
 GameObject:
   m_ObjectHideFlags: 0
