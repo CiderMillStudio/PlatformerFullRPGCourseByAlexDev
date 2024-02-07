@@ -835,7 +835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3994836221130430484, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
       propertyPath: level
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5492379409533207389, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3309,7 +3309,7 @@ GameObject:
   - component: {fileID: 967973067}
   - component: {fileID: 967973066}
   m_Layer: 5
-  m_Name: CraftSlot - Light Armor
+  m_Name: CraftSlot - Flask of Healing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3351,7 +3351,7 @@ MonoBehaviour:
   itemText: {fileID: 307838895}
   defaultSlotImage: {fileID: 2728461401270038545, guid: 4fdf1b18b25dfb0498d8ba3525ea147d, type: 3}
   item:
-    data: {fileID: 11400000, guid: c4fddf9948defc24da1c03720ddabff1, type: 2}
+    data: {fileID: 11400000, guid: 99a81ec8a2f684b4ea9024f7f79adff9, type: 2}
     stackSize: 1
 --- !u!114 &967973067
 MonoBehaviour:
@@ -13564,10 +13564,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
   - {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
   - {fileID: 11400000, guid: 5bed8d6ccfa28d341a3e61ba575416e0, type: 2}
-  - {fileID: 11400000, guid: 824b53ba279d19b4596e55d6d4f6f0ea, type: 2}
-  - {fileID: 11400000, guid: 65536c12e34b5034e84e765ceaea96d6, type: 2}
+  - {fileID: 11400000, guid: 4f7bf41649cb15544b489eca43c11115, type: 2}
+  - {fileID: 11400000, guid: 49981c191a84d20499502fbcd0d777e8, type: 2}
   - {fileID: 11400000, guid: 99a81ec8a2f684b4ea9024f7f79adff9, type: 2}
-  - {fileID: 11400000, guid: 356328aaa2b6a734abde05b5892a58a8, type: 2}
+  - {fileID: 11400000, guid: c76275c7db606c64a955bc2bf96944c1, type: 2}
+  - {fileID: 11400000, guid: 87135df04f6eb2846a1d19668303e1af, type: 2}
   inventory: []
   stash: []
   equipment:
@@ -15700,7 +15701,7 @@ GameObject:
   - component: {fileID: 1892763485784488228}
   - component: {fileID: 8354769193139908028}
   m_Layer: 5
-  m_Name: CraftSlot - Iron Armor
+  m_Name: CraftSlot - Fishing Rod
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16230,7 +16231,7 @@ MonoBehaviour:
   itemText: {fileID: 4340129436880972760}
   defaultSlotImage: {fileID: 2728461401270038545, guid: 4fdf1b18b25dfb0498d8ba3525ea147d, type: 3}
   item:
-    data: {fileID: 11400000, guid: 634af7fe7078cb148afbe4f56513bc27, type: 2}
+    data: {fileID: 11400000, guid: e4ed9e81d1c355747a07b33a974c977f, type: 2}
     stackSize: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

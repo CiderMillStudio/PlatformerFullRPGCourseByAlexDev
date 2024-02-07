@@ -10,15 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
-  m_Name: Flask of Healing
+  m_Name: Armor Flask
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Flask of Healing
-  icon: {fileID: -1740531083, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 2.7
+  itemName: Armor Flask
+  icon: {fileID: -165920498, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 0
   equipmentType: 3
-  itemCooldown: 5
+  itemCooldown: 0
   itemEffects:
+  - {fileID: 11400000, guid: 36d3e2fe02c47de4ba8bfc2537b4902a, type: 2}
   - {fileID: 11400000, guid: cd787e9e7afa7d84294d5aaaf091db23, type: 2}
   strength: 0
   agility: 0

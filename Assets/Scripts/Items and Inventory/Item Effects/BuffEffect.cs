@@ -51,7 +51,7 @@ public class BuffEffect : ItemEffect
             return stats.agility;
         else if (buffType == StatType.intelligence)
             return stats.intelligence;
-        else if (buffType != StatType.vitality)
+        else if (buffType == StatType.vitality)
             return stats.vitality;
         else if (buffType == StatType.damage)
             return stats.damage;

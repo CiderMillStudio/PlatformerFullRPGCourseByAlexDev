@@ -159,6 +159,9 @@ public class CharacterStats : MonoBehaviour
 
         _targetStats.TakeDamage(totalDamage);
 
+
+        DoMagicalDamage(_targetStats); //Remove this line if you don't want to apply magic hit on primary attack.
+
         //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
         //DoMagicalDamage(_targetStats);
 

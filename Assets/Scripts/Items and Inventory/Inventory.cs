@@ -37,6 +37,10 @@ public class Inventory : MonoBehaviour
     #endregion
 
     private float lastTimeUsedFlask;
+    private float lastTimeUsedArmor;
+
+    private float armorCooldown; 
+    private float flaskCooldown; 
 
     private void Awake()
     {
@@ -346,10 +350,11 @@ public class Inventory : MonoBehaviour
 
         //See if we can use flask
         //set up cool down for flask use
-        bool canUseFlask = Time.time > lastTimeUsedFlask + currentFlask.itemCooldown;
+        bool canUseFlask = Time.time > lastTimeUsedFlask + flaskCooldown;
 
         if (canUseFlask)
         {
+            flaskCooldown = currentFlask.itemCooldown;
             currentFlask.Effect(null);
             lastTimeUsedFlask = Time.time;
         }
@@ -359,5 +364,19 @@ public class Inventory : MonoBehaviour
         }
 
 
+    }
+
+    public bool CanUseArmor()
+    {
+        ItemDataEquipment currentArmor = GetEquipment(EquipmentType.Armor);
+        if (Time.time > lastTimeUsedArmor + armorCooldown) //at the beginning of the session, armorCooldown is zero, so it will work in the beginning of the game!
+        {
+            armorCooldown = currentArmor.itemCooldown;
+            lastTimeUsedArmor = Time.time;
+            return true;
+        }
+
+        Debug.Log("Armor is on Cooldown");
+        return false;
     }
 }

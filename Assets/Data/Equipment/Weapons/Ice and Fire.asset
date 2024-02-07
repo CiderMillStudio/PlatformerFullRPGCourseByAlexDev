@@ -10,13 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
-  m_Name: Iron Armor
+  m_Name: Ice and Fire
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Iron Armor
-  icon: {fileID: -1547736094, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 1
-  equipmentType: 1
+  itemName: Ice and Fire
+  icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 6
+  equipmentType: 0
+  itemCooldown: 0
+  itemEffects:
+  - {fileID: 11400000, guid: 45fb5934059f89340b0d539d0c5f0624, type: 2}
+  - {fileID: 11400000, guid: 331509cb3ae802e4f9ce44089b9aa62e, type: 2}
   strength: 0
   agility: 0
   intelligence: 0
@@ -24,17 +28,17 @@ MonoBehaviour:
   damage: 0
   critChance: 0
   critPower: 0
-  maxHealth: 23
-  armor: 13
+  maxHealth: 0
+  armor: 0
   evasion: 0
-  magicResistance: 8
-  fireDamage: 0
-  iceDamage: 0
+  magicResistance: 0
+  fireDamage: 5
+  iceDamage: 7
   lightningDamage: 0
   craftingMaterials:
+  - data: {fileID: 11400000, guid: 099c0a9ba9ab3b64b9d34c929d353d05, type: 2}
+    stackSize: 5
   - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 8
+    stackSize: 3
   - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
-    stackSize: 1
-  - data: {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
-    stackSize: 1
+    stackSize: 2

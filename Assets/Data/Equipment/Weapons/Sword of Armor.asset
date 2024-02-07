@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
-  m_Name: Light Armor
+  m_Name: Sword of Armor
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Light Armor
-  icon: {fileID: 1667790894, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 7
-  equipmentType: 1
+  itemName: Sword of Armor
+  icon: {fileID: 1674809057, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  dropChance: 0
+  equipmentType: 0
+  itemCooldown: 0
+  itemEffects:
+  - {fileID: 11400000, guid: 523a7761a5489174ab86c1102ad288c8, type: 2}
   strength: 0
   agility: 0
   intelligence: 0
@@ -24,15 +27,11 @@ MonoBehaviour:
   damage: 0
   critChance: 0
   critPower: 0
-  maxHealth: 10
-  armor: 4
-  evasion: 6
-  magicResistance: 2
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  craftingMaterials:
-  - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 2
-  - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
-    stackSize: 1
+  craftingMaterials: []
