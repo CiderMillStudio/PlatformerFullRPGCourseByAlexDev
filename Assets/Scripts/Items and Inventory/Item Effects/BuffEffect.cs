@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public enum StatType
+/*public enum StatType //Moved this to CharacterStats.cs
 {
     strength,
     agility,
@@ -19,7 +19,7 @@ public enum StatType
     fireDamage,
     iceDamage,
     lightningDamage
-}
+}*/
 [CreateAssetMenu(fileName = "Buff Effect", menuName = "Data/ItemEffect/Buff Effect")]
 public class BuffEffect : ItemEffect
 {
@@ -38,12 +38,12 @@ public class BuffEffect : ItemEffect
         //Instead of choosing which stat you want to increase here, you we can make a long, tedious function
         //(and an enum) to help us SET the stat in BuffEffect's Scriptable Object entity!!
 
-        stats.IncreaseStatBy(buffAmount, buffDuration, StatToModify());
+        stats.IncreaseStatBy(buffAmount, buffDuration, stats.StatOfType(buffType)); //new!! (was just StatToModify())
 
         
     }
 
-    private Stat StatToModify()
+    /*private Stat StatToModify() //Moved this to CharacterStats.cs
     {
         if (buffType == StatType.strength)
             return stats.strength;
@@ -76,5 +76,5 @@ public class BuffEffect : ItemEffect
 
         else
             return null;
-    }    
+    }    */
 }

@@ -17,6 +17,9 @@ public class UI_EquipmentSlot : UI_ItemSlot
         if (itemImage.sprite == null) //wady's brilliance
             return;
 
+        if (!Inventory.instance.CanAddItem())
+            return;
+
         if (Input.GetKey(KeyCode.LeftControl))
         {
             playerItemDropSystem.SingleItemDrop(item.data);

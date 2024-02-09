@@ -51,7 +51,15 @@ public class ItemObject : MonoBehaviour
     {
         if (canBePickedUp)
         {
+            if (itemData.itemType == ItemType.Equipment && !Inventory.instance.CanAddItem())
+            {
+                Debug.Log("Failed to pick up " + itemData.name);
+                rb.velocity = new Vector2(0, 7);
+                return;
+            }    
+
             Inventory.instance.AddItem(itemData);
+            Debug.Log("Picked up " + itemData.name);
             Destroy(gameObject);
         }
     }

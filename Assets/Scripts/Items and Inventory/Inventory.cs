@@ -29,10 +29,12 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform stashSlotParent;
     [SerializeField] private Transform equipmentSlotParent;
+    [SerializeField] private Transform statSlotParent; 
 
     private UI_ItemSlot[] inventoryItemSlots;
     private UI_ItemSlot[] stashItemSlots; 
     private UI_EquipmentSlot[] equipmentSlots;
+    private UI_StatSlot[] statSlots;
 
     #endregion
 
@@ -62,9 +64,11 @@ public class Inventory : MonoBehaviour
         equipment = new List<InventoryItem>();
         equipmentDictionary = new Dictionary<ItemDataEquipment, InventoryItem>();
 
+
         inventoryItemSlots = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>(); //Creates an array of all the itemSlots in the inventory UI
         stashItemSlots = stashSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        statSlots = statSlotParent.GetComponentsInChildren<UI_StatSlot>();
 
         AddStartingItems();
     }
@@ -113,7 +117,12 @@ public class Inventory : MonoBehaviour
 
     public void UnequipItem(ItemDataEquipment itemToRemove) //Changed this method to PUBLIC from PRIVATE 2/1/24 at 6:02pm
     {
-        if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
+        if (!CanAddItem())
+        {
+            Debug.Log("Inventory is full, cannot unequip item");
+            return;
+        }
+        else if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
         {
             equipment.Remove(value);
             itemToRemove.RemoveModifiers();
@@ -184,11 +193,16 @@ public class Inventory : MonoBehaviour
         {
             stashItemSlots[i].UpdateSlot(stash[i]);
         }
+
+        for (int i = 0; i < statSlots.Length; i++) // update infor of stats in character UI //NEW!!!!
+        {
+            statSlots[i].UpdateStatValueUI();
+        }
     }
 
     public void AddItem(ItemData _item) //used to be AddItem()
     {
-        if (_item.itemType == ItemType.Equipment)
+        if (_item.itemType == ItemType.Equipment && CanAddItem())
         {
             AddToInventory(_item);
         }
@@ -271,6 +285,17 @@ public class Inventory : MonoBehaviour
 
         UpdateSlotUI();
 
+    }
+
+    public bool CanAddItem()
+    {
+        if (inventory.Count >= inventoryItemSlots.Length)
+        {
+            Debug.Log("No More Space");
+            return false;
+        }
+        else
+            return true;
     }
 
     public bool CanCraft(ItemDataEquipment _itemToCraft, List<InventoryItem> _requiredMaterials)
