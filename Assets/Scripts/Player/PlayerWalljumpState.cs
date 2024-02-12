@@ -44,6 +44,8 @@ public class PlayerWalljumpState : PlayerState
             return;
         }
 
+
+
         if (player.IsWallDetected())
         {
             stateMachine.ChangeState(player.wallslideState);
@@ -51,5 +53,8 @@ public class PlayerWalljumpState : PlayerState
             
         if (stateTimer < 0)
             stateMachine.ChangeState(player.airState);
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
+            stateMachine.ChangeState(player.aimSwordState);
     }
 }

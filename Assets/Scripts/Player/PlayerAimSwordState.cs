@@ -28,7 +28,13 @@ public class PlayerAimSwordState : PlayerState
         base.Update();
         
 
-        player.SetZeroVelocity();
+        if (player.IsGroundDetected())
+            player.SetZeroVelocity();
+
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y);
+        }
 
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {

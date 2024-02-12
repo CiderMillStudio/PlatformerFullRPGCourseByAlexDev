@@ -29,9 +29,9 @@ public class CharacterStats : MonoBehaviour
     [Header("Major Stats")]
 
     public Stat strength; //1 pt increase damage by 1 and crit.power by 1%
-    public Stat agility; //1 pt increase evasion by 1% and crit.chance by 1%
-    public Stat intelligence; //1 pt increase magic damage by 1 and magic resistance by 1%.. or 3%? (just FYI We won't be making a bunch of spells)
-    public Stat vitality; //1 pt increase health by 3 or 5 points?
+    public Stat agility; //1% increase evasion by 1% and crit.chance by 1%
+    public Stat intelligence; //1 pt increase magic damage by 2 pts and magic resistance by 3 pts? (just FYI We won't be making a bunch of spells)
+    public Stat vitality; //1 pt increase health by 5 points
 
     #endregion
 
@@ -232,7 +232,7 @@ public class CharacterStats : MonoBehaviour
         int _iceDamage = iceDamage.GetValue();
         int _lightningDamage = lightningDamage.GetValue();
 
-        int totalMagicalDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue();
+        int totalMagicalDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue() * 2;
 
         totalMagicalDamage = CheckTargetResistance(_targetStats, totalMagicalDamage);
         _targetStats.TakeDamage(totalMagicalDamage);

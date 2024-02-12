@@ -6,21 +6,29 @@ using TMPro; //!!!
 using UnityEngine.EventSystems;
 using Unity.VisualScripting;   //Don't forget these!!
 
-public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
+public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
 {
 
     [SerializeField] protected Image itemImage;
     [SerializeField] private TextMeshProUGUI itemText;
     [SerializeField] private Image defaultSlotImage;
-    protected PlayerItemDrop playerItemDropSystem;
 
+    private RectTransform thisSlotRectTransform;
+
+    protected PlayerItemDrop playerItemDropSystem;
+    
+
+    private UI ui;
 
     public InventoryItem item;
+
 
     private void Start()
     {
         //need PlayerItemDrop in the event the player decides to discard items, which cause them to be dropped into the world
         playerItemDropSystem = PlayerManager.instance.player.GetComponent<PlayerItemDrop>(); 
+        ui = GetComponentInParent<UI>();
+        thisSlotRectTransform = GetComponent<RectTransform>();
     }
 
     public void UpdateSlot(InventoryItem _newItem) //Updates the slot (its image and its itemAmount integer value) that
@@ -80,4 +88,26 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler
         itemText.text = "";
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+        ui.itemTooltip.ShowToolTip(item.data as ItemDataEquipment);
+        
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+        ui.itemTooltip.HideToolTip();
+    }
+
+    private void Update()
+    {
+        if (ui.itemTooltip.isActiveAndEnabled)
+        {
+            ui.itemTooltip.itemTooltipRectTransform.position = Input.mousePosition + new Vector3(0, 0.10f * Screen.height);
+        }
+    }
 }

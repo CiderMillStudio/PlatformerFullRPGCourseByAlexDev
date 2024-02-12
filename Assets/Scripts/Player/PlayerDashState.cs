@@ -20,7 +20,7 @@ public class PlayerDashState : PlayerState
     public override void Exit()
     {
         base.Exit();
-        player.SetVelocity(0, rb.velocity.y);
+        player.SetVelocity(player.moveSpeed * player.facingDir, rb.velocity.y);
         player.skill.clone.CreateCloneOnDashFinish();
 
     }
@@ -36,5 +36,8 @@ public class PlayerDashState : PlayerState
 
         if (stateTimer < 0)
             stateMachine.ChangeState(player.idleState);
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
+            stateMachine.ChangeState(player.aimSwordState);
     }
 }

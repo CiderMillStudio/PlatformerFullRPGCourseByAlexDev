@@ -30,5 +30,8 @@ public class PlayerAirState : PlayerState
 
         if (player.IsWallDetected())
             stateMachine.ChangeState(player.wallslideState);
+
+        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
+            stateMachine.ChangeState(player.aimSwordState);
     }
 }

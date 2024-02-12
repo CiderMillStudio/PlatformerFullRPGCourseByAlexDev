@@ -51,12 +51,12 @@ public class PlayerGroundedState : PlayerState
 
     }
 
-    private bool HasNoSword()
+    /*protected virtual bool HasNoSword()
     {
         if (!player.sword) return true;
 
         player.sword.GetComponent<SwordSkillController>().ReturnSword();
         return false;
 
-    }
+    }*/
 }

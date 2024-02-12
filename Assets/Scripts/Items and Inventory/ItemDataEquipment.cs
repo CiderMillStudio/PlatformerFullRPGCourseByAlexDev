@@ -60,6 +60,8 @@ public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.
     [Header("Craft Requirements")] 
     public List<InventoryItem> craftingMaterials; //this is the recipe for any given equipment item
 
+    private int descriptionLength;
+
 
     public void Effect(Transform _respawnTransform)
     {
@@ -115,4 +117,57 @@ public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.
 
     }
 
+    public override string GetDescription()
+    {
+        sb.Length = 0;
+        descriptionLength = 0;
+
+        AddItemDescription(strength, "Strength");  // 3
+        AddItemDescription(agility, "Agility");  //2
+        AddItemDescription(vitality, "Vitality");
+        AddItemDescription(intelligence, "Intelligence");
+
+        AddItemDescription(damage, "Damage");
+        AddItemDescription(critChance, "Crit Chance");
+        AddItemDescription(critPower, "Crit Power");
+
+        AddItemDescription(armor, "Armor");  //5
+        AddItemDescription(maxHealth, "Max Health");
+        AddItemDescription(magicResistance, "Magic Resistance");
+        AddItemDescription(evasion, "Evasion");
+
+        AddItemDescription(iceDamage, "Ice Damage");
+        AddItemDescription(fireDamage, "Fire Damage");
+        AddItemDescription(lightningDamage, "Shock Damage");
+
+        if (descriptionLength <= 5) //it's 3
+        {
+            for (int i = 0; i <= 5 - descriptionLength; i++) 
+            {
+                sb.AppendLine();
+                sb.Append(""); //in this case, we'd add 2 blank lines. This way, each item Tooltip box's description section is 5 lines long (except for really powerful items with more than 5 stat modifiers)
+            }
+        }
+
+
+        return sb.ToString();
+    }
+
+    private void AddItemDescription(int _value, string _name) //value is the modifier of a specific stat, and the NAME is the name of the stat
+    {
+        if (_value != 0)
+        {
+            if (sb.Length > 0)
+            {
+                sb.AppendLine();
+            }
+
+            if (_value > 0)
+            {
+                sb.Append("+" + _value + " " + _name);
+            }
+
+            descriptionLength++;
+        }
+    }
 }
