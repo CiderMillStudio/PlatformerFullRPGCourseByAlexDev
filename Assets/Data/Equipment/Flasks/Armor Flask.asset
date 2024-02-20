@@ -16,11 +16,12 @@ MonoBehaviour:
   itemName: Armor Flask
   icon: {fileID: -165920498, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 0
-  equipmentType: 3
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 36d3e2fe02c47de4ba8bfc2537b4902a, type: 2}
   - {fileID: 11400000, guid: cd787e9e7afa7d84294d5aaaf091db23, type: 2}
+  itemEffectDescription: Restores health and temporarily increases armor stat
+  equipmentType: 3
   strength: 0
   agility: 0
   intelligence: 0
@@ -35,4 +36,8 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+    stackSize: 4

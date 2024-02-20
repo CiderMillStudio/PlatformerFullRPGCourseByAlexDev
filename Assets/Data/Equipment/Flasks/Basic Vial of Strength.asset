@@ -16,6 +16,9 @@ MonoBehaviour:
   itemName: Basic Vial of Strength
   icon: {fileID: -410334530, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 4
+  itemCooldown: 0
+  itemEffects: []
+  itemEffectDescription: 
   equipmentType: 3
   strength: 5
   agility: 0
@@ -35,4 +38,6 @@ MonoBehaviour:
   - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
     stackSize: 1
   - data: {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
-    stackSize: 3
+    stackSize: 1
+  - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+    stackSize: 2

@@ -16,10 +16,11 @@ MonoBehaviour:
   itemName: Rogue's Jacket
   icon: {fileID: 957708663, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 0
-  equipmentType: 1
   itemCooldown: 15
   itemEffects:
   - {fileID: 11400000, guid: be1168b670bae84468152130dcf7f970, type: 2}
+  itemEffectDescription: Temporarily increases evasion after being hit
+  equipmentType: 1
   strength: 0
   agility: 0
   intelligence: 0
@@ -34,4 +35,8 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
+    stackSize: 12
+  - data: {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
+    stackSize: 5

@@ -10,11 +10,28 @@ public class UI : MonoBehaviour
 
     public UI_ItemTooltip itemTooltip;
     public UI_StatTooltip statTooltip;
+    public UI_SkillTooltip skillTooltip;
+
+    public UI_CraftWindow craftWindow;
 
     private void Start()
     {
+        if (itemTooltip != null)
+        {
         itemTooltip.gameObject.SetActive(false);
+
+        }
+
+        if (statTooltip != null)
+        {
         statTooltip.gameObject.SetActive(false);
+        }
+
+        if (skillTooltip != null)
+        {
+            skillTooltip.gameObject.SetActive(false);
+
+        }
     }
     public void SwitchTo(GameObject _menu)
     {

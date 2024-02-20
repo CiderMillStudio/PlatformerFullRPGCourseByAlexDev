@@ -16,10 +16,11 @@ MonoBehaviour:
   itemName: Sword of Armor
   icon: {fileID: 1674809057, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 0
-  equipmentType: 0
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 523a7761a5489174ab86c1102ad288c8, type: 2}
+  itemEffectDescription: Grants a temporary armor buff when you hit an enemy.
+  equipmentType: 0
   strength: 0
   agility: 0
   intelligence: 0
@@ -34,4 +35,8 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+    stackSize: 4
+  - data: {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
+    stackSize: 2

@@ -10,7 +10,7 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
 {
 
     [SerializeField] protected Image itemImage;
-    [SerializeField] private TextMeshProUGUI itemText;
+    [SerializeField] protected TextMeshProUGUI itemText;
     [SerializeField] private Image defaultSlotImage;
 
     private RectTransform thisSlotRectTransform;
@@ -18,12 +18,12 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
     protected PlayerItemDrop playerItemDropSystem;
     
 
-    private UI ui;
+    protected UI ui;
 
     public InventoryItem item;
 
 
-    private void Start()
+    protected virtual void Start()
     {
         //need PlayerItemDrop in the event the player decides to discard items, which cause them to be dropped into the world
         playerItemDropSystem = PlayerManager.instance.player.GetComponent<PlayerItemDrop>(); 
@@ -39,7 +39,8 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
 
         if (item != null)
         {
-            itemImage.sprite = item.data.icon;
+            if (item.data != null)
+                itemImage.sprite = item.data.icon;
 
             if (item.stackSize > 1)
             {
@@ -75,7 +76,9 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
         }
         
         if (item.data.itemType == ItemType.Equipment)
-            Inventory.instance.EquipItem(item.data);            
+            Inventory.instance.EquipItem(item.data);
+
+        ui.itemTooltip.HideToolTip();
 
     }
 
@@ -92,7 +95,7 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
     {
         if (item == null)
             return;
-        ui.itemTooltip.ShowToolTip(item.data as ItemDataEquipment);
+        ui.itemTooltip?.ShowToolTip(item.data as ItemDataEquipment);
         
     }
 
@@ -100,14 +103,19 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
     {
         if (item == null)
             return;
-        ui.itemTooltip.HideToolTip();
+        ui.itemTooltip?.HideToolTip();
     }
 
     private void Update()
     {
-        if (ui.itemTooltip.isActiveAndEnabled)
+        if (ui.itemTooltip != null)
         {
-            ui.itemTooltip.itemTooltipRectTransform.position = Input.mousePosition + new Vector3(0, 0.10f * Screen.height);
+
+            if (ui.itemTooltip.isActiveAndEnabled && ui.itemTooltip.itemTooltipRectTransform != null)
+            {
+                ui.itemTooltip.itemTooltipRectTransform.position = Input.mousePosition + new Vector3(0, 0.10f * Screen.height);
+            }
+
         }
     }
 }

@@ -16,11 +16,13 @@ MonoBehaviour:
   itemName: Ice and Fire
   icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 6
-  equipmentType: 0
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 45fb5934059f89340b0d539d0c5f0624, type: 2}
   - {fileID: 11400000, guid: 331509cb3ae802e4f9ce44089b9aa62e, type: 2}
+  itemEffectDescription: 'If you rapidly attack an enemy, fire damage stacks. On
+    third hit, summons a magic ball of ice and fire. '
+  equipmentType: 0
   strength: 0
   agility: 0
   intelligence: 0

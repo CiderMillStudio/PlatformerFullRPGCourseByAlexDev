@@ -16,10 +16,11 @@ MonoBehaviour:
   itemName: Fire Flask
   icon: {fileID: 1073501139, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 0
-  equipmentType: 3
-  itemCooldown: 0
+  itemCooldown: 5
   itemEffects:
   - {fileID: 11400000, guid: deaf297ea33a355468a62541efa5f10b, type: 2}
+  itemEffectDescription: Temporarily increases fire damage stat
+  equipmentType: 3
   strength: 0
   agility: 0
   intelligence: 0
@@ -34,4 +35,8 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
+    stackSize: 3

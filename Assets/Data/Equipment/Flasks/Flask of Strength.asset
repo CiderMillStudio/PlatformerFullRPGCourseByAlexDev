@@ -16,10 +16,10 @@ MonoBehaviour:
   itemName: Flask of Strength
   icon: {fileID: -1698851337, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 0
-  equipmentType: 3
   itemCooldown: 0
-  itemEffects:
-  - {fileID: 11400000, guid: 721c5f6a49eb63c41a75c77739d5cf61, type: 2}
+  itemEffects: []
+  itemEffectDescription: 
+  equipmentType: 3
   strength: 5
   agility: 0
   intelligence: 0
@@ -34,4 +34,8 @@ MonoBehaviour:
   fireDamage: 0
   iceDamage: 0
   lightningDamage: 0
-  craftingMaterials: []
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
+    stackSize: 3

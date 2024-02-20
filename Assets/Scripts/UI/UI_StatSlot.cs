@@ -96,7 +96,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     private void Update()
     {
-        if (ui.statTooltip.isActiveAndEnabled)
+        if (ui.statTooltip.isActiveAndEnabled && ui.statTooltip.statTooltipRectTransform != null)
         {
             ui.statTooltip.statTooltipRectTransform.position = Input.mousePosition + new Vector3(0.05f * Screen.width, 0);
             

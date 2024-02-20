@@ -46,6 +46,8 @@ public class UI_EquipmentSlot : UI_ItemSlot
                                                                     //removed, and maybe even when we die we "unequip items"
                                                                     //but don't want them to go back into our
                                                                     //inventory (because we drop them!)
+        ui.itemTooltip.HideToolTip();
+
         CleanUpSlot();
         
     }

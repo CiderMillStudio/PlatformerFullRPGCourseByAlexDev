@@ -13,11 +13,15 @@ public enum EquipmentType
 [CreateAssetMenu(fileName = "New Equipment Item Data", menuName = "Data/Equipment")]
 public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.O., like ItemData itself
 {
+    [Header("Unique Effect")]
+    public float itemCooldown;
+    public ItemEffect[] itemEffects;
+    [TextArea]
+    public string itemEffectDescription;
+
     public EquipmentType equipmentType;
 
-    public float itemCooldown;
 
-    public ItemEffect[] itemEffects;
 
     #region Stats (The Grand Encyclopedia of Stats)
     #region Major Stats
@@ -140,13 +144,27 @@ public class ItemDataEquipment : ItemData //thus, ItemDataEquipment is also a S.
         AddItemDescription(fireDamage, "Fire Damage");
         AddItemDescription(lightningDamage, "Shock Damage");
 
-        if (descriptionLength <= 5) //it's 3
+        if (descriptionLength <= 5 && itemEffectDescription.Length <= 0) //it's 3
         {
             for (int i = 0; i <= 5 - descriptionLength; i++) 
             {
                 sb.AppendLine();
                 sb.Append(""); //in this case, we'd add 2 blank lines. This way, each item Tooltip box's description section is 5 lines long (except for really powerful items with more than 5 stat modifiers)
             }
+        }
+        else if (itemEffectDescription.Length > 0)
+        {
+            sb.AppendLine();
+            sb.Append("");
+            sb.AppendLine();
+        }
+
+        if (itemEffectDescription.Length > 0)
+        {
+            sb.Append("Item Effect:");
+            sb.AppendLine();
+            sb.Append(itemEffectDescription);
+
         }
 
 
