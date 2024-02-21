@@ -152,8 +152,8 @@ public class Inventory : MonoBehaviour
 
     private void UpdateSlotUI()
     {
-        
-        
+
+
         for (int i = 0; i < inventoryItemSlots.Length; i++)
         {
             inventoryItemSlots[i].CleanUpSlot();
@@ -194,6 +194,11 @@ public class Inventory : MonoBehaviour
             stashItemSlots[i].UpdateSlot(stash[i]);
         }
 
+        UpdateStatsUI();
+    }
+
+    public void UpdateStatsUI()
+    {
         for (int i = 0; i < statSlots.Length; i++) // update infor of stats in character UI //NEW!!!!
         {
             statSlots[i].UpdateStatValueUI();

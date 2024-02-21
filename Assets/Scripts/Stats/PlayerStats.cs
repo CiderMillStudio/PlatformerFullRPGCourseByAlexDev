@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class PlayerStats : CharacterStats
@@ -39,6 +40,12 @@ public class PlayerStats : CharacterStats
         {
             currentArmor.Effect(player.transform);
         }
+    }
+
+
+    public override void OnEvasion(Transform _enemyTransform)
+    {
+        player.skill.dodge.CreateMirageOnDodge(_enemyTransform);
     }
 
 }

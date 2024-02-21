@@ -16,11 +16,6 @@ public class CloneSkill : Skill
     [Space]
     [SerializeField] private bool canAttack;
 
-
-    [SerializeField] private bool createCloneOnDashStart;
-    [SerializeField] private bool createCloneOnDashFinish;
-    [SerializeField] private bool canCreateCloneOnCounterAttack;
-
     [Space]
     [SerializeField] private bool canDuplicateClone;
     [Tooltip("Percent chance of the clone duplicating itself into another clone on a successful hit")]
@@ -46,32 +41,13 @@ public class CloneSkill : Skill
                 canDuplicateClone, chanceToDuplicateClone, player);
     }
 
-    public void CreateCloneOnDashStart()
+    public void CreateCloneWithDelay(Transform _enemyTransform)
     {
-        if (createCloneOnDashStart)
-        {
-            CreateClone(player.transform, Vector3.zero);
-        }
-    }
-
-    public void CreateCloneOnDashFinish()
-    {
-        if (createCloneOnDashFinish)
-        {
-            CreateClone(player.transform, Vector3.zero);
-        }
-    }
-
-    public void CreateCloneOnCounterAttack(Transform _enemyTransform)
-    {
-        if (canCreateCloneOnCounterAttack)
-        {
-            StartCoroutine(CreateCloneWithDelay(_enemyTransform, new Vector3(2 * player.facingDir, 0, 0)));
-        }
+            StartCoroutine(CloneDelayCoroutine(_enemyTransform, new Vector3(2 * player.facingDir, 0, 0)));
     }
 
 
-    private IEnumerator CreateCloneWithDelay(Transform _transform, Vector3 _offset)
+    private IEnumerator CloneDelayCoroutine(Transform _transform, Vector3 _offset)
     {
         yield return new WaitForSeconds(0.4f);
         CreateClone(_transform, _offset);

@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public enum StatType //NEW (used to be in BuffEffect.cs)
 {
@@ -211,8 +210,8 @@ public class CharacterStats : MonoBehaviour
 
     public void IncreaseHealthBy(int _healAmount)
     {
-        currentHealth += _healAmount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth.GetValue());
+        int newHealth = Mathf.RoundToInt(currentHealth + _healAmount);
+        currentHealth = Mathf.Clamp(newHealth, 0, GetMaxHealthValue());
 
         if (onHealthChanged != null)
             onHealthChanged();
@@ -438,6 +437,11 @@ public class CharacterStats : MonoBehaviour
         return totalMagicalDamage;
     }
 
+    public virtual void OnEvasion(Transform _enemyTransform)
+    {
+
+    }
+
     private bool TargetCanAvoidAttack(CharacterStats _targetStats)
     {
         int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
@@ -449,6 +453,7 @@ public class CharacterStats : MonoBehaviour
 
         if (Random.Range(1, 100) < totalEvasion)
         {
+            _targetStats.OnEvasion(transform);
             return true;
         }
 

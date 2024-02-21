@@ -38,8 +38,10 @@ public class PlayerGroundedState : PlayerState
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && player.skill.parry.parryUnlocked)
+        { 
             stateMachine.ChangeState(player.counterAttackState);
+        }
 
         if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
         { 

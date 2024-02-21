@@ -120,7 +120,7 @@ public class Player : Entity
         stateMachine.currentState.Update();
 
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && skill.crystal.crystalUnlocked)
         {
             skill.crystal.CanUseSkill();
         }
@@ -186,6 +186,8 @@ public class Player : Entity
         if (IsWallDetected())
             return; //you cannot dash if you're standing point blank against a wall
 
+        if (skill.dash.dashUnlocked == false)
+            return;
 
         if (Input.GetKey(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill() && !stats.isDead) 
         {
