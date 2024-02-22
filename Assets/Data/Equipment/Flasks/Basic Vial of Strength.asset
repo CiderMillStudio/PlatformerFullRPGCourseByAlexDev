@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Basic Vial of Strength
   icon: {fileID: -410334530, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   dropChance: 4
-  itemCooldown: 0
+  itemCooldown: 2
   itemEffects: []
   itemEffectDescription: 
   equipmentType: 3

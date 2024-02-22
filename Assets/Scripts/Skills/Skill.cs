@@ -7,8 +7,8 @@ public class Skill : MonoBehaviour
     /*This will be the grand daddy skill master class which encodes functionality that 
      all skills will have in common. For instance, a cooldown timer, etc... */
 
-    [SerializeField] protected float cooldown;
-    protected float cooldownTimer;
+    public float cooldown;
+    protected float cooldownTimer; //maybe switch this back to protected?
 
     protected Player player;
 

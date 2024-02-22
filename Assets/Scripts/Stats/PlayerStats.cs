@@ -48,4 +48,34 @@ public class PlayerStats : CharacterStats
         player.skill.dodge.CreateMirageOnDodge(_enemyTransform);
     }
 
+    public void CloneDoDamage(CharacterStats _targetStats, float _multiplier)
+    {
+        if (TargetCanAvoidAttack(_targetStats))
+            return;
+        
+
+        int totalDamage = damage.GetValue() + strength.GetValue();
+
+        if (_multiplier > 0)
+        {
+            totalDamage = Mathf.RoundToInt(totalDamage * _multiplier);
+        }
+
+        totalDamage = CheckTargetArmor(_targetStats, totalDamage);
+
+        if (CanCrit())
+        {
+            totalDamage = CalculateCriticalDamage(totalDamage);
+            //Debug.Log("total crit damage is: " + totalDamage);
+        }
+
+        _targetStats.TakeDamage(totalDamage);
+
+
+        DoMagicalDamage(_targetStats); //Remove this line if you don't want to apply magic hit on primary attack.
+
+        //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
+        //DoMagicalDamage(_targetStats);
+    }
+
 }

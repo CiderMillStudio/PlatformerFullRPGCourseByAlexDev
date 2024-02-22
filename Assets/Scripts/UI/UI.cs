@@ -6,7 +6,13 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
-    [SerializeField] private GameObject[] UiPanels;
+    [SerializeField] private GameObject characterPanel;
+    [SerializeField] private GameObject skilltreePanel;
+    [SerializeField] private GameObject craftPanel;
+    [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject inGameUi;
+
+    [SerializeField] private GameObject[] UiMenuPanels;
 
     public UI_ItemTooltip itemTooltip;
     public UI_StatTooltip statTooltip;
@@ -14,8 +20,15 @@ public class UI : MonoBehaviour
 
     public UI_CraftWindow craftWindow;
 
+    private void Awake()
+    {
+        SwitchTo(skilltreePanel);
+    }
+
     private void Start()
     {
+        SwitchTo(inGameUi);
+
         if (itemTooltip != null)
         {
         itemTooltip.gameObject.SetActive(false);
@@ -35,9 +48,9 @@ public class UI : MonoBehaviour
     }
     public void SwitchTo(GameObject _menu)
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < UiMenuPanels.Length; i++)
         {
-            transform.GetChild(i).gameObject.SetActive(false);
+            UiMenuPanels[i].gameObject.SetActive(false);
         }
 
         if (_menu != null)
@@ -48,25 +61,28 @@ public class UI : MonoBehaviour
 
     public void ToggleUiMenu()
     {
-        foreach (GameObject _menu in UiPanels)
+        foreach (GameObject _menu in UiMenuPanels)
         {
             if (_menu.activeInHierarchy)
             {
                 _menu.SetActive(false);
+                CheckForInGameUI();
                 return;
             }
         }
 
-        UiPanels[0].SetActive(true);   
+        inGameUi.SetActive(false);
+        characterPanel.SetActive(true);
     }
 
     public void ToggleToSpecificUIMenuWithShortcut(GameObject _specificMenu)
     {
-        foreach (GameObject menu in UiPanels)
+        foreach (GameObject menu in UiMenuPanels)
         {
             if (menu.activeInHierarchy)
             {
                 menu.SetActive(false);
+                
             }
         }
 
@@ -82,25 +98,46 @@ public class UI : MonoBehaviour
 
         else if (Input.GetKeyUp(KeyCode.C))
         {
-            ToggleToSpecificUIMenuWithShortcut(UiPanels[0]); //UiPanels[0] is Character Panel
+            ToggleToSpecificUIMenuWithShortcut(characterPanel); //UiPanels[0] is Character Panel
+            CheckForInGameUI();
         }
 
         else if (Input.GetKeyUp(KeyCode.V))
         {
-            ToggleToSpecificUIMenuWithShortcut(UiPanels[1]); //UiPanels[0] is SkillTree Panel
+            ToggleToSpecificUIMenuWithShortcut(skilltreePanel); //UiPanels[0] is SkillTree Panel
+            CheckForInGameUI();
         }
 
         else if (Input.GetKeyUp(KeyCode.B))
         {
-            ToggleToSpecificUIMenuWithShortcut(UiPanels[2]); //UiPanels[2] is Craft Panel
+            ToggleToSpecificUIMenuWithShortcut(craftPanel); //UiPanels[2] is Craft Panel
+            CheckForInGameUI();
         }
 
         else if (Input.GetKeyUp(KeyCode.N))
         {
-            ToggleToSpecificUIMenuWithShortcut(UiPanels[3]); //UiPanels[3] is Options Panel
+            ToggleToSpecificUIMenuWithShortcut(optionsPanel); //UiPanels[3] is Options Panel
+            CheckForInGameUI();
         }
 
+    }
+
+    private void CheckForInGameUI()
+    {
+        for (int i = 0; i < UiMenuPanels.Length; i++)
+        {
+            inGameUi.gameObject.SetActive(false);
+
+            if (UiMenuPanels[i].gameObject.activeSelf)
+            {
+                return;
+            }
+        }
+
+        ItemDataEquipment currentFlask = Inventory.instance.GetEquipment(EquipmentType.Flask);
+        inGameUi.GetComponent<UI_InGamePanel>().SetFlaskImage(currentFlask);
 
 
+        SwitchTo(inGameUi);
     }
 }

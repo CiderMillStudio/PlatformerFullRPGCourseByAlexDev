@@ -19,6 +19,7 @@ public class SwordSkillController : MonoBehaviour
     private bool canRotate; //probably won't use this much
     private bool isReturning;
     private float freezeTimeDuration;  //NEWWWWWW
+    private float vulnerableTimeDuration = 2f;
 
 
     [Header("Bounce Info")]
@@ -47,6 +48,7 @@ public class SwordSkillController : MonoBehaviour
     private float hitCooldown;
 
     private float spinDirection;
+
 
 
 
@@ -296,8 +298,17 @@ public class SwordSkillController : MonoBehaviour
 
     private void SwordSkillDamage(Enemy enemy)
     {
-        player.stats.DoDamage(enemy.GetComponent<CharacterStats>());
-        enemy.FreezeTimeFor(freezeTimeDuration);
+        EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
+
+        player.stats.DoDamage(enemyStats);
+
+        if (player.skill.swordThrow.timeStopUnlocked)
+            enemy.FreezeTimeFor(freezeTimeDuration);
+
+        if (player.skill.swordThrow.vulnerableUnlocked)
+        {
+            enemyStats.MakeVulnerableFor(vulnerableTimeDuration);
+        }
 
         ItemDataEquipment equippedAmulet = Inventory.instance.GetEquipment(EquipmentType.Amulet);
 

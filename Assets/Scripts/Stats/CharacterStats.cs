@@ -84,6 +84,8 @@ public class CharacterStats : MonoBehaviour
 
     public System.Action onHealthChanged;
 
+    private bool isVulnerable;
+
     public bool isDead { get; private set; }
 
 
@@ -202,10 +204,28 @@ public class CharacterStats : MonoBehaviour
 
     protected virtual void DecreaseHealthBy(int _damage)
     {
+        if (isVulnerable)
+        {
+            _damage = Mathf.RoundToInt(_damage * 1.4f);
+        }
+
         currentHealth -= _damage;
 
         if (onHealthChanged != null)
             onHealthChanged();
+    }
+
+
+    public void MakeVulnerableFor(float _duration)
+    {
+        StartCoroutine(VulnerableCoroutine(_duration));
+    }
+
+    private IEnumerator VulnerableCoroutine(float _duration)
+    {
+        isVulnerable = true;
+        yield return new WaitForSeconds(_duration);
+        isVulnerable = false;
     }
 
     public void IncreaseHealthBy(int _healAmount)
@@ -415,7 +435,7 @@ public class CharacterStats : MonoBehaviour
     #endregion
 
     #region Stat Calculations
-    private int CheckTargetArmor(CharacterStats _targetStats, int _totalDamage)
+    protected int CheckTargetArmor(CharacterStats _targetStats, int _totalDamage)
     {
         if (_targetStats.isChilled)
         {
@@ -442,7 +462,7 @@ public class CharacterStats : MonoBehaviour
 
     }
 
-    private bool TargetCanAvoidAttack(CharacterStats _targetStats)
+    protected bool TargetCanAvoidAttack(CharacterStats _targetStats)
     {
         int totalEvasion = _targetStats.evasion.GetValue() + _targetStats.agility.GetValue();
 
@@ -460,7 +480,7 @@ public class CharacterStats : MonoBehaviour
         return false;
     }
 
-    private bool CanCrit()
+    protected bool CanCrit()
     {
         int totalCriticalChance = critChance.GetValue() + agility.GetValue();
 
@@ -472,7 +492,7 @@ public class CharacterStats : MonoBehaviour
         return false;
     }
 
-    private int CalculateCriticalDamage(int _totalDamage)
+    protected int CalculateCriticalDamage(int _totalDamage)
     {
         float totalCritPower = (critPower.GetValue() + strength.GetValue()) * 0.01f;
 

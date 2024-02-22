@@ -1,12 +1,13 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum SwordType //enums: basically a list of elements, and each type has an associated index number, bout how does this differ from lists? Notice how we're making the enum OUTSIDE of the class?
 {
     Regular, //index 0
     Bounce, //index 1, etc...
     Pierce,
-    Spin
+    Chainsaw
 }
 
 public class SwordSkill : Skill
@@ -16,6 +17,8 @@ public class SwordSkill : Skill
 
 
     [Header("Skill Info")]
+    [SerializeField] private UI_SkillTreeSlot swordUnlockButton;
+    public bool swordUnlocked {  get; private set; }
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce = new Vector2(24f, 24f); //was previously launchDirection
     private float swordGravity = 3;
@@ -26,15 +29,18 @@ public class SwordSkill : Skill
     private Vector2 finalDirection;
 
     [Header("Bounce Info")]
+    [SerializeField] private UI_SkillTreeSlot bounceUnlockButton;
     [SerializeField] private int bounceAmount;
     [SerializeField] private float bounceSwordGravity = 6f;
     [SerializeField] private float bounceSpeed = 20f;
 
     [Header("Pierce Info")]
+    [SerializeField] private UI_SkillTreeSlot pierceUnlockButton;
     [SerializeField] private int pierceAmount;
     [SerializeField] private float pierceSwordGravity;
 
-    [Header("Spin Info")]
+    [Header("Chainsaw Info")]
+    [SerializeField] private UI_SkillTreeSlot chainsawUnlockButton;
     [SerializeField] private float hitCoolown = 0.35f;
     [SerializeField] private float maxTravelDistance = 7f;
     [SerializeField] private float spinDuration = 2f;
@@ -51,6 +57,12 @@ public class SwordSkill : Skill
     [SerializeField] private GameObject dotPrefab;
     [SerializeField] Transform dotParent;
 
+    [Header("Passive Skills")]
+    [SerializeField] private UI_SkillTreeSlot timeStopUnlockButton;
+    public bool timeStopUnlocked { get; private set; }
+    [SerializeField] private UI_SkillTreeSlot vulnerableUnlockButton;
+    public bool vulnerableUnlocked { get; private set; }
+
 
     private GameObject[] dots;
 
@@ -62,6 +74,13 @@ public class SwordSkill : Skill
         GenerateDots();
 
         SetupGravity();
+
+        swordUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockSword);
+        timeStopUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockTimeStop);
+        vulnerableUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockVulnerability);
+        chainsawUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockChainsawSword);
+        pierceUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockPierceSword);
+        bounceUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockBounceSword);
     }
 
     private void SetupGravity()
@@ -78,7 +97,7 @@ public class SwordSkill : Skill
         {
             swordGravity = pierceSwordGravity;
         }
-        else if (swordType == SwordType.Spin)
+        else if (swordType == SwordType.Chainsaw)
         {
             swordGravity = spinGravity;
         }
@@ -98,7 +117,7 @@ public class SwordSkill : Skill
         //{ swordGravity = bounceSwordGravity; }
         else if (swordType == SwordType.Pierce)
             newSwordScript.SetupPierce(pierceAmount);
-        else if (swordType == SwordType.Spin)
+        else if (swordType == SwordType.Chainsaw)
             newSwordScript.SetupSpin(true, maxTravelDistance, spinDuration, hitCoolown);
 
 
@@ -112,7 +131,58 @@ public class SwordSkill : Skill
 
     }
 
-   
+    #region Unlock Region
+
+    private void UnlockTimeStop()
+    {
+        if (timeStopUnlockButton.unlocked)
+        {
+            timeStopUnlocked = true;
+        }
+    }
+
+    private void UnlockVulnerability()
+    {
+        if (vulnerableUnlockButton.unlocked)
+        {
+            vulnerableUnlocked = true;
+        }
+    }
+
+    private void UnlockSword()
+    {
+        if (swordUnlockButton.unlocked)
+        {
+            swordType = SwordType.Regular;
+            swordUnlocked = true;
+        }
+    }
+
+    private void UnlockBounceSword()
+    {
+        if (bounceUnlockButton.unlocked)
+        {
+            swordType = SwordType.Bounce;
+        }
+    }
+
+    private void UnlockPierceSword()
+    {
+        if (pierceUnlockButton.unlocked)
+        {
+            swordType = SwordType.Pierce;
+        }
+    }
+
+    private void UnlockChainsawSword()
+    {
+        if (chainsawUnlockButton.unlocked)
+        {
+            swordType = SwordType.Chainsaw;
+        }
+    }
+
+    #endregion
 
     protected override void Update()
     {

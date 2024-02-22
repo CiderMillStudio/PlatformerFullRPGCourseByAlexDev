@@ -36,6 +36,8 @@ public class SkillManager : MonoBehaviour
         crystal = GetComponent<CrystalSkill>();
         parry = GetComponent<ParrySkill>();
         dodge = GetComponent<DodgeSkill>();
+
+        Debug.Log("SkillManager");
     }
 
 

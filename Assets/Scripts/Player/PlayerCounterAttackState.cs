@@ -14,6 +14,13 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
+        if (!player.skill.parry.parryUnlocked || !player.skill.parry.CanUseSkill()) //maybe delete this code?
+        {
+            player.stateMachine.ChangeState(player.idleState);
+            return;
+        }
+
         stateTimer = player.counterAttackDuration;
         player.anim.SetBool("SuccessfulCounterAttack", false);
         //we must add this here

@@ -24,6 +24,8 @@ public class CloneSkillController : MonoBehaviour
     private int facingDir = 1;
     private float chanceToDuplicateClone;
 
+    private float attackMultiplier;
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -45,7 +47,7 @@ public class CloneSkillController : MonoBehaviour
     public void SetUpClone(Transform _newTransform, float _cloneDuration, 
         float _fadeOutModifier, bool canAttack, 
             float _attackCheckRadius, Vector3 _offset, Transform _closestEnemy, 
-                bool _canDuplicateClone, float _chanceToDuplicateClone, Player _player) //sets up position and other stuff
+                bool _canDuplicateClone, float _chanceToDuplicateClone, Player _player, float _attackMultiplier) //sets up position and other stuff
     {
         if (canAttack)
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
@@ -60,6 +62,7 @@ public class CloneSkillController : MonoBehaviour
 
         canDuplicateClone = _canDuplicateClone;
         chanceToDuplicateClone = _chanceToDuplicateClone;
+        attackMultiplier = _attackMultiplier;
         
         FaceClosestTarget();
 
@@ -96,7 +99,16 @@ public class CloneSkillController : MonoBehaviour
             {
                 //hit.GetComponent<Enemy>().DamageEffect(); no longer needed because we have line below!
 
-                player.stats.DoDamage(hit.GetComponent<CharacterStats>());
+                PlayerStats playerStats = player.GetComponent<PlayerStats>();
+                EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
+
+                playerStats.CloneDoDamage(enemyStats, attackMultiplier);
+
+                if (player.skill.clone.canApplyOnHitEffect)
+                {
+                    Inventory.instance.GetEquipment(EquipmentType.Weapon)?.Effect(hit.transform);
+                }
+                
 
 
                 if (canDuplicateClone)
