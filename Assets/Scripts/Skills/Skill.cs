@@ -15,11 +15,18 @@ public class Skill : MonoBehaviour
     protected virtual void Start()
     {
         player = PlayerManager.instance.player;
+
+        CheckUnlock(); //SUPER USEFUL!!! 2/24/2024
     }
 
     protected virtual void Update()
     {
         cooldownTimer -= Time.deltaTime;
+    }
+
+    protected virtual void CheckUnlock()
+    {
+
     }
 
 

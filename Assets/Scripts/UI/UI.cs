@@ -11,6 +11,8 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject craftPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject inGameUi;
+    [SerializeField] public GameObject fadeScreen;
+    [SerializeField] public GameObject deathText;
 
     [SerializeField] private GameObject[] UiMenuPanels;
 
@@ -139,5 +141,12 @@ public class UI : MonoBehaviour
 
 
         SwitchTo(inGameUi);
+    }
+
+    public void SwitchOnEndScreen()
+    {
+        deathText.SetActive(true);
+        fadeScreen.GetComponent<UI_FadeScreen>().FadeOut(3f);
+        deathText.GetComponent<Animator>().SetTrigger("Death");
     }
 }

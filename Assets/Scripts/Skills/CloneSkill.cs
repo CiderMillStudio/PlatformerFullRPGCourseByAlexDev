@@ -54,6 +54,14 @@ public class CloneSkill : Skill
 
     #region Unlock Region
 
+    protected override void CheckUnlock()
+    {
+        UnlockCloneAttack();
+        UnlockAggressiveClone();
+        UnlockCrystalInstead();
+        UnlockMultipleClone();
+    }
+
     private void UnlockCloneAttack()
     {
         if (cloneAttackUnlockButton.unlocked)

@@ -83,6 +83,16 @@ public class SwordSkill : Skill
         bounceUnlockButton.GetComponent<Button>().onClick.AddListener(UnlockBounceSword);
     }
 
+    protected override void CheckUnlock()
+    {
+        UnlockSword();
+        UnlockTimeStop();
+        UnlockVulnerability();
+        UnlockChainsawSword();
+        UnlockBounceSword();
+        UnlockPierceSword();
+    }
+
     private void SetupGravity()
     {
         if (swordType == SwordType.Regular)
@@ -105,7 +115,7 @@ public class SwordSkill : Skill
 
     public void CreateSword()
     {
-        SetupGravity(); //TALK ABOut THIS LATER!
+        SetupGravity();
 
         GameObject newSword = Instantiate(swordPrefab, player.transform.position,
             transform.rotation);
@@ -114,7 +124,6 @@ public class SwordSkill : Skill
 
         if (swordType == SwordType.Bounce)
             newSwordScript.SetUpBounce(true, bounceAmount, bounceSpeed);
-        //{ swordGravity = bounceSwordGravity; }
         else if (swordType == SwordType.Pierce)
             newSwordScript.SetupPierce(pierceAmount);
         else if (swordType == SwordType.Chainsaw)
@@ -125,7 +134,7 @@ public class SwordSkill : Skill
 
  
 
-        newSwordScript.SetUpSword(finalDirection, swordGravity, player, returnSpeed, freezeTimeDuration); //Turns out Alex was right!
+        newSwordScript.SetUpSword(finalDirection, swordGravity, player, returnSpeed, freezeTimeDuration);
 
         DotsActive(false);
 

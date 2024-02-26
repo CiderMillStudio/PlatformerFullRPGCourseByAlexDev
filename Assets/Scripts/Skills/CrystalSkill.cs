@@ -14,7 +14,7 @@ public class CrystalSkill : Skill
     [SerializeField] private UI_SkillTreeSlot unlockCrystalButton;
     public bool crystalUnlocked;
 
-    [Header("Crystal Mirage")]
+    [Header("Crystal Mirage Blink")]
     [SerializeField] private UI_SkillTreeSlot unlockCloneInsteadButton;
     [SerializeField] private bool cloneLeftBehindAfterTeleportation;
 
@@ -24,7 +24,7 @@ public class CrystalSkill : Skill
     [SerializeField] private float maxSize;
     [SerializeField] private float growSpeed;
 
-    [Header("Moving Crystal")]
+    [Header("Moving Crystal (Controlled Destruction)")]
     [SerializeField] private UI_SkillTreeSlot unlockMovingCrystalButton;
     [SerializeField] private bool canMoveToEnemy;
     [SerializeField] private float moveSpeed;
@@ -50,10 +50,21 @@ public class CrystalSkill : Skill
     }
 
     #region Unlock Skill Region - here we unlock crystal skills.
+
+    protected override void CheckUnlock()
+    {
+        UnlockCrystal();
+        UnlockCrystalMirage();
+        UnlockExplosiveCrystal();
+        UnlockMovingCrystal();
+        UnlockMultistackCrystal();
+
+    }
     private void UnlockCrystal()
     {
         if (unlockCrystalButton.unlocked)
             crystalUnlocked = true;
+
     }
 
     private void UnlockCrystalMirage()

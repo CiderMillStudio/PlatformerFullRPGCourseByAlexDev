@@ -22,9 +22,15 @@ public class DodgeSkill : Skill
         unlockDodgeMirageButton.GetComponent<Button>().onClick.AddListener(UnlockDodgeMirage);
     }
 
+    protected override void CheckUnlock() //WOW 2/24/2024
+    {
+        UnlockDodge();
+        UnlockDodgeMirage();
+    }
+
     private void UnlockDodge()
     {
-        if (unlockDodgeButton.unlocked)
+        if (unlockDodgeButton.unlocked && !dodgeUnlocked) //by adding !dodgeUnlocked, we prevent players from increasing their evasion stat to infinity by repeat-clicking the dodgeUnlockButton.
         {
             player.stats.evasion.AddModifier(evasionAmount);
             dodgeUnlocked = true;

@@ -43,7 +43,7 @@ public class UI_InGamePanel : MonoBehaviour
 
     private void Update()
     {
-        currentSouls.text = PlayerManager.instance.GetCurrentCurrency().ToString("#,#"); //THIS IS SO COOL HOLY MOLEY!!!!!! LADKFJKLASDFALJFSDALKFSDLFJDS
+        currentSouls.text = "$" + PlayerManager.instance.GetCurrentCurrency().ToString("#,#"); //THIS IS SO COOL HOLY MOLEY!!!!!! LADKFJKLASDFALJFSDALKFSDLFJDS
         
         if (Input.GetKeyDown(KeyCode.LeftShift) && skills.dash.dashUnlocked)
         {

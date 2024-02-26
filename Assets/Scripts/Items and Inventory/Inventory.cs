@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using static UnityEditor.Progress;
 
 
 
-public class Inventory : MonoBehaviour
+public class Inventory : MonoBehaviour, ISaveManager
 {
     public static Inventory instance; // PUBLIC STATIC
 
@@ -42,7 +43,12 @@ public class Inventory : MonoBehaviour
     private float lastTimeUsedArmor;
 
     private float armorCooldown; 
-    private float flaskCooldown; 
+    private float flaskCooldown;
+
+
+    [Header("Database")]
+    public List<InventoryItem> loadedItems;
+    public List<ItemDataEquipment> loadedEquipment;
 
     private void Awake()
     {
@@ -75,7 +81,29 @@ public class Inventory : MonoBehaviour
 
     private void AddStartingItems()
     {
-        for (int i = 0; i < startingItems.Count; i++)
+        if (loadedEquipment.Count > 0)
+        {
+            foreach (ItemDataEquipment item in loadedEquipment)
+            {
+                EquipItem(item);
+            }
+        }
+
+        if (loadedItems.Count > 0)  //if there are any loaded items (i.e. if there was a save prior to this load),                                              //              //
+        {
+            foreach (InventoryItem item in loadedItems)   
+            {
+                for (int i = 0; i < item.stackSize; i++)
+                {
+                    AddItem(item.data); //then we will add those items into our player's inventory!
+                }
+            }
+            return; //Then, we'll return early so that 'starting items' won't be added at all (see below)
+        }
+
+        
+        
+        for (int i = 0; i < startingItems.Count; i++) //this for loop will only happen if there was not a prior save!
         {
             AddItem(startingItems[i]);
         }
@@ -215,6 +243,7 @@ public class Inventory : MonoBehaviour
         else if (_item.itemType == ItemType.Material)
         {
             AddToStash(_item);
+            Debug.Log("Adding " +  _item.itemName + " to stash!");
 
         
         }
@@ -409,4 +438,74 @@ public class Inventory : MonoBehaviour
         Debug.Log("Armor is on Cooldown");
         return false;
     }
+
+    public void LoadData(GameData _data)
+    {
+        foreach (KeyValuePair<string, int> pair in _data.inventory) // this line acquires the items the player had in inventory last session (in form of serializable dictionary, of which each element consists of a itemId key and a stacksize value.)
+        {
+            foreach (var item in GetItemDatabase()) //this line acquires ALL unique items in the whole game.
+            {
+                if (item != null && item.itemId == pair.Key) //now, we'll compare each unique item's itemId to the itemId (pair.key) of each item that was in our inventory during the last save.
+                {
+                    InventoryItem itemToLoad = new InventoryItem(item); //IF and ONLY IF those itemId's match, we will generate a new InventoryItem (of ItemData type 'item')
+                    itemToLoad.stackSize = pair.Value;  //and we will assign its stacksize to the amount from the prior save (pair.Value)
+
+                    loadedItems.Add(itemToLoad); //finally, we'll add that InventoryItem to the List of Inventory Items called 'loadedItems'
+                }
+            }
+        }
+
+        foreach (string loadedEquipmentId in _data.equipmentId)
+        {
+            foreach (var item in GetItemDatabase())
+            {
+                if (item != null && item.itemId == loadedEquipmentId)
+                {
+                    loadedEquipment.Add(item as ItemDataEquipment);
+                }
+            }
+        }
+    }
+
+    public void SaveData(ref GameData _data)     //in inventory: 2 wooden swords, 1 stone sword
+    {
+        _data.inventory.Clear();  //clear serializable dictionary from previous save file
+        _data.equipmentId.Clear(); //DON'T FORGET THIS!!!!
+
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in inventoryDictionary) //for each item currently in our inventory,
+        {
+            _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize); // we'll add an element to GameData's recently cleared serializable dictionary, consisting of an itemId (long string name), and a stack size.
+        } 
+
+
+        foreach (KeyValuePair<ItemData, InventoryItem> pair in stashDictionary)
+        {
+            _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
+
+            Debug.Log("Saved " + pair.Key.itemName);
+        }
+
+        foreach (KeyValuePair<ItemDataEquipment, InventoryItem> pair in equipmentDictionary)
+        {
+            _data.equipmentId.Add(pair.Key.itemId);
+            Debug.Log("Saved " + pair.Key.itemName + " in Equipment Slot " + pair.Key.equipmentType.ToString());
+        }
+
+    }
+
+    private List<ItemData> GetItemDatabase() //return a list of every single item (itemData) we've made)
+    {
+        List<ItemData> itemDatabase = new List<ItemData>();
+        string[] assetNames = AssetDatabase.FindAssets("", new[] {"Assets/Data/Items"});
+
+        foreach (string scriptableObjectName in assetNames)
+        {
+            var scriptableObjectPath = AssetDatabase.GUIDToAssetPath(scriptableObjectName);
+            var itemData = AssetDatabase.LoadAssetAtPath<ItemData>(scriptableObjectPath);
+            itemDatabase.Add(itemData);
+        }
+
+        return itemDatabase;
+    }
+
 }

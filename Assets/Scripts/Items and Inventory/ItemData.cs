@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -18,10 +19,20 @@ public class ItemData : ScriptableObject //INHERIT FROM S.O.!!
     public string itemName;
     public Sprite icon;
 
+    public string itemId;
+
     [Range(0, 100)]
     public float dropChance;
 
     protected StringBuilder sb = new StringBuilder();
+
+    private void OnValidate()
+    {
+#if UNITY_EDITOR //generates a unique ID for each individual item!
+        string path = AssetDatabase.GetAssetPath(this);
+        itemId = AssetDatabase.AssetPathToGUID(path);
+#endif
+    }
 
     public virtual string GetDescription()
     {
