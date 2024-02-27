@@ -16,6 +16,7 @@ public class EnemyStats : CharacterStats
 
     protected override void Start()
     {
+        soulsDropAmount.SetDefaultValue(100);
         ApplyLevelModifiers();
 
         base.Start();
@@ -58,5 +59,7 @@ public class EnemyStats : CharacterStats
         enemy.Die();
 
         myDropSystem.GenerateDropUponDeath();
+
+        PlayerManager.instance.currency += soulsDropAmount.GetValue();
     }
 }

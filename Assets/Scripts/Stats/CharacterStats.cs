@@ -16,7 +16,8 @@ public enum StatType //NEW (used to be in BuffEffect.cs)
     magicResistance,
     fireDamage,
     iceDamage,
-    lightningDamage
+    lightningDamage,
+    soulsDropAmount
 }
 public class CharacterStats : MonoBehaviour
 {
@@ -76,6 +77,9 @@ public class CharacterStats : MonoBehaviour
 
     #endregion;
 
+    [Header("Souls Stats")]
+    public Stat soulsDropAmount;
+
     #endregion
 
     public int currentHealth;
@@ -109,6 +113,8 @@ public class CharacterStats : MonoBehaviour
         listOfStats.Add(fireDamage);
         listOfStats.Add(iceDamage);
         listOfStats.Add(lightningDamage);
+        if (this.GetComponent<EnemyStats>() != null)
+            listOfStats.Add(soulsDropAmount);
 
     }
     protected virtual void Start()

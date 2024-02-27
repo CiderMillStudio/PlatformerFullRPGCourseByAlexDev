@@ -104,7 +104,6 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
         else
         {
             _data.skillTree.Add(skillName, unlocked);
-            Debug.Log("Saved " +  skillName);
         }
     }
 } 

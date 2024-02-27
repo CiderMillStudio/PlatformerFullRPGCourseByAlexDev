@@ -6,13 +6,22 @@ using UnityEngine;
 
 public class UI : MonoBehaviour
 {
+    [Header("Checkpoints")]
+    private CheckpointParent checkpointParent;
+
+    [Header("Death Screen")]
+    public GameObject fadeScreen;
+    public GameObject deathText;
+    public GameObject respawnButton;
+    [SerializeField] private float delayAfterDeathBeforeEndScreenAppears = 3f;
+
+    [Space]
+    [Header("UI Panels")]
     [SerializeField] private GameObject characterPanel;
     [SerializeField] private GameObject skilltreePanel;
     [SerializeField] private GameObject craftPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject inGameUi;
-    [SerializeField] public GameObject fadeScreen;
-    [SerializeField] public GameObject deathText;
 
     [SerializeField] private GameObject[] UiMenuPanels;
 
@@ -24,7 +33,9 @@ public class UI : MonoBehaviour
 
     private void Awake()
     {
+        checkpointParent = FindObjectOfType<CheckpointParent>();
         SwitchTo(skilltreePanel);
+        fadeScreen.SetActive(true);
     }
 
     private void Start()
@@ -145,8 +156,21 @@ public class UI : MonoBehaviour
 
     public void SwitchOnEndScreen()
     {
+        StartCoroutine(EndScreenDelayCoroutine(delayAfterDeathBeforeEndScreenAppears));
+    }
+
+    public void RestartGameButton() => GameManager.instance.RestartCurrentScene(); 
+
+    private IEnumerator EndScreenDelayCoroutine(float _delay)
+    {
+        checkpointParent.DisableAllCheckpointButtons();
         deathText.SetActive(true);
-        fadeScreen.GetComponent<UI_FadeScreen>().FadeOut(3f);
+
+        yield return new WaitForSeconds(_delay);
+        fadeScreen.GetComponent<UI_FadeScreen>().FadeOut(0);
         deathText.GetComponent<Animator>().SetTrigger("Death");
+
+        yield return new WaitForSeconds(3f);
+        respawnButton.SetActive(true);
     }
 }

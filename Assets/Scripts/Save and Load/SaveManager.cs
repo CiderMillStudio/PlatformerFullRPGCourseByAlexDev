@@ -45,7 +45,7 @@ public class SaveManager : MonoBehaviour
         saveManagers = FindAllSaveManagers();
         
         LoadGame();
-        Debug.Log("Save Manager Loaded Game.");
+       
     }
 
     public void NewGame()
@@ -55,6 +55,8 @@ public class SaveManager : MonoBehaviour
 
     public void LoadGame()
     {
+
+        Debug.Log("LOADING GAME!!!!!");
         gameData = dataHandler.Load();
 
         if (this.gameData == null)
@@ -67,12 +69,14 @@ public class SaveManager : MonoBehaviour
         {
             saveManager.LoadData(gameData);
         }
+
+        Debug.Log("Save Manager Loaded Game.");
     }
 
     public void SaveGame()
     {
-        
 
+        Debug.Log("SAVING GAME!!!!");
         foreach (ISaveManager saveManager in saveManagers)
         {
             saveManager.SaveData(ref gameData);

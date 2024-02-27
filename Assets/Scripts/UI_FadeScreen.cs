@@ -25,15 +25,6 @@ public class UI_FadeScreen : MonoBehaviour
     {
         yield return new WaitForSeconds(_delay);
         anim.SetBool("FadeOut", true);
-        if (PlayerManager.instance != null)
-        {
-            if (PlayerManager.instance.player.stats.isDead)
-            {
-                yield return new WaitForSeconds(4f);
-                SaveManager.instance.SaveGame();
-                SceneManager.LoadScene("StartMenu");
-            }
-        }
         
     }
 

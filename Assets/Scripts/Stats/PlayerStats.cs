@@ -27,7 +27,13 @@ public class PlayerStats : CharacterStats
         base.Die();
 
         player.Die();
+
+        GameManager.instance.lostCurrencyAmount = PlayerManager.instance.currency;
+        PlayerManager.instance.currency = 0;
+
         myPlayerItemDropSystem.GenerateDropUponDeath();
+
+
     }
 
     protected override void DecreaseHealthBy(int _damage) 

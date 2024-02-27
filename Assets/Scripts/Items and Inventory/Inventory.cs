@@ -242,10 +242,7 @@ public class Inventory : MonoBehaviour, ISaveManager
 
         else if (_item.itemType == ItemType.Material)
         {
-            AddToStash(_item);
-            Debug.Log("Adding " +  _item.itemName + " to stash!");
-
-        
+            AddToStash(_item);        
         }
 
             UpdateSlotUI(); //this line ensures that itemSlot images and itemAmount (TMP) values are accurate
@@ -482,13 +479,13 @@ public class Inventory : MonoBehaviour, ISaveManager
         {
             _data.inventory.Add(pair.Key.itemId, pair.Value.stackSize);
 
-            Debug.Log("Saved " + pair.Key.itemName);
+            
         }
 
         foreach (KeyValuePair<ItemDataEquipment, InventoryItem> pair in equipmentDictionary)
         {
             _data.equipmentId.Add(pair.Key.itemId);
-            Debug.Log("Saved " + pair.Key.itemName + " in Equipment Slot " + pair.Key.equipmentType.ToString());
+           
         }
 
     }

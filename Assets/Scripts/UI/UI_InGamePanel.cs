@@ -23,8 +23,11 @@ public class UI_InGamePanel : MonoBehaviour
 
     private SkillManager skills;
 
-
+    [Header("Souls Currency Info")]
     [SerializeField] private TextMeshProUGUI currentSouls;
+    [SerializeField] private float soulsAmount;
+    [SerializeField] private float increaseRate = 500;
+
 
 
     private void Start()
@@ -43,7 +46,12 @@ public class UI_InGamePanel : MonoBehaviour
 
     private void Update()
     {
-        currentSouls.text = "$" + PlayerManager.instance.GetCurrentCurrency().ToString("#,#"); //THIS IS SO COOL HOLY MOLEY!!!!!! LADKFJKLASDFALJFSDALKFSDLFJDS
+        if (soulsAmount < PlayerManager.instance.GetCurrentCurrency())       
+            soulsAmount += Time.deltaTime * increaseRate;       
+        else
+            soulsAmount = PlayerManager.instance.GetCurrentCurrency();
+
+        currentSouls.text = Mathf.RoundToInt(soulsAmount).ToString("#,#"); //THIS IS SO COOL HOLY MOLEY!!!!!! LADKFJKLASDFALJFSDALKFSDLFJDS
         
         if (Input.GetKeyDown(KeyCode.LeftShift) && skills.dash.dashUnlocked)
         {
