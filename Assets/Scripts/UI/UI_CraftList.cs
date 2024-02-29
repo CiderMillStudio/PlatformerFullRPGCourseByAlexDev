@@ -12,6 +12,12 @@ public class UI_CraftList : MonoBehaviour, IPointerDownHandler
 
     [SerializeField] private List<ItemDataEquipment> craftEquipment;
 
+    private void OnEnable() //added this 2/29/2024 due to bug where item names wouldn't appear on craft slot after opening it once. (first time opening the craft tab was successful, but not subsequent times)
+    {
+        SetupCraftList();
+        SetupDefaultCraftWindow();
+    }
+
     private void Start() //called 4 times (because there are 4 Craft List Buttons!)
     {
         transform.parent.GetChild(0).GetComponent<UI_CraftList>().SetupCraftList();

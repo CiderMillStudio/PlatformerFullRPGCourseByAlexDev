@@ -3832,7 +3832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3994836221130430484, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
       propertyPath: level
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5492379409533207389, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3885,10 +3885,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1317514369851888436, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1509471720}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
 --- !u!1 &219598691
 GameObject:
@@ -13546,6 +13543,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5954377701895840076, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
+      propertyPath: defaultKnockbackDirection.x
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5954377701895840076, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
+      propertyPath: defaultKnockbackDirection.y
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8164608732340227407, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -14664,7 +14669,7 @@ MonoBehaviour:
     m_Bits: 8
   attackCheck: {fileID: 565078510}
   attackCheckRadius: 1.42
-  defaultKnockbackDirection: {x: 7, y: 3}
+  defaultKnockbackDirection: {x: 7, y: 2}
   maxHealthProportionForSuperKnockback: 0.4
   superKnockbackMultiplier: 4
   knockbackDuration: 0.13
@@ -14793,7 +14798,7 @@ MonoBehaviour:
     baseValue: 5
     modifiers: 
   damage:
-    baseValue: 33
+    baseValue: 30
     modifiers: 
   critChance:
     baseValue: 0
@@ -91154,12 +91159,12 @@ MonoBehaviour:
   skilltreePanel: {fileID: 1309380769}
   craftPanel: {fileID: 298677807}
   optionsPanel: {fileID: 1134290696}
-  inGameUi: {fileID: 1694035363}
   UiMenuPanels:
   - {fileID: 668533495}
   - {fileID: 1309380769}
   - {fileID: 298677807}
   - {fileID: 1134290696}
+  inGameUi: {fileID: 1694035363}
   itemTooltip: {fileID: 471094905}
   statTooltip: {fileID: 679763452}
   skillTooltip: {fileID: 329170535}
@@ -112414,37 +112419,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1485637321}
   m_CullTransparentMesh: 1
---- !u!1 &1509471715 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1317514369851888436, guid: eadfb35468a2f6e438c9bb866e6b4fd2, type: 3}
-  m_PrefabInstance: {fileID: 219521526}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1509471720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1509471715}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d480cc2fb756e564f89e0505c078e163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxAmountOfItemsToDrop: 5
-  dropChanceModifier: 1
-  possibleDrops:
-  - {fileID: 11400000, guid: 2addda0fb8f9fc3489de4ca9448c1cad, type: 2}
-  - {fileID: 11400000, guid: a75472e00c63d7943881801f46fb3620, type: 2}
-  - {fileID: 11400000, guid: e4ed9e81d1c355747a07b33a974c977f, type: 2}
-  - {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
-  - {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
-  - {fileID: 11400000, guid: b39df5c6dac8329499b09aa3ebab8055, type: 2}
-  - {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
-  - {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
-  - {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-  dropList: []
-  dropPrefab: {fileID: 7243729598822216024, guid: 44d2a472c13c5044588b970f1fb3500d, type: 3}
 --- !u!1 &1511954873
 GameObject:
   m_ObjectHideFlags: 0

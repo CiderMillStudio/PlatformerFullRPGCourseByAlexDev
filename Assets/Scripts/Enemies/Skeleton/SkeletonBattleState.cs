@@ -7,6 +7,8 @@ public class SkeletonBattleState : EnemyState
     private Transform player;
     private EnemySkeleton enemy;
     private int moveDirection;
+
+    private float attackCooldownModifier = 0;
     public SkeletonBattleState(Enemy _enemyBase, EnemyStateMachine _stateMachine, 
         string _animBoolName, EnemySkeleton _enemy) : base(_enemyBase, _stateMachine, _animBoolName)
     {
@@ -19,18 +21,27 @@ public class SkeletonBattleState : EnemyState
         player = PlayerManager.instance.player.transform; //using singletons to our advantage!
         //player = GameObject.Find("Player").transform; //THIS IS VERY RESOURCE HEAVY
 
+        attackCooldownModifier = Random.Range(0f, 1.2f);
+
         
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        attackCooldownModifier = 0;
     }
 
     public override void Update()
     {
         base.Update();
         
+        if (player.GetComponent<PlayerStats>().isDead)
+        {
+            stateMachine.ChangeState(enemy.moveState);
+            return;
+        }
 
         if (enemy.IsPlayerDetected())
         {
@@ -39,8 +50,10 @@ public class SkeletonBattleState : EnemyState
 
             if (enemy.IsPlayerInRange())
             {
+                
                 if (CanAttack())
                 {
+                    attackCooldownModifier = Random.Range(0f, 1.2f);
                     stateMachine.ChangeState(enemy.attackState);
                 }
             }
@@ -71,7 +84,9 @@ public class SkeletonBattleState : EnemyState
 
     private bool CanAttack()
     {
-        if (enemy.lastTimeAttacked + enemy.attackCooldown < Time.time)
+        
+        
+        if (enemy.lastTimeAttacked + enemy.attackCooldown + attackCooldownModifier < Time.time)
         {
             enemy.lastTimeAttacked = Time.time;
             return true;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class UI : MonoBehaviour, ISaveManager
 {
@@ -21,10 +22,15 @@ public class UI : MonoBehaviour, ISaveManager
     [SerializeField] private GameObject skilltreePanel;
     [SerializeField] private GameObject craftPanel;
     [SerializeField] private GameObject optionsPanel;
-    [SerializeField] private GameObject inGameUi;
+
     [Space]
     [SerializeField] private GameObject[] UiMenuPanels;
+    [Space]
+    [Header("In-Game UI")]
+    [SerializeField] private GameObject inGameUi;
 
+    [Space]
+    [Header("Tooltips")]
     public UI_ItemTooltip itemTooltip;
     public UI_StatTooltip statTooltip;
     public UI_SkillTooltip skillTooltip;
@@ -74,7 +80,19 @@ public class UI : MonoBehaviour, ISaveManager
         {
             _menu.SetActive(true);
             AudioManager.instance.PlaySFX(7, null);
+
+            if (_menu != inGameUi)
+            {
+                GameManager.instance.PauseGame(true);
+            }
+            else if (_menu == inGameUi)
+            {
+                GameManager.instance.PauseGame(false);
+            }
         }
+
+
+        
     }
 
     public void ToggleUiMenu()
@@ -85,6 +103,7 @@ public class UI : MonoBehaviour, ISaveManager
             {
                 _menu.SetActive(false);
                 CheckForInGameUI();
+                GameManager.instance.PauseGame(false);
                 return;
             }
         }
@@ -93,6 +112,8 @@ public class UI : MonoBehaviour, ISaveManager
         characterPanel.SetActive(true);
 
         AudioManager.instance.PlaySFX(7, null);
+
+        GameManager.instance.PauseGame(true);
     }
 
     public void ToggleToSpecificUIMenuWithShortcut(GameObject _specificMenu)
@@ -132,6 +153,7 @@ public class UI : MonoBehaviour, ISaveManager
         else if (Input.GetKeyUp(KeyCode.B))
         {
             ToggleToSpecificUIMenuWithShortcut(craftPanel); //UiPanels[2] is Craft Panel
+            
             CheckForInGameUI();
         }
 
@@ -151,6 +173,7 @@ public class UI : MonoBehaviour, ISaveManager
 
             if (UiMenuPanels[i].gameObject.activeSelf)
             {
+                GameManager.instance.PauseGame(true);
                 return;
             }
         }
@@ -160,6 +183,8 @@ public class UI : MonoBehaviour, ISaveManager
 
 
         SwitchTo(inGameUi);
+        GameManager.instance.PauseGame(false);
+
     }
 
     public void SwitchOnEndScreen()

@@ -179,4 +179,15 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
         return closestCheckpoint;
 
     }
+
+
+    public void PauseGame(bool _pause)
+    {
+        if (_pause)
+        {
+            Time.timeScale = 0;
+        }
+        else
+            Time.timeScale = 1;
+    }
 }

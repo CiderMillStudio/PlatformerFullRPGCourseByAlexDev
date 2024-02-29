@@ -121,7 +121,10 @@ public class Entity : MonoBehaviour
             damageSourceDirectionX = 1; //the damage source is TO THE RIGHT
 
         if (superKnockbackEnabled)
+        {
             knockbackDirection = defaultKnockbackDirection * superKnockbackMultiplier;
+
+        }
 
         rb.velocity = new Vector2 (knockbackDirection.x * -damageSourceDirectionX, knockbackDirection.y);
 

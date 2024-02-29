@@ -19,7 +19,9 @@ public class UI_CraftSlot : UI_ItemSlot
     private void OnEnable()
     {
         if (item != null)
+        {
             UpdateSlot(item);
+        }
         else
             Debug.Log("There is not an item assigned to this CraftSlot!!! Pls send Halp");
     }
@@ -32,6 +34,8 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public void SetupCraftSlot(ItemDataEquipment _data)
     {
+        Debug.Log("Setting up craft slot!");
+        
         if (_data == null)
             return;
 

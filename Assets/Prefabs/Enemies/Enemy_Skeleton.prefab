@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 8634683281924363390}
   - component: {fileID: 5954377701895840076}
   - component: {fileID: 3994836221130430484}
+  - component: {fileID: 1602821248434556521}
   m_Layer: 8
   m_Name: Enemy_Skeleton
   m_TagString: Untagged
@@ -192,9 +193,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   attackCheck: {fileID: 7552297247007222588}
-  attackCheckRadius: 1.55
-  knockbackDirection: {x: 14, y: 7}
-  knockbackDuration: 0.07
+  attackCheckRadius: 1.66
+  defaultKnockbackDirection: {x: 4, y: 1}
+  maxHealthProportionForSuperKnockback: 0.4
+  superKnockbackMultiplier: 4
+  knockbackDuration: 0.15
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 128
@@ -206,7 +209,7 @@ MonoBehaviour:
   battleTime: 6
   stopAttackDistance: 25
   battleRange: 6.17
-  attackDistance: 2.25
+  attackDistance: 2.73
   attackSpeedModifier: 1.8
   BattleRangeCheck: {fileID: 2916757021569654743}
   AttackDistanceCheck: {fileID: 5292159185409896470}
@@ -278,6 +281,32 @@ MonoBehaviour:
   currentHealth: 0
   level: 1
   percentageModifier: 0.4
+--- !u!114 &1602821248434556521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1317514369851888436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d480cc2fb756e564f89e0505c078e163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxAmountOfItemsToDrop: 5
+  dropChanceModifier: 1
+  possibleDrops:
+  - {fileID: 11400000, guid: 2addda0fb8f9fc3489de4ca9448c1cad, type: 2}
+  - {fileID: 11400000, guid: a75472e00c63d7943881801f46fb3620, type: 2}
+  - {fileID: 11400000, guid: e4ed9e81d1c355747a07b33a974c977f, type: 2}
+  - {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
+  - {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
+  - {fileID: 11400000, guid: b39df5c6dac8329499b09aa3ebab8055, type: 2}
+  - {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
+  - {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
+  - {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+  dropList: []
+  dropPrefab: {fileID: 7243729598822216024, guid: 44d2a472c13c5044588b970f1fb3500d, type: 3}
 --- !u!1 &1435294327295286807
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +394,7 @@ Transform:
   m_GameObject: {fileID: 2610202153980420402}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.82, y: -0.26, z: 0}
+  m_LocalPosition: {x: 1.11, y: -0.26, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
