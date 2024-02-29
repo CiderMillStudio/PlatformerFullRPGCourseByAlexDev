@@ -181,21 +181,21 @@ public class CharacterStats : MonoBehaviour
             //Debug.Log("total crit damage is: " + totalDamage);
         }
 
-        _targetStats.TakeDamage(totalDamage);
+        _targetStats.TakeDamage(totalDamage, this.transform);
 
 
-        DoMagicalDamage(_targetStats); //Remove this line if you don't want to apply magic hit on primary attack.
+        DoMagicalDamage(_targetStats, this.transform); //Remove this line if you don't want to apply magic hit on primary attack.
 
         //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
         //DoMagicalDamage(_targetStats);
 
     }
 
-    public virtual void TakeDamage(int _damage)
+    public virtual void TakeDamage(int _damage, Transform _damageSource)
     {
         DecreaseHealthBy(_damage);
 
-        GetComponent<Entity>().DamageImpact(); //We deleted DamageEffect() EVERYWHERE else, except for here!
+        GetComponent<Entity>().DamageImpact(_damageSource, _damage); //We deleted DamageEffect() EVERYWHERE else, except for here!
         fx.StartCoroutine("FlashFX");
 
         //Debug.Log("TakeDamage(): " +_damage);
@@ -251,7 +251,7 @@ public class CharacterStats : MonoBehaviour
     }
 
     #region Magical Damage and Ailments
-    public virtual void DoMagicalDamage(CharacterStats _targetStats)
+    public virtual void DoMagicalDamage(CharacterStats _targetStats, Transform _magicDamageSource)
     {
         int _fireDamage = fireDamage.GetValue();
         int _iceDamage = iceDamage.GetValue();
@@ -260,7 +260,8 @@ public class CharacterStats : MonoBehaviour
         int totalMagicalDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue() * 2;
 
         totalMagicalDamage = CheckTargetResistance(_targetStats, totalMagicalDamage);
-        _targetStats.TakeDamage(totalMagicalDamage);
+        _targetStats.TakeDamage(totalMagicalDamage, _magicDamageSource);
+        Debug.Log(_magicDamageSource);
 
         //This is where we'll write code for Ailments (next video!)
         //The way this works is the ailment with "the most damage attributed to it's category" is the ailment that gets applied

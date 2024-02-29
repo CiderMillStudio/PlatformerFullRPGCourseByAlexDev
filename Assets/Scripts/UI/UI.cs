@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
-public class UI : MonoBehaviour
+public class UI : MonoBehaviour, ISaveManager
 {
     [Header("Checkpoints")]
     private CheckpointParent checkpointParent;
@@ -22,7 +22,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject craftPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject inGameUi;
-
+    [Space]
     [SerializeField] private GameObject[] UiMenuPanels;
 
     public UI_ItemTooltip itemTooltip;
@@ -30,6 +30,10 @@ public class UI : MonoBehaviour
     public UI_SkillTooltip skillTooltip;
 
     public UI_CraftWindow craftWindow;
+
+    [Space]
+    [Header("Volume Sliders")]
+    [SerializeField] private UI_VolumeSlider[] volumeSliders;
 
     private void Awake()
     {
@@ -69,6 +73,7 @@ public class UI : MonoBehaviour
         if (_menu != null)
         {
             _menu.SetActive(true);
+            AudioManager.instance.PlaySFX(7, null);
         }
     }
 
@@ -86,6 +91,8 @@ public class UI : MonoBehaviour
 
         inGameUi.SetActive(false);
         characterPanel.SetActive(true);
+
+        AudioManager.instance.PlaySFX(7, null);
     }
 
     public void ToggleToSpecificUIMenuWithShortcut(GameObject _specificMenu)
@@ -100,6 +107,7 @@ public class UI : MonoBehaviour
         }
 
         _specificMenu.SetActive(true);
+        AudioManager.instance.PlaySFX(7, null);
     }
 
     private void Update()
@@ -172,5 +180,31 @@ public class UI : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
         respawnButton.SetActive(true);
+    }
+
+    public void LoadData(GameData _data)
+    {
+        foreach (UI_VolumeSlider volumeSlider in volumeSliders)
+        {
+            foreach (KeyValuePair<string, float> pair in _data.volumeSliders)
+            {
+                if (pair.Key == volumeSlider.parameter)
+                {
+                    volumeSlider.SliderValue(pair.Value);
+                    volumeSlider.slider.value = pair.Value;
+                }
+            }
+        }
+    }
+
+    public void SaveData(ref GameData _data)
+    {
+        _data.volumeSliders.Clear();
+
+
+        foreach (UI_VolumeSlider volumeSlider in volumeSliders)
+        {
+            _data.volumeSliders.Add(volumeSlider.parameter, volumeSlider.slider.value);
+        }
     }
 }

@@ -1,13 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Data.Common;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.UIElements; //IMPORTANT!!
 
 public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEMENT GAME MANAGER INTERFACE!
 {
 
     public static GameManager instance;
+
+    [SerializeField] private UnityEngine.UI.Slider sfxSlider;
+    [SerializeField] private UnityEngine.UI.Slider bgmSlider;
+    [SerializeField] private AudioMixer audioMixer;
+
+
     [SerializeField] private Checkpoint[] checkpoints;
 
     private Transform player;
@@ -18,7 +27,12 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
     [SerializeField] private float lostCurrencyXPosition;
     [SerializeField] private float lostCurrencyYPosition;
 
-    
+    [Space]
+    [Header("Options & Settings")]
+    public float currentBgmVolume;
+    public float currentSfxVolume;
+
+
     private void Awake()
     {
         if (instance != null)
@@ -95,10 +109,20 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
 
     private IEnumerator LoadWithDelay(GameData _data)
     {
+       /* sfxSlider.value = _data.sfxVolume;
+        audioMixer.SetFloat("SFX", _data.sfxVolume);
+
+        bgmSlider.value = _data.backgroundMusicVolume;
+        audioMixer.SetFloat("BGM", _data.backgroundMusicVolume);*/
+
         yield return new WaitForSeconds(0.1f);
         LoadCheckpoints(_data);
         PlacePlayerAtNearestCheckpoint(_data);
         LoadLostCurrency(_data);
+
+
+        
+        
 
     }
 
@@ -118,7 +142,11 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
         _data.lostCurrencyX = player.position.x;
         _data.lostCurrencyY = player.position.y;
 
+
+/*        _data.backgroundMusicVolume = currentBgmVolume;
+        _data.sfxVolume = currentSfxVolume;*/
         
+
     }
 
 

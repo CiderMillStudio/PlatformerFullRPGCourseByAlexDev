@@ -83,6 +83,7 @@ public class Checkpoint : MonoBehaviour
    
     public void ActivateCheckpoint()
     {
+        AudioManager.instance.PlaySFX(5, this.transform);
         checkpointActivated = true;
         anim.SetBool("active", true);
         playerCanActivateCheckpoint = false;

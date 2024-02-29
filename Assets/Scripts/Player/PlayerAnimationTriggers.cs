@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerAnimationTriggers : MonoBehaviour
 {
+    private bool hitEnemy;
     private Player player => GetComponentInParent<Player>();
 
     void AnimationTrigger()
@@ -18,14 +19,20 @@ public class PlayerAnimationTriggers : MonoBehaviour
 
     void AnimationDamageTrigger()
     {
+        
+        hitEnemy = false;
+
         Collider2D[] colliders = 
             Physics2D.OverlapCircleAll(player.attackCheck.position, 
                 player.attackCheckRadius);
+
+
 
         foreach (var hit in colliders)
         {
             if (hit.GetComponent<Enemy>() != null)
             {
+                hitEnemy = true;
                 EnemyStats _target = hit.GetComponent<EnemyStats>();
 
                 if (_target != null)
@@ -37,6 +44,13 @@ public class PlayerAnimationTriggers : MonoBehaviour
                 Inventory.instance.GetEquipment(EquipmentType.Weapon)?.Effect(_target.transform);
             }
         }
+
+        if (!hitEnemy)
+            AudioManager.instance.PlaySFX(2, player.transform);
+        else
+            AudioManager.instance.PlaySFX(1, player.transform);
+
+
 
         // we chose to implement item effects HERE instead of DoDamage()
         // (in characterStats) because DoDamage is called even for abilities,

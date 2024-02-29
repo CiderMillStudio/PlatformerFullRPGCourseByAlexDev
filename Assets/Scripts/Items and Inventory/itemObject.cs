@@ -56,8 +56,9 @@ public class ItemObject : MonoBehaviour
                 Debug.Log("Failed to pick up " + itemData.name);
                 rb.velocity = new Vector2(0, 7);
                 return;
-            }    
+            }
 
+            AudioManager.instance.PlaySFX(18, this.transform);
             Inventory.instance.AddItem(itemData);
             Debug.Log("Picked up " + itemData.name);
             Destroy(gameObject);

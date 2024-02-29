@@ -16,6 +16,7 @@ public class PlayerPrimaryAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        //AudioManager.instance.PlaySFX(2);
         xInput = 0; /*WE ADDED THIS IN LECTURE 59 due to a bug, which fixed Alex's 
                      attack direction. I don't think it will have any impact on my 
                         code (I never had a bug!) but I don't think this could possibly 
@@ -62,5 +63,10 @@ public class PlayerPrimaryAttackState : PlayerState
 
         if (stateTimer < 0)
             player.SetVelocity(0, 0);
+
+        if (player.stats.isDead)
+        {
+            stateMachine.ChangeState(player.deadState);
+        }
     }
 }

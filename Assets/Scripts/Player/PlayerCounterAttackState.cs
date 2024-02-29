@@ -17,10 +17,12 @@ public class PlayerCounterAttackState : PlayerState
 
         if (!player.skill.parry.parryUnlocked || !player.skill.parry.CanUseSkill()) //maybe delete this code?
         {
+            Debug.Log("TRIGGERED, entering idle");
             player.stateMachine.ChangeState(player.idleState);
             return;
         }
 
+        Debug.Log("We've entered CounterAttack State!!");
         stateTimer = player.counterAttackDuration;
         player.anim.SetBool("SuccessfulCounterAttack", false);
         //we must add this here
@@ -52,6 +54,12 @@ public class PlayerCounterAttackState : PlayerState
                     player.anim.SetBool("SuccessfulCounterAttack", true);
                     
                     player.skill.parry.UseSkill(); //using this parry.UseSkill() method to restore health on Parry (only if this skill is unlocked in the skill tree!) 
+
+                    if (player.skill.parry.restoreUnlocked)
+                    {
+                        int restoreAmount = Mathf.RoundToInt(player.stats.GetMaxHealthValue() * player.skill.parry.restoreHealthPercentage);
+                        player.stats.IncreaseHealthBy(restoreAmount);
+                    }
 
                     if (!cloneCreated)
                     {

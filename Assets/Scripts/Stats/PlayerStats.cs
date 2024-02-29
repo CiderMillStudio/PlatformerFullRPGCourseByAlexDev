@@ -16,9 +16,9 @@ public class PlayerStats : CharacterStats
         myPlayerItemDropSystem = GetComponent<PlayerItemDrop>();
     }
 
-    public override void TakeDamage(int _damage)
+    public override void TakeDamage(int _damage, Transform _damageSource)
     {
-        base.TakeDamage(_damage);
+        base.TakeDamage(_damage, _damageSource);
 
     }
 
@@ -54,7 +54,7 @@ public class PlayerStats : CharacterStats
         player.skill.dodge.CreateMirageOnDodge(_enemyTransform);
     }
 
-    public void CloneDoDamage(CharacterStats _targetStats, float _multiplier)
+    public void CloneDoDamage(CharacterStats _targetStats, float _multiplier, Transform _cloneTransform)
     {
         if (TargetCanAvoidAttack(_targetStats))
             return;
@@ -75,10 +75,10 @@ public class PlayerStats : CharacterStats
             //Debug.Log("total crit damage is: " + totalDamage);
         }
 
-        _targetStats.TakeDamage(totalDamage);
+        _targetStats.TakeDamage(totalDamage, _cloneTransform);
 
 
-        DoMagicalDamage(_targetStats); //Remove this line if you don't want to apply magic hit on primary attack.
+        DoMagicalDamage(_targetStats, _cloneTransform); //Remove this line if you don't want to apply magic hit on primary attack.
 
         //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
         //DoMagicalDamage(_targetStats);

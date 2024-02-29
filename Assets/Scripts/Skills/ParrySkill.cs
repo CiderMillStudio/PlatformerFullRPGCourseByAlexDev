@@ -12,7 +12,7 @@ public class ParrySkill : Skill
     [Header("Restore Health on Parry")]
     [SerializeField] private UI_SkillTreeSlot restoreUnlockButton;
     [Range(0f,1f)]
-    [SerializeField] private float restoreHealthPercentage;
+    public float restoreHealthPercentage;
     public bool restoreUnlocked { get; private set; }
 
 
@@ -24,11 +24,6 @@ public class ParrySkill : Skill
     {
         base.UseSkill();
 
-        if (restoreUnlocked)
-        {
-            int restoreAmount = Mathf.RoundToInt(player.stats.GetMaxHealthValue() * restoreHealthPercentage);
-            player.stats.IncreaseHealthBy(restoreAmount);
-        }
     }
 
     protected override void Start()

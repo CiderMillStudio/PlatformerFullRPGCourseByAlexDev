@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Entity : MonoBehaviour
@@ -29,7 +30,13 @@ public class Entity : MonoBehaviour
 
     #region Knockback
     [Header("KnockBack info")]
-    public Vector2 knockbackDirection;
+    public Vector2 defaultKnockbackDirection;
+    private Vector2 knockbackDirection;
+    [Range(0f, 1f)]
+    [Tooltip("a 'super knockback' will be triggered if the player is dealt damage greater than this potion of the player's max health")]
+    [SerializeField] private float maxHealthProportionForSuperKnockback = 0.4f;
+    private bool superKnockbackEnabled = false;
+    [SerializeField] private float superKnockbackMultiplier = 4f;
     protected bool isKnocked;
     [SerializeField] protected float knockbackDuration = 0.2f;
 
@@ -67,7 +74,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        knockbackDirection = defaultKnockbackDirection;
     }
 
     public virtual void SlowEntityBy(float _slowPercentage, float _slowDuration)
@@ -81,18 +88,49 @@ public class Entity : MonoBehaviour
         anim.speed = 1;
     }
 
-    public virtual void DamageImpact() => StartCoroutine("HitKnockback");
+    public virtual void DamageImpact(Transform _damageSource, float _totalDamageDone)
+    {
+        knockbackDirection = defaultKnockbackDirection;
+
+        float superKnockbackThreshold = this.stats.GetMaxHealthValue() * maxHealthProportionForSuperKnockback;
+
+        if (_totalDamageDone >= superKnockbackThreshold)
+        {
+            Debug.Log("super knockback enabled this hit!");
+            superKnockbackEnabled = true;
+        }
+
+        StartCoroutine("HitKnockback", _damageSource);
+
+       
+    }
 
 
-    protected virtual IEnumerator HitKnockback()
+
+    protected virtual IEnumerator HitKnockback(Transform _hitSource)
     {
         isKnocked = true;
 
-        rb.velocity = new Vector2 (knockbackDirection.x * -facingDir, knockbackDirection.y);
+        int damageSourceDirectionX = 1;
+
+        Vector3 damageSourceDirection = (transform.position - _hitSource.position);
+
+        if (damageSourceDirection.x > 0)
+            damageSourceDirectionX = -1; // the damage source is TO THE LEFT
+        else
+            damageSourceDirectionX = 1; //the damage source is TO THE RIGHT
+
+        if (superKnockbackEnabled)
+            knockbackDirection = defaultKnockbackDirection * superKnockbackMultiplier;
+
+        rb.velocity = new Vector2 (knockbackDirection.x * -damageSourceDirectionX, knockbackDirection.y);
 
         yield return new WaitForSeconds(knockbackDuration);
 
+        superKnockbackEnabled = false;
+
         isKnocked = false;
+        SetZeroVelocity();
     }
 
 

@@ -21,6 +21,11 @@ public class GameData  //DOES NOT inherit from Monobehavior
     public float lostCurrencyY;
     public int lostCurrencyAmount;
 
+    public float sfxVolume;
+    public float backgroundMusicVolume;
+
+    public SerializableDictionary<string, float> volumeSliders;
+
     public GameData()
     {
         this.lostCurrencyX = 0;
@@ -34,6 +39,11 @@ public class GameData  //DOES NOT inherit from Monobehavior
 
         checkpoints = new SerializableDictionary<string, bool>();
         closestCheckpointId = string.Empty;
+
+        sfxVolume = 0;
+        backgroundMusicVolume = 0;
+
+        volumeSliders = new SerializableDictionary<string, float>();
 
         
     }

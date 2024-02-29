@@ -12,11 +12,15 @@ public class PlayerMoveState : PlayerGroundedState
     public override void Enter()
     {
         base.Enter();
+
+        AudioManager.instance.PlaySFX(14, null); //pass null because then we don't do a distance check at all (see audiomanager.cs)
     }
 
     public override void Exit()
     {
         base.Exit();
+
+        AudioManager.instance.StopSFX(14);
     }
 
     public override void Update()

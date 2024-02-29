@@ -52,6 +52,8 @@ public class BlackholeSkill : Skill //NEW SCRIPT!
     {
         base.UseSkill();
 
+        AudioManager.instance.PlaySFX(6, player.transform);
+
         GameObject newBlackhole = Instantiate(blackholePrefab, player.transform.position - new Vector3(0,1), Quaternion.identity);
 
         currentBlackhole = newBlackhole.GetComponent<BlackholeSkillController>();

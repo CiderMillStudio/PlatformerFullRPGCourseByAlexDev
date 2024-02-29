@@ -102,7 +102,7 @@ public class CloneSkillController : MonoBehaviour
                 PlayerStats playerStats = player.GetComponent<PlayerStats>();
                 EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
 
-                playerStats.CloneDoDamage(enemyStats, attackMultiplier);
+                playerStats.CloneDoDamage(enemyStats, attackMultiplier, this.transform);
 
                 if (player.skill.clone.canApplyOnHitEffect)
                 {
