@@ -37,7 +37,7 @@ public class PlayerDashState : PlayerState
         if (stateTimer < 0)
             stateMachine.ChangeState(player.idleState);
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword())
+        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword() && player.skill.swordThrow.swordUnlocked)
             stateMachine.ChangeState(player.aimSwordState);
     }
 }

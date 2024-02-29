@@ -250,6 +250,11 @@ public class CharacterStats : MonoBehaviour
         isDead = true;
     }
 
+    public void KillEntity()
+    {
+        Die();
+    }
+
     #region Magical Damage and Ailments
     public virtual void DoMagicalDamage(CharacterStats _targetStats, Transform _magicDamageSource)
     {
