@@ -12,6 +12,7 @@ public class PlayerDashState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        AudioManager.instance.PlaySFX(Random.Range(45, 47), null);
         player.skill.dash.CreateCloneOnDash();
         // ^Was: SkillManager.instance.clone.CreateClone(player.transform);
         stateTimer = player.dashDuration;

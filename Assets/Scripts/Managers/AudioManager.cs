@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -65,6 +66,7 @@ public class AudioManager : MonoBehaviour
         if (_sfxIndex < sfx.Length)
         {
             sfx[_sfxIndex].Play();
+           
         }
     }
 
@@ -85,6 +87,8 @@ public class AudioManager : MonoBehaviour
         {
             backgroundMusic[i].Stop();
         }
+
+        //playBackgroundMusic = false; //get rid of this!!
     }
 
     public void EnableSFX() => canPlaySFX = true;
@@ -95,11 +99,24 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeOutVolumeCoroutine(sfx[_sfxIndex]));
     }
 
-    public void FadeInSfxVolume(int _sfxIndex)
+    public void FadeInSfxVolume(int _sfxIndex, float _rate)
     {
         StopAllCoroutines();
         PlaySFX(_sfxIndex, null);
-        StartCoroutine(FadeInVolumeCoroutine(sfx[_sfxIndex]));
+        StartCoroutine(FadeInVolumeCoroutine(sfx[_sfxIndex], _rate));
+    }
+
+    public void FadeOutBgmVolume(int _bgmIndex)
+    {
+        StopAllCoroutines();
+        StartCoroutine(FadeOutVolumeCoroutine(backgroundMusic[_bgmIndex]));
+    }
+
+    public void FadeInBgmVolume(int _bgmIndex, float _rate)
+    {
+        StopAllCoroutines();
+        PlayBackgroundMusic(_bgmIndex);
+        StartCoroutine(FadeInVolumeCoroutine(backgroundMusic[_bgmIndex], _rate));
     }
 
     private IEnumerator FadeOutVolumeCoroutine(AudioSource _audio)
@@ -122,12 +139,20 @@ public class AudioManager : MonoBehaviour
         if (_audio.volume <= 0.16f)
         {
             _audio.Stop();
+            foreach (AudioSource source in backgroundMusic)
+            {
+                if (_audio == source)
+                {
+                    playBackgroundMusic = false;
+                    Debug.Log("This worked bgm!!!!");
+                }
+            }
             _audio.volume = defaultVolume;
                 
         }
     }
 
-    private IEnumerator FadeInVolumeCoroutine(AudioSource _audio)
+    private IEnumerator FadeInVolumeCoroutine(AudioSource _audio, float _rate)
     {
         Debug.Log("Fading IN!");
         float defaultVolume = 0.5f;
@@ -136,8 +161,8 @@ public class AudioManager : MonoBehaviour
         while (_audio.volume <= defaultVolume)
         {
             _audio.volume += 0.05f;
-
-            yield return new WaitForSeconds(0.1f);
+            float newRate = 1 / _rate;
+            yield return new WaitForSeconds(newRate);
             
             if (_audio.volume >= 0.5f)
             {

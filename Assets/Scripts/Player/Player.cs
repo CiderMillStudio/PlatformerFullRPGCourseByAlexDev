@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Player : Entity
@@ -19,6 +18,7 @@ public class Player : Entity
     public float swordReturnImpact = 9f;
     private float defaultMoveSpeed;
     private float defaultJumpForce;
+    [SerializeField] private float jumpDelay = 0.05f;
    
     #endregion 
 
@@ -127,6 +127,13 @@ public class Player : Entity
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
             Inventory.instance.UseFlask();
+
+        if (Input.GetKeyDown(KeyCode.Space) && IsGroundDetected())
+        {
+            StartCoroutine(Jump(jumpDelay));
+            Debug.Log("jumping!");
+
+        }
     }
 
     public override void SlowEntityBy(float _slowPercentage, float _slowDuration)
@@ -221,6 +228,15 @@ public class Player : Entity
     {
         base.Die();
         stateMachine.ChangeState(deadState);
+    }
+
+    private IEnumerator Jump(float _jumpDelay)
+    {
+        AudioManager.instance.PlaySFX(Random.Range(38, 41), null);
+
+        yield return new WaitForSeconds(_jumpDelay);
+
+        stateMachine.ChangeState(jumpState);
     }
 
 

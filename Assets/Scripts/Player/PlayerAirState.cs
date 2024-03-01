@@ -26,7 +26,10 @@ public class PlayerAirState : PlayerState
         player.SetVelocity(xInput * player.moveSpeed * player.airSpeedModifier, rb.velocity.y);
 
         if (player.IsGroundDetected()) //temporary solution
+        {
+            AudioManager.instance.PlaySFX(43, null);
             stateMachine.ChangeState(player.idleState);
+        }
 
         if (player.IsWallDetected())
             stateMachine.ChangeState(player.wallslideState);

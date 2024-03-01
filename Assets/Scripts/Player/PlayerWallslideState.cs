@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerWallslideState : PlayerState
 {
+
+    private int slideSfxIndex;
     public PlayerWallslideState(Player _player, PlayerStateMachine _stateMachine, string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
     }
@@ -11,11 +13,14 @@ public class PlayerWallslideState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        slideSfxIndex = Random.Range(41, 43);
+        AudioManager.instance.FadeInSfxVolume(slideSfxIndex, 60f) ;
     }
 
     public override void Exit()
     {
         base.Exit();
+        AudioManager.instance.StopSFX(slideSfxIndex);
     }
 
     public override void Update()
@@ -24,6 +29,8 @@ public class PlayerWallslideState : PlayerState
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            AudioManager.instance.PlaySFX(44, null);
+            AudioManager.instance.PlaySFX(Random.Range(38, 41), null);
             stateMachine.ChangeState(player.walljumpState);
             return;
         }

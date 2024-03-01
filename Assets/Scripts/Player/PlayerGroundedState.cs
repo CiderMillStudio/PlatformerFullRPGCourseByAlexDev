@@ -29,8 +29,6 @@ public class PlayerGroundedState : PlayerState
         if (!player.IsGroundDetected())
             stateMachine.ChangeState(player.airState);
 
-        if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected())
-            stateMachine.ChangeState(player.jumpState);
 
         if (Input.GetKey(KeyCode.Mouse0) && !Input.GetKey(KeyCode.LeftControl)) //if player is removing items, they will not enter attack state!!!
         {
@@ -51,7 +49,20 @@ public class PlayerGroundedState : PlayerState
         if (Input.GetKeyDown(KeyCode.R) && player.skill.blackhole.blackholeUnlocked)
             stateMachine.ChangeState(player.blackholeState); //NEW
 
+/*        if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected())
+        {
+            Jump(); //moved Jump to Player.cs because StartCoroutine() was needed, but not available in this script.
+
+        }*/
+
+
     }
+
+/*    private void Jump() //moved Jump to Player.cs because StartCoroutine() was needed, but is not available in this script.
+    {
+        AudioManager.instance.PlaySFX(Random.Range(41, 44), null);
+        stateMachine.ChangeState(player.jumpState);
+    }*/
 
     /*protected virtual bool HasNoSword()
     {

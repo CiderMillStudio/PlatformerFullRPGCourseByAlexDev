@@ -1,9 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class UI : MonoBehaviour, ISaveManager
 {
@@ -231,5 +229,12 @@ public class UI : MonoBehaviour, ISaveManager
         {
             _data.volumeSliders.Add(volumeSlider.parameter, volumeSlider.slider.value);
         }
+    }
+
+
+    public void ExitGame()
+    {
+        SaveManager.instance.SaveGame();
+        Application.Quit();
     }
 }

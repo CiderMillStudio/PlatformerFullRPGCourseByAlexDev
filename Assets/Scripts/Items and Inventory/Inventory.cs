@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 using UnityEngine;
-using static UnityEditor.Progress;
+
 
 
 
@@ -47,6 +50,7 @@ public class Inventory : MonoBehaviour, ISaveManager
 
 
     [Header("Database")]
+    public List<ItemData> itemDataBase;
     public List<InventoryItem> loadedItems;
     public List<ItemDataEquipment> loadedEquipment;
 
@@ -440,7 +444,7 @@ public class Inventory : MonoBehaviour, ISaveManager
     {
         foreach (KeyValuePair<string, int> pair in _data.inventory) // this line acquires the items the player had in inventory last session (in form of serializable dictionary, of which each element consists of a itemId key and a stacksize value.)
         {
-            foreach (var item in GetItemDatabase()) //this line acquires ALL unique items in the whole game.
+            foreach (var item in itemDataBase) //this line acquires ALL unique items in the whole game.
             {
                 if (item != null && item.itemId == pair.Key) //now, we'll compare each unique item's itemId to the itemId (pair.key) of each item that was in our inventory during the last save.
                 {
@@ -454,7 +458,7 @@ public class Inventory : MonoBehaviour, ISaveManager
 
         foreach (string loadedEquipmentId in _data.equipmentId)
         {
-            foreach (var item in GetItemDatabase())
+            foreach (var item in itemDataBase)
             {
                 if (item != null && item.itemId == loadedEquipmentId)
                 {
@@ -490,6 +494,13 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     }
 
+#if UNITY_EDITOR
+    [ContextMenu("Fill Up ItemDatabase")]
+    private void FillUpItemDatabase()
+    {
+        itemDataBase = new List<ItemData>(GetItemDatabase());
+    }
+
     private List<ItemData> GetItemDatabase() //return a list of every single item (itemData) we've made)
     {
         List<ItemData> itemDatabase = new List<ItemData>();
@@ -504,5 +515,7 @@ public class Inventory : MonoBehaviour, ISaveManager
 
         return itemDatabase;
     }
+
+#endif
 
 }

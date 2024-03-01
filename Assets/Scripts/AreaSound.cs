@@ -13,7 +13,7 @@ public class AreaSound : MonoBehaviour
         if (collision.GetComponent<Player>() != null)
         {
 
-            AudioManager.instance.FadeInSfxVolume(areaSoundIndex);
+            AudioManager.instance.FadeInSfxVolume(areaSoundIndex, 10f);
         }
     }
 
