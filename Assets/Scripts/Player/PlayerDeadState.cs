@@ -19,6 +19,8 @@ public class PlayerDeadState : PlayerState
 
         UI ui = GameObject.FindObjectOfType<UI>();
 
+        AudioManager.instance.PlaySFX(55, null);
+
         ui.SwitchOnEndScreen();
 
 

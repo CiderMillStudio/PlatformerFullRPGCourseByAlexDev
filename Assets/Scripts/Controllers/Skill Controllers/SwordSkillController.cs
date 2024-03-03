@@ -260,7 +260,13 @@ public class SwordSkillController : MonoBehaviour
         if (collision.GetComponent<Enemy>() != null)
         {
             Enemy enemy = collision.GetComponent<Enemy>();
+            AudioManager.instance.PlaySFX(Random.Range(48, 51), null);
             SwordSkillDamage(enemy);
+        }
+        else
+        {
+            AudioManager.instance.PlaySFX(65, transform);
+            AudioManager.instance.PlaySFX(Random.Range(48, 51), transform);
         }
 
         if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
@@ -294,13 +300,16 @@ public class SwordSkillController : MonoBehaviour
         transform.parent = collision.transform; //stick to object!
 
 
+
     }
 
     private void SwordSkillDamage(Enemy enemy)
     {
         EnemyStats enemyStats = enemy.GetComponent<EnemyStats>();
 
-        player.stats.DoDamage(enemyStats);
+        AudioManager.instance.PlaySFX(Random.Range(48, 51), enemy.transform);
+
+        player.stats.DoPhysicalDamage(enemyStats);
 
         if (player.skill.swordThrow.timeStopUnlocked)
             enemy.FreezeTimeFor(freezeTimeDuration);

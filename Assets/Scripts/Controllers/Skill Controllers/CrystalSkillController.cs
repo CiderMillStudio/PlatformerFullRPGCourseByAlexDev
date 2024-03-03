@@ -23,6 +23,8 @@ public class CrystalSkillController : MonoBehaviour
                                      //is called ONCE (either by the timer expiring,
                                      //or if the player prematurely presses the crystal skill hotkey.
 
+    private bool playedExplodeSound = false;
+
     private Transform closestTarget;
 
     [SerializeField] private LayerMask whatIsEnemy;
@@ -41,12 +43,21 @@ public class CrystalSkillController : MonoBehaviour
         growSpeed = _growSpeed;
         closestTarget = _closestTarget;
 
+        AudioManager.instance.PlaySFX(73, transform);
+        AudioManager.instance.PlaySFX(Random.Range(79, 84), transform);
+
 
     }
 
     private void Update()
     {
         crystalExistTimer -= Time.deltaTime;
+
+        if (crystalExistTimer <= 1.3f && !playedExplodeSound)
+        {
+            AudioManager.instance.PlaySFX(Random.Range(68, 73), transform);
+            playedExplodeSound = true;
+        }
 
         if (crystalExistTimer < 0 || playerEndedCrystal)
         {
@@ -77,6 +88,12 @@ public class CrystalSkillController : MonoBehaviour
             canGrow = true;
             playerEndedCrystal = true;
             canMove = false;
+
+            if (!playedExplodeSound)
+            {
+                AudioManager.instance.PlaySFX(Random.Range(74, 79), transform);
+                playedExplodeSound = true;
+            }
         }
         else
         {

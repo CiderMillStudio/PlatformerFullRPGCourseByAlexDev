@@ -12,6 +12,7 @@ public class PlayerAimSwordState : PlayerState
     {
         base.Enter();
         player.skill.swordThrow.DotsActive(true);
+        AudioManager.instance.PlaySFX(62, null);
     }
 
     public override void Exit()
@@ -39,6 +40,7 @@ public class PlayerAimSwordState : PlayerState
         if (Input.GetKeyUp(KeyCode.Mouse1))
         {
             stateMachine.ChangeState(player.idleState);
+            AudioManager.instance.PlaySFX(63, null);
         }
 
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);

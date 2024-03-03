@@ -13,12 +13,12 @@ public class FreezeEnemiesEffect : ItemEffect
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();
 
-        if(playerStats.currentHealth > playerStats.maxHealth.GetValue() * 0.1f)
+        if(playerStats.currentHealth > playerStats.maxHealth.GetValue() * 0.8f)
             return;
         
 
-        if (!Inventory.instance.CanUseArmor())
-            return;
+/*        if (!Inventory.instance.CanUseArmor())
+            return;*/
 
         Collider2D[] colliders =
             Physics2D.OverlapCircleAll(_respawnTransform.position, 3);

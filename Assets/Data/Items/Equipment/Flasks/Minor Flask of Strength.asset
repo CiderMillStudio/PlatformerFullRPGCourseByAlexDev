@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
+  m_Name: Minor Flask of Strength
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: Minor Flask of Strength
+  icon: {fileID: -410334530, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: b39df5c6dac8329499b09aa3ebab8055
+  dropChance: 4
+  itemCooldown: 40
+  itemEffects:
+  - {fileID: 11400000, guid: a5522712ddadd4949bc8d677d0d0fc84, type: 2}
+  itemEffectDescription: 'Boosts strength by 4 points for 15 seconds
+
+    (40 second
+    cooldown)'
+  equipmentType: 3
+  strength: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 0
+  critChance: 0
+  critPower: 0
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightningDamage: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+    stackSize: 2

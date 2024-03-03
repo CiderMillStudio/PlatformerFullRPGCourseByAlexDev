@@ -17,6 +17,8 @@ public class PlayerCatchSwordState : PlayerState
         sword = player.sword.transform;
         if (!player.IsGroundDetected()) { modifiedSwordReturnImpact = player.swordReturnImpact * 3f; }
         else { modifiedSwordReturnImpact = player.swordReturnImpact; }
+
+        AudioManager.instance.PlaySFX(64, null);
         
         if (player.transform.position.x > sword.position.x && player.facingDir == 1) //HONESTLY alex's solution is better than mine!
         {

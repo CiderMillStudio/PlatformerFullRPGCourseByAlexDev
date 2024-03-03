@@ -33,8 +33,8 @@ public class ItemDrop : MonoBehaviour
 
             if (Random.value < dropChanceModifier)
             {
-            dropList.Remove(randomItem);
-            DropItem(randomItem, false);
+                dropList.Remove(randomItem);
+                DropItem(randomItem, false);
             }
 
         }
@@ -44,6 +44,7 @@ public class ItemDrop : MonoBehaviour
     protected void DropItem(ItemData _itemData, bool _alwaysDropForwards) //public because this needs to be called by the enemy
     {
         GameObject newDrop = Instantiate(dropPrefab, transform.position, Quaternion.identity);
+        StartCoroutine("PlayDropSFX", newDrop.transform);
 
         if (!_alwaysDropForwards)
         {
@@ -58,5 +59,12 @@ public class ItemDrop : MonoBehaviour
             newDrop.GetComponent<ItemObject>().SetupItem(_itemData, randomForwardVelocity);
         }
 
+    }
+
+    private IEnumerator PlayDropSFX(Transform _itemDropTransform)
+    {
+        yield return new WaitForSeconds(Random.Range(0.7f, 1.2f));
+
+        AudioManager.instance.PlaySFX(Random.Range(56, 61), _itemDropTransform);
     }
 }

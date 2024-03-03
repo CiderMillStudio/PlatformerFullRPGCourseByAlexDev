@@ -58,7 +58,7 @@ public class ItemObject : MonoBehaviour
                 return;
             }
 
-            AudioManager.instance.PlaySFX(18, this.transform);
+            AudioManager.instance.PlaySFX(56, this.transform);
             Inventory.instance.AddItem(itemData);
             Debug.Log("Picked up " + itemData.name);
             Destroy(gameObject);

@@ -16,9 +16,9 @@ public class PlayerStats : CharacterStats
         myPlayerItemDropSystem = GetComponent<PlayerItemDrop>();
     }
 
-    public override void TakeDamage(int _damage, Transform _damageSource)
+    public override void TakeDamage(int _damage, Transform _damageSource, bool _fromPhysicalAttack)
     {
-        base.TakeDamage(_damage, _damageSource);
+        base.TakeDamage(_damage, _damageSource, _fromPhysicalAttack);
 
     }
 
@@ -36,21 +36,24 @@ public class PlayerStats : CharacterStats
 
     }
 
-    protected override void DecreaseHealthBy(int _damage) 
+    protected override void DecreaseHealthBy(int _damage, bool _fromPhysicalAttack) 
     {
-        base.DecreaseHealthBy(_damage);
+        base.DecreaseHealthBy(_damage, _fromPhysicalAttack);
 
         ItemDataEquipment currentArmor = Inventory.instance.GetEquipment(EquipmentType.Armor);
 
-        if (currentArmor != null && Inventory.instance.CanUseArmor())
+        if (currentArmor != null && _fromPhysicalAttack)
         {
-            currentArmor.Effect(player.transform);
+            if (Inventory.instance.CanUseArmor())
+                currentArmor.Effect(player.transform);
         }
     }
 
 
     public override void OnEvasion(Transform _enemyTransform)
     {
+        base.OnEvasion(_enemyTransform);
+
         player.skill.dodge.CreateMirageOnDodge(_enemyTransform);
     }
 
@@ -75,7 +78,7 @@ public class PlayerStats : CharacterStats
             //Debug.Log("total crit damage is: " + totalDamage);
         }
 
-        _targetStats.TakeDamage(totalDamage, _cloneTransform);
+        _targetStats.TakeDamage(totalDamage, _cloneTransform, false);
 
 
         DoMagicalDamage(_targetStats, _cloneTransform); //Remove this line if you don't want to apply magic hit on primary attack.

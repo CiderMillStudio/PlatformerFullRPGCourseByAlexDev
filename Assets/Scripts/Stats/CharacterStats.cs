@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 public enum StatType //NEW (used to be in BuffEffect.cs)
 {
@@ -166,7 +167,7 @@ public class CharacterStats : MonoBehaviour
 
 
 
-    public virtual void DoDamage(CharacterStats _targetStats)
+    public virtual void DoPhysicalDamage(CharacterStats _targetStats)
     {
         if (TargetCanAvoidAttack(_targetStats))
             return;
@@ -178,10 +179,11 @@ public class CharacterStats : MonoBehaviour
         if (CanCrit())
         {
             totalDamage = CalculateCriticalDamage(totalDamage);
+            AudioManager.instance.PlaySFX(1, _targetStats.transform);
             //Debug.Log("total crit damage is: " + totalDamage);
         }
 
-        _targetStats.TakeDamage(totalDamage, this.transform);
+        _targetStats.TakeDamage(totalDamage, this.transform, true);
 
 
         DoMagicalDamage(_targetStats, this.transform); //Remove this line if you don't want to apply magic hit on primary attack.
@@ -191,9 +193,10 @@ public class CharacterStats : MonoBehaviour
 
     }
 
-    public virtual void TakeDamage(int _damage, Transform _damageSource)
+    public virtual void TakeDamage(int _damage, Transform _damageSource, bool _fromPhyscialAttack)
     {
-        DecreaseHealthBy(_damage);
+
+        DecreaseHealthBy(_damage, _fromPhyscialAttack);
 
         GetComponent<Entity>().DamageImpact(_damageSource, _damage); //We deleted DamageEffect() EVERYWHERE else, except for here!
         fx.StartCoroutine("FlashFX");
@@ -208,8 +211,13 @@ public class CharacterStats : MonoBehaviour
         }
     }
 
-    protected virtual void DecreaseHealthBy(int _damage)
+    protected virtual void DecreaseHealthBy(int _damage, bool _fromPhysicalAttack)
     {
+        if (_fromPhysicalAttack)
+            Debug.Log("Physical Attack Damage: " + _damage);
+        else
+            Debug.Log("Magic Attack Damage: " + _damage);
+
         if (isVulnerable)
         {
             _damage = Mathf.RoundToInt(_damage * 1.4f);
@@ -236,6 +244,9 @@ public class CharacterStats : MonoBehaviour
 
     public void IncreaseHealthBy(int _healAmount)
     {
+        if (!(currentHealth == GetMaxHealthValue()))
+            AudioManager.instance.PlaySFX(Random.Range(84, 87), null);
+
         int newHealth = Mathf.RoundToInt(currentHealth + _healAmount);
         currentHealth = Mathf.Clamp(newHealth, 0, GetMaxHealthValue());
 
@@ -265,8 +276,10 @@ public class CharacterStats : MonoBehaviour
         int totalMagicalDamage = _fireDamage + _iceDamage + _lightningDamage + intelligence.GetValue() * 2;
 
         totalMagicalDamage = CheckTargetResistance(_targetStats, totalMagicalDamage);
-        _targetStats.TakeDamage(totalMagicalDamage, _magicDamageSource);
-        Debug.Log(_magicDamageSource);
+      
+        
+        _targetStats.TakeDamage(totalMagicalDamage, _magicDamageSource, false);
+        
 
         //This is where we'll write code for Ailments (next video!)
         //The way this works is the ailment with "the most damage attributed to it's category" is the ailment that gets applied
@@ -385,7 +398,7 @@ public class CharacterStats : MonoBehaviour
         if (igniteDamageTimer < 0)
         {
 
-            DecreaseHealthBy(igniteDamage);
+            DecreaseHealthBy(igniteDamage, false);
 
 
             if (currentHealth <= 0 && !isDead)
@@ -471,7 +484,7 @@ public class CharacterStats : MonoBehaviour
 
     public virtual void OnEvasion(Transform _enemyTransform)
     {
-
+        AudioManager.instance.PlaySFX(Random.Range(66, 68), transform);
     }
 
     protected bool TargetCanAvoidAttack(CharacterStats _targetStats)

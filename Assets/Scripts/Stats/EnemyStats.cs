@@ -46,9 +46,9 @@ public class EnemyStats : CharacterStats
         }
     }
 
-    public override void TakeDamage(int _damage, Transform _damageSource)
+    public override void TakeDamage(int _damage, Transform _damageSource, bool _fromPhysicalAttack)
     {
-        base.TakeDamage(_damage, _damageSource);
+        base.TakeDamage(_damage, _damageSource, _fromPhysicalAttack);
 
         
     }

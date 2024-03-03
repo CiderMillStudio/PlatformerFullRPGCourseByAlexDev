@@ -43,6 +43,17 @@ public class Skill : MonoBehaviour
         return false;
     }
 
+    public virtual bool SkillInCooldown()
+    {
+        if (cooldownTimer > 0)
+        {
+            return true;
+        }
+
+        //Debug.Log("Skill is on cooldown");
+        return false;
+    }
+
 
     public virtual void UseSkill()
     {

@@ -1,9 +1,13 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerCounterAttackState : PlayerState
 {
 
     private bool cloneCreated;
+    private bool parryMissed;
+
+    private bool parrySkillInCooldownUponStateEntry;
 
 
     public PlayerCounterAttackState(Player _player, PlayerStateMachine _stateMachine,
@@ -14,6 +18,11 @@ public class PlayerCounterAttackState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        parryMissed = true;
+        parrySkillInCooldownUponStateEntry = false;
+
+        if (player.skill.parry.SkillInCooldown())
+            parrySkillInCooldownUponStateEntry = true;
 
         if (!player.skill.parry.parryUnlocked || !player.skill.parry.CanUseSkill()) //maybe delete this code?
         {
@@ -21,6 +30,7 @@ public class PlayerCounterAttackState : PlayerState
             player.stateMachine.ChangeState(player.idleState);
             return;
         }
+
 
         Debug.Log("We've entered CounterAttack State!!");
         stateTimer = player.counterAttackDuration;
@@ -32,8 +42,14 @@ public class PlayerCounterAttackState : PlayerState
     public override void Exit()
     {
         base.Exit();
+
+        if (parryMissed && player.skill.parry.parryUnlocked && !parrySkillInCooldownUponStateEntry)
+            AudioManager.instance.PlaySFX(54, null);
+
+
         player.anim.SetBool("SuccessfulCounterAttack", false); //this was very important
         cloneCreated = false;
+
     }
 
     public override void Update()
@@ -50,8 +66,17 @@ public class PlayerCounterAttackState : PlayerState
             {
                 if (hit.GetComponent<Enemy>().CanBeStunned())
                 {
+                    parryMissed = false;
+
                     stateTimer = 10f; //this just needs to last a long time
                     player.anim.SetBool("SuccessfulCounterAttack", true);
+
+                    AudioManager.instance.PlaySFX(51, null);
+                    AudioManager.instance.PlaySFX(52, null);
+                    AudioManager.instance.PlaySFX(53, null);
+                    AudioManager.instance.PlaySFX(47, null);
+
+                    player.stats.DoPhysicalDamage(hit.GetComponent<EnemyStats>());
                     
                     player.skill.parry.UseSkill(); //using this parry.UseSkill() method to restore health on Parry (only if this skill is unlocked in the skill tree!) 
 

@@ -36,7 +36,7 @@ public class PlayerAnimationTriggers : MonoBehaviour
                 EnemyStats _target = hit.GetComponent<EnemyStats>();
 
                 if (_target != null)
-                    player.stats.DoDamage(_target);
+                    player.stats.DoPhysicalDamage(_target);
                 
                 //hit.GetComponent<Enemy>().Damage();
                 
@@ -45,10 +45,8 @@ public class PlayerAnimationTriggers : MonoBehaviour
             }
         }
 
-        if (!hitEnemy)
-            AudioManager.instance.PlaySFX(2, player.transform);
-        else
-            AudioManager.instance.PlaySFX(1, player.transform);
+        if (hitEnemy)
+            AudioManager.instance.PlaySFX(Random.Range(48,51), null);
 
 
 
@@ -62,6 +60,11 @@ public class PlayerAnimationTriggers : MonoBehaviour
     void ThrowSword()
     {
         SkillManager.instance.swordThrow.CreateSword();
+    }
+
+    void AnimationSoundEffect1()
+    {
+        AudioManager.instance.PlaySFX(61, player.transform);
     }
 
 

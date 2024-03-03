@@ -40,7 +40,13 @@ public class BuffEffect : ItemEffect
 
         stats.IncreaseStatBy(buffAmount, buffDuration, stats.StatOfType(buffType)); //new!! (was just StatToModify())
 
-        
+        if (buffType == StatType.strength || buffType == StatType.critChance || buffType == StatType.critPower || buffType == StatType.damage || buffType == StatType.agility)
+            AudioManager.instance.PlaySFX(87, null);
+        else if (buffType == StatType.intelligence || buffType == StatType.magicResistance || buffType == StatType.fireDamage || buffType == StatType.iceDamage || buffType == StatType.lightningDamage)
+            AudioManager.instance.PlaySFX(88, null);
+        else if (buffType == StatType.vitality || buffType == StatType.health || buffType == StatType.armor || buffType == StatType.evasion)
+            AudioManager.instance.PlaySFX(89, null);
+
     }
 
     /*private Stat StatToModify() //Moved this to CharacterStats.cs

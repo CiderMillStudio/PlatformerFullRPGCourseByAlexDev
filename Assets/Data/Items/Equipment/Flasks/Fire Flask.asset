@@ -15,11 +15,14 @@ MonoBehaviour:
   itemType: 1
   itemName: Fire Flask
   icon: {fileID: 1073501139, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: 87135df04f6eb2846a1d19668303e1af
   dropChance: 0
-  itemCooldown: 5
+  itemCooldown: 20
   itemEffects:
   - {fileID: 11400000, guid: deaf297ea33a355468a62541efa5f10b, type: 2}
-  itemEffectDescription: Temporarily increases fire damage stat
+  itemEffectDescription: 'Temporarily increases fire damage stat
+
+    (20 sec cooldown)'
   equipmentType: 3
   strength: 0
   agility: 0

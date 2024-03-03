@@ -13,7 +13,7 @@ public class ThunderStrikeEffect : ItemEffect
         //delete base!
 
         GameObject newThunderStrike = Instantiate(thunderStrikePrefab, _respawnPosition.position, Quaternion.identity);
-
+        AudioManager.instance.PlaySFX(Random.Range(90, 93), newThunderStrike.transform);
         //TODO: create a Setup function for newThunderStrike (i.e. we need to make a Thunder Strike Controller script!!!) (actually not anymore!)
         
         Destroy(newThunderStrike, 0.5f);

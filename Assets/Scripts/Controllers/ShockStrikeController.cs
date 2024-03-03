@@ -58,6 +58,8 @@ public class ShockStrikeController : MonoBehaviour
         {
             triggered = true;
 
+            AudioManager.instance.PlaySFX(93, transform);
+
             anim.transform.localRotation = Quaternion.identity;
             transform.localRotation = Quaternion.identity;
             transform.localScale = new Vector3(3, 3);
@@ -77,7 +79,7 @@ public class ShockStrikeController : MonoBehaviour
     private void DamageAndSelfDestroy()
     {
 
-        targetStats.TakeDamage(damage, this.transform);
+        targetStats.TakeDamage(damage, this.transform, false);
             targetStats.ApplyShock(true);
             Destroy(gameObject, 0.4f);
     }

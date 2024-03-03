@@ -56,7 +56,6 @@ public class SaveManager : MonoBehaviour
     public void LoadGame()
     {
 
-        Debug.Log("LOADING GAME!!!!!");
         gameData = dataHandler.Load();
 
         if (this.gameData == null)

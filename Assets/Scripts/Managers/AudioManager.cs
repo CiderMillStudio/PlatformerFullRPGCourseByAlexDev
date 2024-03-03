@@ -120,8 +120,7 @@ public class AudioManager : MonoBehaviour
     }
 
     private IEnumerator FadeOutVolumeCoroutine(AudioSource _audio)
-    {
-        Debug.Log("Fading Out!");
+    { 
         float defaultVolume = _audio.volume;
 
         while (_audio.volume > 0.1f)
@@ -154,7 +153,6 @@ public class AudioManager : MonoBehaviour
 
     private IEnumerator FadeInVolumeCoroutine(AudioSource _audio, float _rate)
     {
-        Debug.Log("Fading IN!");
         float defaultVolume = 0.5f;
         _audio.volume = 0;
 

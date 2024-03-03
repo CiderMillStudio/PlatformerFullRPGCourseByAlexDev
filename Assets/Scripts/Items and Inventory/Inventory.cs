@@ -428,16 +428,21 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     public bool CanUseArmor()
     {
+
+
         ItemDataEquipment currentArmor = GetEquipment(EquipmentType.Armor);
         if (Time.time > lastTimeUsedArmor + armorCooldown) //at the beginning of the session, armorCooldown is zero, so it will work in the beginning of the game!
         {
+           
             armorCooldown = currentArmor.itemCooldown;
             lastTimeUsedArmor = Time.time;
             return true;
         }
-
-        Debug.Log("Armor is on Cooldown");
-        return false;
+        else
+        {
+            Debug.Log("Armor is on Cooldown");
+            return false;
+        }
     }
 
     public void LoadData(GameData _data)
