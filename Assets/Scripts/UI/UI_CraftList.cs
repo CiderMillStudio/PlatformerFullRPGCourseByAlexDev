@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UI_CraftList : MonoBehaviour, IPointerDownHandler
+public class UI_CraftList : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler
 {
     [SerializeField] private Transform craftSlotParent;
     [SerializeField] private GameObject craftSlotPrefab;
@@ -44,11 +44,17 @@ public class UI_CraftList : MonoBehaviour, IPointerDownHandler
     {
         SetupCraftList();
         SetupDefaultCraftWindow();
+        AudioManager.instance.PlaySFX(7, null);
     }
 
     public void SetupDefaultCraftWindow()
     {
         if (craftEquipment[0] != null)
             GetComponentInParent<UI>().craftWindow.SetupCraftWindow(craftEquipment[0]);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        AudioManager.instance.PlaySFX(36, null);
     }
 }

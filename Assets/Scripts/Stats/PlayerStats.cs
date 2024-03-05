@@ -80,8 +80,9 @@ public class PlayerStats : CharacterStats
 
         _targetStats.TakeDamage(totalDamage, _cloneTransform, false);
 
-
-        DoMagicalDamage(_targetStats, _cloneTransform); //Remove this line if you don't want to apply magic hit on primary attack.
+        
+        if (player.skill.clone.canApplyOnHitEffect)
+            DoMagicalDamage(_targetStats, _cloneTransform); //Remove this line if you don't want to apply magic hit on primary attack.
 
         //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
         //DoMagicalDamage(_targetStats);

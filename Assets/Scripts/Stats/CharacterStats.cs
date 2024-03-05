@@ -186,7 +186,7 @@ public class CharacterStats : MonoBehaviour
         _targetStats.TakeDamage(totalDamage, this.transform, true);
 
 
-        DoMagicalDamage(_targetStats, this.transform); //Remove this line if you don't want to apply magic hit on primary attack.
+        //DoMagicalDamage(_targetStats, this.transform); //Remove this line if you don't want to apply magic hit on primary attack.
 
         //if current weapon has fire effect, do fire magical damage, otherwise DON'T!
         //DoMagicalDamage(_targetStats);
@@ -198,7 +198,7 @@ public class CharacterStats : MonoBehaviour
 
         DecreaseHealthBy(_damage, _fromPhyscialAttack);
 
-        GetComponent<Entity>().DamageImpact(_damageSource, _damage); //We deleted DamageEffect() EVERYWHERE else, except for here!
+        GetComponent<Entity>().DamageImpact(_damageSource, _damage); //We deleted DamageImpact() EVERYWHERE else, except for here!
         fx.StartCoroutine("FlashFX");
 
         //Debug.Log("TakeDamage(): " +_damage);
@@ -359,6 +359,8 @@ public class CharacterStats : MonoBehaviour
             isIgnited = _ignite;
             ignitedTimer = ailmentsDuration;
             fx.IgniteFxFor(ailmentsDuration);
+
+            AudioManager.instance.PlaySFX(94, transform);
         }
 
         if (_chill && canApplyChill)
@@ -371,6 +373,9 @@ public class CharacterStats : MonoBehaviour
 
             GetComponent<Entity>().SlowEntityBy(slowPercentage, ailmentsDuration);
             fx.ChillFxFor(ailmentsDuration);
+
+            AudioManager.instance.PlaySFX(Random.Range(96, 99), transform);
+            AudioManager.instance.PlaySFX(Random.Range(74, 79), transform);
         }
 
         if (_shock && canApplyShock)
@@ -379,6 +384,7 @@ public class CharacterStats : MonoBehaviour
             if (!isShocked)
             {
                 ApplyShock(_shock);
+                AudioManager.instance.PlaySFX(93, transform);
             }
 
             else

@@ -26,6 +26,8 @@ public class CloneSkillController : MonoBehaviour
 
     private float attackMultiplier;
 
+    private bool exitSoundPlayed;
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -37,9 +39,19 @@ public class CloneSkillController : MonoBehaviour
     {
         cloneTimer -= Time.deltaTime; 
 
+
+        if (cloneTimer < 0.3f && !exitSoundPlayed) 
+        { 
+            AudioManager.instance.PlaySFX(Random.Range(101, 106), null);
+            exitSoundPlayed = true;
+        }    
+
         if (cloneTimer < 0 )
+        {
             sr.color  = new Color(sr.color.r, sr.color.g, sr.color.b, 
                 sr.color.a -  fadeOutModifier * Time.deltaTime);
+
+        }
         if (sr.color.a <= 0f)
             Destroy(gameObject);
     }
@@ -50,7 +62,10 @@ public class CloneSkillController : MonoBehaviour
                 bool _canDuplicateClone, float _chanceToDuplicateClone, Player _player, float _attackMultiplier) //sets up position and other stuff
     {
         if (canAttack)
+        {
             anim.SetInteger("AttackNumber", Random.Range(1, 4));
+            
+        }
         
         player = _player;
         cloneTimer = _cloneDuration;
@@ -63,7 +78,9 @@ public class CloneSkillController : MonoBehaviour
         canDuplicateClone = _canDuplicateClone;
         chanceToDuplicateClone = _chanceToDuplicateClone;
         attackMultiplier = _attackMultiplier;
-        
+
+        AudioManager.instance.PlaySFX(100, transform);
+
         FaceClosestTarget();
 
         //if (PlayerManager.instance.player.facingDir < 0)
@@ -85,7 +102,7 @@ public class CloneSkillController : MonoBehaviour
 
         rb.AddForce(new Vector2(1 /*moveSpeedProxy*/ * 10 * facingDir,
             0), ForceMode2D.Impulse);
-        }
+    }
 
     void AnimationDamageTrigger()
     {
@@ -103,6 +120,7 @@ public class CloneSkillController : MonoBehaviour
                 EnemyStats enemyStats = hit.GetComponent<EnemyStats>();
 
                 playerStats.CloneDoDamage(enemyStats, attackMultiplier, this.transform);
+                AudioManager.instance.PlaySFX(Random.Range(48, 51), null);
 
                 if (player.skill.clone.canApplyOnHitEffect)
                 {
@@ -123,6 +141,11 @@ public class CloneSkillController : MonoBehaviour
                 }
             }
         }
+    }
+
+    void AnimationSoundEffectTrigger1()
+    {
+        AudioManager.instance.PlaySFX(Random.Range(107,110), transform);
     }
 
     

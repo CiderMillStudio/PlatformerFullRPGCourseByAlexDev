@@ -112,6 +112,11 @@ public class SwordSkillController : MonoBehaviour
 
     public void ReturnSword()
     {
+        AudioManager.instance.PlaySFX(106, transform);
+
+        if (transform.parent?.GetComponent<Entity>() != null)
+            AudioManager.instance.PlaySFX(Random.Range(48, 51), null);
+        
         rb.isKinematic = false;
         transform.parent = null;
         isReturning = true;

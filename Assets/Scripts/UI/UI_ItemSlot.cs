@@ -80,6 +80,8 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
 
         ui.itemTooltip.HideToolTip();
 
+        AudioManager.instance.PlaySFX(7, null);
+
     }
 
     public void CleanUpSlot()
@@ -96,6 +98,9 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
         if (item == null)
             return;
         ui.itemTooltip?.ShowToolTip(item.data as ItemDataEquipment);
+
+
+        AudioManager.instance.PlaySFX(36, null);
         
     }
 

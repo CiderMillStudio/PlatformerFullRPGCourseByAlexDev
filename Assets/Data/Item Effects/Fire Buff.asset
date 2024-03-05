@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buffType: 11
   buffAmount: 15
-  buffDuration: 5
+  buffDuration: 10

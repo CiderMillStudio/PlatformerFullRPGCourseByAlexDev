@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
+  m_Name: Ash Maker
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: Ash Maker
+  icon: {fileID: 1811826115, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: 8b4586f1d073f044b80599727ce1ed2f
+  dropChance: 3
+  itemCooldown: 0
+  itemEffects: []
+  itemEffectDescription: 
+  equipmentType: 2
+  strength: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 0
+  critChance: 0
+  critPower: 0
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 13
+  iceDamage: 0
+  lightningDamage: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
+    stackSize: 2

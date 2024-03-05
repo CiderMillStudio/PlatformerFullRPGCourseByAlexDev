@@ -41,7 +41,7 @@ public class UI_MainMenu : MonoBehaviour
     public void ExitGame()
     {
         Debug.Log("Exiting Game");
-        AudioManager.instance.FadeOutBgmVolume(6);
+        AudioManager.instance.FadeOutBgmVolume(6, 10);
         Application.Quit();
     }
 
@@ -49,7 +49,7 @@ public class UI_MainMenu : MonoBehaviour
     private IEnumerator ContinueGameWithDelayForFade(float _delay)
     {
         fadeScreen.FadeOut(0f);
-        AudioManager.instance.FadeOutBgmVolume(6);
+        AudioManager.instance.FadeOutBgmVolume(6, 10);
 
         yield return new WaitForSeconds(_delay);
 
@@ -59,7 +59,7 @@ public class UI_MainMenu : MonoBehaviour
     private IEnumerator NewGameWithDelayForFade(float _delay)
     {
         fadeScreen.FadeOut(0f);
-        AudioManager.instance.FadeOutBgmVolume(6);
+        AudioManager.instance.FadeOutBgmVolume(6, 10);
 
         yield return new WaitForSeconds(_delay);
 

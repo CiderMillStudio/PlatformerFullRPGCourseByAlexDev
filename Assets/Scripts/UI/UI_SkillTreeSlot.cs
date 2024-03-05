@@ -73,6 +73,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
         }
 
         unlocked = true;
+        AudioManager.instance.PlaySFX(99, null);
         skillImage.color = Color.white;
     }
 

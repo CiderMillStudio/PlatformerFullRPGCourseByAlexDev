@@ -112,6 +112,7 @@ public class CrystalSkill : Skill
             if (!canMoveToEnemy)
             {
                 Vector2 playerPos = player.transform.position;
+                AudioManager.instance.PlaySFX(113, null);
                 player.transform.position = currentCrystal.transform.position;
                 currentCrystal.transform.position = playerPos;
 

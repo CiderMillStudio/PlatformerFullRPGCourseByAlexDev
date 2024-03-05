@@ -276,7 +276,7 @@ MonoBehaviour:
   isShocked: 0
   shockThunderstrikePrefab: {fileID: 2146538237896387988, guid: 5b58648136c5473429769b0ab75a8805, type: 3}
   soulsDropAmount:
-    baseValue: 12
+    baseValue: 300
     modifiers: 
   currentHealth: 0
   level: 1
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d480cc2fb756e564f89e0505c078e163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxAmountOfItemsToDrop: 5
+  maxAmountOfItemsToDrop: 7
   dropChanceModifier: 1
   possibleDrops:
   - {fileID: 11400000, guid: 2addda0fb8f9fc3489de4ca9448c1cad, type: 2}
@@ -305,6 +305,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
   - {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
   - {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+  - {fileID: 11400000, guid: 824b53ba279d19b4596e55d6d4f6f0ea, type: 2}
+  - {fileID: 11400000, guid: b28618904becbd74b9aa78459c432717, type: 2}
+  - {fileID: 11400000, guid: 4f7bf41649cb15544b489eca43c11115, type: 2}
+  - {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
+  - {fileID: 11400000, guid: 87135df04f6eb2846a1d19668303e1af, type: 2}
+  - {fileID: 11400000, guid: 099c0a9ba9ab3b64b9d34c929d353d05, type: 2}
+  - {fileID: 11400000, guid: 8b4586f1d073f044b80599727ce1ed2f, type: 2}
+  - {fileID: 11400000, guid: 08e291c823472ba408eb372ff5322d61, type: 2}
+  - {fileID: 11400000, guid: 99a81ec8a2f684b4ea9024f7f79adff9, type: 2}
   dropList: []
   dropPrefab: {fileID: 7243729598822216024, guid: 44d2a472c13c5044588b970f1fb3500d, type: 3}
 --- !u!1 &1435294327295286807
@@ -698,7 +707,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 8164608732340227407}
   m_HandleRect: {fileID: 0}

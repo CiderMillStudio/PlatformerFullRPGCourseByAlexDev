@@ -53,9 +53,14 @@ public class CrystalSkillController : MonoBehaviour
     {
         crystalExistTimer -= Time.deltaTime;
 
-        if (crystalExistTimer <= 1.3f && !playedExplodeSound)
+        if (crystalExistTimer <= 1.3f && !playedExplodeSound && canExplode)
         {
             AudioManager.instance.PlaySFX(Random.Range(68, 73), transform);
+            playedExplodeSound = true;
+        }
+        else if (crystalExistTimer <= 0.5f && !playedExplodeSound)
+        {
+            AudioManager.instance.PlaySFX(Random.Range(110, 113), transform);
             playedExplodeSound = true;
         }
 

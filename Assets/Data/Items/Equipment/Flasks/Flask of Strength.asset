@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Flask of Strength
   icon: {fileID: -1698851337, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 08e291c823472ba408eb372ff5322d61
-  dropChance: 0
+  dropChance: 4
   itemCooldown: 45
   itemEffects:
   - {fileID: 11400000, guid: 1085431040f8ae24da1b1dcf07f4ed45, type: 2}

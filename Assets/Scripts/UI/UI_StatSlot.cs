@@ -87,6 +87,7 @@ public class UI_StatSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void OnPointerEnter(PointerEventData eventData)
     {
         ui.statTooltip.ShowStatTooltip(statDescription);
+        AudioManager.instance.PlaySFX(36, null);
     }
 
     public void OnPointerExit(PointerEventData eventData)

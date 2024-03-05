@@ -22,7 +22,7 @@ public class AreaSound : MonoBehaviour
         if (collision.GetComponent<Player>() != null)
         {
 
-            AudioManager.instance.FadeOutSfxVolume(areaSoundIndex);
+            AudioManager.instance.FadeOutSfxVolume(areaSoundIndex, 10);
         }
     }
 }

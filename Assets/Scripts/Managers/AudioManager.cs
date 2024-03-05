@@ -91,12 +91,16 @@ public class AudioManager : MonoBehaviour
         //playBackgroundMusic = false; //get rid of this!!
     }
 
-    public void EnableSFX() => canPlaySFX = true;
-
-    public void FadeOutSfxVolume(int _sfxIndex)
+    public void EnableSFX()
     {
-        StopAllCoroutines();
-        StartCoroutine(FadeOutVolumeCoroutine(sfx[_sfxIndex]));
+        canPlaySFX = true;
+        PlaySFX(114, null); //this is the ambient noise loop
+    }
+
+    public void FadeOutSfxVolume(int _sfxIndex, float _rate)
+    {
+        //StopAllCoroutines();
+        StartCoroutine(FadeOutVolumeCoroutine(sfx[_sfxIndex], _rate));
     }
 
     public void FadeInSfxVolume(int _sfxIndex, float _rate)
@@ -106,10 +110,10 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeInVolumeCoroutine(sfx[_sfxIndex], _rate));
     }
 
-    public void FadeOutBgmVolume(int _bgmIndex)
+    public void FadeOutBgmVolume(int _bgmIndex, float _rate)
     {
         StopAllCoroutines();
-        StartCoroutine(FadeOutVolumeCoroutine(backgroundMusic[_bgmIndex]));
+        StartCoroutine(FadeOutVolumeCoroutine(backgroundMusic[_bgmIndex], _rate));
     }
 
     public void FadeInBgmVolume(int _bgmIndex, float _rate)
@@ -119,7 +123,7 @@ public class AudioManager : MonoBehaviour
         StartCoroutine(FadeInVolumeCoroutine(backgroundMusic[_bgmIndex], _rate));
     }
 
-    private IEnumerator FadeOutVolumeCoroutine(AudioSource _audio)
+    private IEnumerator FadeOutVolumeCoroutine(AudioSource _audio, float _rate)
     { 
         float defaultVolume = _audio.volume;
 
@@ -127,7 +131,9 @@ public class AudioManager : MonoBehaviour
         {
             _audio.volume -= 0.05f;
 
-            yield return new WaitForSeconds(0.1f);
+            float newRate = 1 / _rate;
+
+            yield return new WaitForSeconds(newRate);
 
             if (_audio.volume < 0.15f)
                 break;
@@ -143,7 +149,6 @@ public class AudioManager : MonoBehaviour
                 if (_audio == source)
                 {
                     playBackgroundMusic = false;
-                    Debug.Log("This worked bgm!!!!");
                 }
             }
             _audio.volume = defaultVolume;

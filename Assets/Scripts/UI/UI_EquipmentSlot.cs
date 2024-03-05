@@ -48,6 +48,8 @@ public class UI_EquipmentSlot : UI_ItemSlot
                                                                     //inventory (because we drop them!)
         ui.itemTooltip.HideToolTip();
 
+        AudioManager.instance.PlaySFX(7, null);
+
         CleanUpSlot();
         
     }
