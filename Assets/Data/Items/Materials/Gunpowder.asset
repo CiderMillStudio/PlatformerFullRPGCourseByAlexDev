@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Gunpowder
   icon: {fileID: 1357857371, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 03d0f22245c9b49448bfb12f5636d537
-  dropChance: 20
+  dropChance: 8

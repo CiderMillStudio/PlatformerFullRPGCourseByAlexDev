@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Brain
   icon: {fileID: -1494798538, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 68de66f1da79f1e409482591ecdf22af
-  dropChance: 4
+  dropChance: 1

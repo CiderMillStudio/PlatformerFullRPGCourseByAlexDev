@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Carrot
   icon: {fileID: -2112835744, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 5ccaab2f12bf8b448ae4b21aa6f26153
-  dropChance: 23
+  dropChance: 5

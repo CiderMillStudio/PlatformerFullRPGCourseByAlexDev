@@ -32,4 +32,25 @@ public class UI_SkillTooltip : UI_Tooltip
         skillName.fontSize = defaultNameFontSize;
         gameObject.SetActive(false);
     }
+
+    public override void AdjustPosition()
+    {
+        Vector2 mousePosition = Input.mousePosition;
+
+        float newXOffset = 0;
+        float newYOffset = 0;
+
+        if (mousePosition.x > xLimit)
+            newXOffset = -xOffset;
+        else
+            newXOffset = xOffset;
+
+        if (mousePosition.y > yLimit)
+            newYOffset = Mathf.RoundToInt(0.33f * yOffset);
+        else
+            newYOffset = yOffset;
+
+        transform.position = new Vector2(mousePosition.x + newXOffset, mousePosition.y + newYOffset);
+    }
+
 }

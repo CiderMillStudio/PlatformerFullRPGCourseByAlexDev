@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Thunder Claw
   icon: {fileID: 367297872, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: fe9080d0654673f46b47ef8b78549919
-  dropChance: 1
+  dropChance: 0
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 8e43c77b929135a4b8c336a46c76ed99, type: 2}

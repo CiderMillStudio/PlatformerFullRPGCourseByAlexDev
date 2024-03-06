@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Orange Leaf
   icon: {fileID: 429609311, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 5bb41d44a4588b4458f6f4a516770c4e
-  dropChance: 15
+  dropChance: 3

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Amulet of Thor
   icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 824b53ba279d19b4596e55d6d4f6f0ea
-  dropChance: 0.5
+  dropChance: 0
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 8e43c77b929135a4b8c336a46c76ed99, type: 2}

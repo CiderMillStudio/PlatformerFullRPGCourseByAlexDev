@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Green Leaf
   icon: {fileID: -716120472, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: f373e93d4c705da4787cd96af46ae242
-  dropChance: 20
+  dropChance: 3

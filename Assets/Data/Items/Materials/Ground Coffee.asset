@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Ground Coffee
   icon: {fileID: 520244564, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: f1b48a18ea8117d4487ba8face25ef2f
-  dropChance: 16.9
+  dropChance: 5

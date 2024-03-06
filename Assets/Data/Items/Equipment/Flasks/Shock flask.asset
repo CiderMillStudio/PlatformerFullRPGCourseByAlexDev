@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Shock Flask
   icon: {fileID: -648297027, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   itemId: b28618904becbd74b9aa78459c432717
-  dropChance: 2
+  dropChance: 0
   itemCooldown: 45
   itemEffects:
   - {fileID: 11400000, guid: 67649f3b8ac43c44c84cedb3a2c2dafb, type: 2}

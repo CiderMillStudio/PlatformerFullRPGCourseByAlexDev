@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Mushroom
   icon: {fileID: -177013655, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 7ba2ce9c1dd75dd4a9b6f074ebe555ed
-  dropChance: 22
+  dropChance: 5

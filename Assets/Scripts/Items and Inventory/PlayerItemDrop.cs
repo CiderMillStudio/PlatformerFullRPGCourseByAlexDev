@@ -11,6 +11,8 @@ public class PlayerItemDrop : ItemDrop
     [Range(0, 100)]
     [SerializeField] private float chanceToLoseMaterials;
 
+    
+
 
     public void SingleItemDrop(ItemData _itemToBeDropped) 
     {
@@ -24,18 +26,15 @@ public class PlayerItemDrop : ItemDrop
 
     public override void GenerateDropUponDeath() //My Generate Drop (Player version) is rather custom, so if things break later on, suspect the GEnerate Drop
     {
+
         Inventory inventory = Inventory.instance;
 
         Debug.Log("Custom Generate Drop, BEWARE!");
 
         //list of equipment (via inventory)
-        List<InventoryItem> currentEquipment = new List<InventoryItem>(); 
+
         List<InventoryItem> currentStash = new List<InventoryItem>();
         
-        foreach (InventoryItem inventoryItem in inventory.GetEquipmentList())
-        {
-            currentEquipment.Add(inventoryItem);
-        }
 
         foreach (InventoryItem stashItem in inventory.GetStashList())
         {
@@ -44,14 +43,6 @@ public class PlayerItemDrop : ItemDrop
 
         //for each item we'll check if we should lose it
 
-        foreach (InventoryItem item in currentEquipment)
-        {
-            if (Random.Range(0,100) <= chanceToLoseEquipment)
-            {
-                DropItem(item.data, false);
-                inventory.UnequipItem(item.data as ItemDataEquipment);
-            }
-        }
 
         foreach (InventoryItem item in currentStash)
         {
@@ -64,6 +55,27 @@ public class PlayerItemDrop : ItemDrop
                         DropItem(item.data, false);
                 }
                     
+            }
+        }
+        
+
+        if (!GameManager.instance.enabledHardCoreMode)
+            return;
+
+
+        List<InventoryItem> currentEquipment = new List<InventoryItem>(); 
+
+        foreach (InventoryItem inventoryItem in inventory.GetEquipmentList())
+        {
+            currentEquipment.Add(inventoryItem);
+        }
+
+        foreach (InventoryItem item in currentEquipment)
+        {
+            if (Random.Range(0,100) <= chanceToLoseEquipment)
+            {
+                DropItem(item.data, false);
+                inventory.UnequipItem(item.data as ItemDataEquipment);
             }
         }
     }

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Minor Flask of Strength
   icon: {fileID: -410334530, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: b39df5c6dac8329499b09aa3ebab8055
-  dropChance: 9
+  dropChance: 0
   itemCooldown: 40
   itemEffects:
   - {fileID: 11400000, guid: a5522712ddadd4949bc8d677d0d0fc84, type: 2}

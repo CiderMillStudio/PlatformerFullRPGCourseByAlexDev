@@ -15,4 +15,5 @@ MonoBehaviour:
   itemType: 0
   itemName: Rope
   icon: {fileID: 861423284, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 26.9
+  itemId: eb40bbd8dbc69884d9cf0b1bf6302d3b
+  dropChance: 30

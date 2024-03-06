@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Wooden Sword
   icon: {fileID: 1025091068, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: a75472e00c63d7943881801f46fb3620
-  dropChance: 67
+  dropChance: 0
   itemCooldown: 0
   itemEffects: []
   itemEffectDescription: 

@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Ash Maker
   icon: {fileID: 1811826115, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 8b4586f1d073f044b80599727ce1ed2f
-  dropChance: 3
+  dropChance: 0
   itemCooldown: 0
   itemEffects: []
   itemEffectDescription: 

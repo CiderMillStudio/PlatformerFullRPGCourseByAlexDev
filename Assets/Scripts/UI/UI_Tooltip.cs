@@ -6,11 +6,11 @@ using UnityEngine;
 public class UI_Tooltip : MonoBehaviour
 {
 
-    [SerializeField] private float xLimit = 960;
-    [SerializeField] private float yLimit = 640;
+    [SerializeField] protected float xLimit = 960;
+    [SerializeField] protected float yLimit = 640;
 
-    [SerializeField] private float xOffset = 150;
-    [SerializeField] private float yOffset = 150;
+    [SerializeField] protected float xOffset = 150;
+    [SerializeField] protected float yOffset = 150;
 
     public virtual void AdjustPosition()
     {

@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Tomato
   icon: {fileID: 1304907158, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 9662b340ce290a9478a006472507bd62
-  dropChance: 16
+  dropChance: 5

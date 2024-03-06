@@ -13,7 +13,7 @@ public class FreezeEnemiesEffect : ItemEffect
     {
         PlayerStats playerStats = PlayerManager.instance.player.GetComponent<PlayerStats>();
 
-        if(playerStats.currentHealth > playerStats.maxHealth.GetValue() * 0.8f)
+        if(playerStats.currentHealth > playerStats.GetMaxHealthValue() * 0.8f)
             return;
         
 

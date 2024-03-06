@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Egg
   icon: {fileID: 815606122, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: a87cbccfc96910848bf87bae87070026
-  dropChance: 18.8
+  dropChance: 2

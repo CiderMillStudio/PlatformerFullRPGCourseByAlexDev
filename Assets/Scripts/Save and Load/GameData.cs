@@ -26,6 +26,11 @@ public class GameData  //DOES NOT inherit from Monobehavior
 
     public SerializableDictionary<string, float> volumeSliders;
 
+    public bool enableHardCoreMode;
+
+    public bool playerHealthBarEnabled;
+    public bool enabledPlayerHealthBar;
+
     public GameData()
     {
         this.lostCurrencyX = 0;
@@ -45,6 +50,11 @@ public class GameData  //DOES NOT inherit from Monobehavior
 
         volumeSliders = new SerializableDictionary<string, float>();
 
-        
+        enableHardCoreMode = false;
+        playerHealthBarEnabled = false;
+        enabledPlayerHealthBar = true;
+
+
+
     }
 }

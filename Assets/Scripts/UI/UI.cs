@@ -26,6 +26,7 @@ public class UI : MonoBehaviour, ISaveManager
     [Space]
     [Header("In-Game UI")]
     [SerializeField] private GameObject inGameUi;
+    [SerializeField] private GameObject playerEntityStatusAndHealthBar;
 
     [Space]
     [Header("Tooltips")]
@@ -39,15 +40,32 @@ public class UI : MonoBehaviour, ISaveManager
     [Header("Volume Sliders")]
     [SerializeField] private UI_VolumeSlider[] volumeSliders;
 
+    [Header("Toggle Settings")]
+    [SerializeField] private HardcoreModeToggleButton hardCoreModeToggleButton;
+    [SerializeField] private PlayerHealthBarToggleButton playerHealthModeToggleButton;
+
+    
+
     private void Awake()
     {
         checkpointParent = FindObjectOfType<CheckpointParent>();
         SwitchTo(skilltreePanel);
         fadeScreen.SetActive(true);
+
+        
+
     }
 
     private void Start()
     {
+
+        optionsPanel.SetActive(true);
+        playerEntityStatusAndHealthBar.SetActive(true);
+         
+        hardCoreModeToggleButton.SetStartingToggleValue();
+        playerHealthModeToggleButton.SetStartingToggleValue();
+        optionsPanel.SetActive(false);
+
         SwitchTo(inGameUi);
 
         if (itemTooltip != null)

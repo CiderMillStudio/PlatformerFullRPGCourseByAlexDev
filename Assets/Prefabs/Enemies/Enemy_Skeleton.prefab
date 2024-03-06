@@ -276,7 +276,7 @@ MonoBehaviour:
   isShocked: 0
   shockThunderstrikePrefab: {fileID: 2146538237896387988, guid: 5b58648136c5473429769b0ab75a8805, type: 3}
   soulsDropAmount:
-    baseValue: 478
+    baseValue: 534
     modifiers: 
   currentHealth: 0
   level: 1
@@ -312,6 +312,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a87cbccfc96910848bf87bae87070026, type: 2}
   - {fileID: 11400000, guid: e4f3779935f0aee4980baf81996f21e5, type: 2}
   - {fileID: 11400000, guid: 0f7adda8b8dd90745b5bc59aba8eb3a0, type: 2}
+  - {fileID: 11400000, guid: 717cd75b5e0cc5d4cad2bf53ffce075b, type: 2}
   - {fileID: 11400000, guid: f373e93d4c705da4787cd96af46ae242, type: 2}
   - {fileID: 11400000, guid: f1b48a18ea8117d4487ba8face25ef2f, type: 2}
   - {fileID: 11400000, guid: 03d0f22245c9b49448bfb12f5636d537, type: 2}
@@ -320,7 +321,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5bb41d44a4588b4458f6f4a516770c4e, type: 2}
   - {fileID: 11400000, guid: 9662b340ce290a9478a006472507bd62, type: 2}
   - {fileID: 11400000, guid: 37fb96e7d7179a1479d2b07c63cb7196, type: 2}
-  - {fileID: 11400000, guid: 717cd75b5e0cc5d4cad2bf53ffce075b, type: 2}
   dropList: []
   dropPrefab: {fileID: 7243729598822216024, guid: 44d2a472c13c5044588b970f1fb3500d, type: 3}
 --- !u!1 &1435294327295286807

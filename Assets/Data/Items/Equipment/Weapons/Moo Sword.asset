@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Moo Sword
   icon: {fileID: 1954205950, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
   itemId: 20f17b3c96c10eb43b80b41a6ff69886
-  dropChance: 1
+  dropChance: 0
   itemCooldown: 0
   itemEffects: []
   itemEffectDescription: 

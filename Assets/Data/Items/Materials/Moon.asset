@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Moon
   icon: {fileID: -538168415, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 099c0a9ba9ab3b64b9d34c929d353d05
-  dropChance: 5
+  dropChance: 7

@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Corn
   icon: {fileID: 1335285574, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: a4980f07659bf6b4a8846009156dab59
-  dropChance: 16.9
+  dropChance: 3

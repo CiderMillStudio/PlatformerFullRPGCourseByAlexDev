@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
     [Header("Options & Settings")]
     public float currentBgmVolume;
     public float currentSfxVolume;
+    public bool enabledHardCoreMode;
+    public bool enabledPlayerHealthBar;
 
 
     private void Awake()
@@ -116,10 +118,16 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
         bgmSlider.value = _data.backgroundMusicVolume;
         audioMixer.SetFloat("BGM", _data.backgroundMusicVolume);*/
 
+        enabledHardCoreMode = _data.enableHardCoreMode;
+        enabledPlayerHealthBar = _data.enabledPlayerHealthBar;
+        Debug.Log("Loading HardCoreMode: " + enabledHardCoreMode);
+        Debug.Log("Loading playerbar toggle: " + enabledPlayerHealthBar);
+
         yield return new WaitForSeconds(0.1f);
         LoadCheckpoints(_data);
         PlacePlayerAtNearestCheckpoint(_data);
         LoadLostCurrency(_data);
+
 
 
         
@@ -143,6 +151,11 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
         _data.lostCurrencyX = player.position.x;
         _data.lostCurrencyY = player.position.y;
 
+        _data.enableHardCoreMode = enabledHardCoreMode;
+        _data.enabledPlayerHealthBar = enabledPlayerHealthBar;
+
+        Debug.Log("Saving HArdCore Mode: " + _data.enableHardCoreMode);
+        Debug.Log("saving playerbar toggle: " + _data.enabledPlayerHealthBar);
 
 /*        _data.backgroundMusicVolume = currentBgmVolume;
         _data.sfxVolume = currentSfxVolume;*/
