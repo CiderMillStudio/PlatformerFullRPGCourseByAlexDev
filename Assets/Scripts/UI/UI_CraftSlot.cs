@@ -34,7 +34,6 @@ public class UI_CraftSlot : UI_ItemSlot
 
     public void SetupCraftSlot(ItemDataEquipment _data)
     {
-        Debug.Log("Setting up craft slot!");
         
         if (_data == null)
             return;

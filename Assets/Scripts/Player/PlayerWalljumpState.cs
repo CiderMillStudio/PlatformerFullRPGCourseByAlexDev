@@ -54,7 +54,13 @@ public class PlayerWalljumpState : PlayerState
         if (stateTimer < 0)
             stateMachine.ChangeState(player.airState);
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword() && player.skill.swordThrow.swordUnlocked)
-            stateMachine.ChangeState(player.aimSwordState);
+        if (Input.GetKeyDown(KeyCode.Mouse1) && PlayerHasSwordInHand() && player.skill.swordThrow.swordUnlocked)
+        {
+            if (player.skill.swordThrow.CanUseSkill())
+            {
+                stateMachine.ChangeState(player.aimSwordState);
+            }
+
+        }
     }
 }

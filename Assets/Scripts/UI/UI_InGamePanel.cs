@@ -51,7 +51,10 @@ public class UI_InGamePanel : MonoBehaviour
         else
             soulsAmount = PlayerManager.instance.GetCurrentCurrency();
 
-        currentSouls.text = Mathf.RoundToInt(soulsAmount).ToString("#,#"); //THIS IS SO COOL HOLY MOLEY!!!!!! LADKFJKLASDFALJFSDALKFSDLFJDS
+        if (soulsAmount == 0)
+            currentSouls.text = "$0";
+        else
+            currentSouls.text = "$" + Mathf.RoundToInt(soulsAmount).ToString("#,#"); //THIS IS SO COOL HOLY MOLEY!!!!!! LADKFJKLASDFALJFSDALKFSDLFJDS
         
         if (Input.GetKeyDown(KeyCode.LeftShift) && skills.dash.dashUnlocked)
         {
@@ -68,7 +71,7 @@ public class UI_InGamePanel : MonoBehaviour
             SetCooldownOf(crystalImage);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && skills.swordThrow.swordUnlocked) 
+        if (Input.GetKeyDown(KeyCode.Mouse1) && skills.swordThrow.swordUnlocked && PlayerManager.instance.player.sword == null) 
         {
             SetCooldownOf(swordThrowImage);
         }

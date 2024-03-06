@@ -62,9 +62,9 @@ public class PlayerState
         middleTrigger1Called = true;
     }
 
-    protected virtual bool HasNoSword()
+    protected virtual bool PlayerHasSwordInHand()
     {
-        if (!player.sword) return true;
+        if (player.sword == null) return true;
 
         player.sword.GetComponent<SwordSkillController>().ReturnSword();
         return false;

@@ -757,7 +757,6 @@ GameObject:
   - component: {fileID: 5269287416108996129}
   - component: {fileID: 887003186132506479}
   - component: {fileID: 819070423338978977}
-  - component: {fileID: 3151019332622494548}
   m_Layer: 8
   m_Name: Boss Skeleton
   m_TagString: Untagged
@@ -998,32 +997,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9662b340ce290a9478a006472507bd62, type: 2}
   - {fileID: 11400000, guid: 37fb96e7d7179a1479d2b07c63cb7196, type: 2}
   - {fileID: 11400000, guid: 717cd75b5e0cc5d4cad2bf53ffce075b, type: 2}
-  dropList: []
-  dropPrefab: {fileID: 7243729598822216024, guid: 44d2a472c13c5044588b970f1fb3500d, type: 3}
---- !u!114 &3151019332622494548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5998383979174932348}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d480cc2fb756e564f89e0505c078e163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxAmountOfItemsToDrop: 5
-  dropChanceModifier: 1
-  possibleDrops:
-  - {fileID: 11400000, guid: 2addda0fb8f9fc3489de4ca9448c1cad, type: 2}
-  - {fileID: 11400000, guid: a75472e00c63d7943881801f46fb3620, type: 2}
-  - {fileID: 11400000, guid: e4ed9e81d1c355747a07b33a974c977f, type: 2}
-  - {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
-  - {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
-  - {fileID: 11400000, guid: b39df5c6dac8329499b09aa3ebab8055, type: 2}
-  - {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
-  - {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
-  - {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
   dropList: []
   dropPrefab: {fileID: 7243729598822216024, guid: 44d2a472c13c5044588b970f1fb3500d, type: 3}
 --- !u!1 &7590986511964991459

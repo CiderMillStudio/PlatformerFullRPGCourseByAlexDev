@@ -59,6 +59,7 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
             if (shouldBeUnlocked[i].unlocked == false)
             {
                 Debug.Log("You cannot unlock this skill");
+                AudioManager.instance.PlaySFX(118, null);
                 return;
             }
         }
@@ -68,12 +69,16 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
             if (shouldBeLocked[i].unlocked == true)
             {
                 Debug.Log("You cannot unlock this skill");
+                AudioManager.instance.PlaySFX(118, null);
                 return;
             }
         }
         
         if (PlayerManager.instance.HaveEnoughMoney(skillCost) == false)
+        {
+            AudioManager.instance.PlaySFX(118, null);
             return;
+        }
 
         ui.SetSkillTreeCurrencyText();
         unlocked = true;

@@ -41,9 +41,13 @@ public class PlayerGroundedState : PlayerState
             stateMachine.ChangeState(player.counterAttackState);
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse1) && HasNoSword() && player.skill.swordThrow.swordUnlocked)
-        { 
+        if (Input.GetKeyDown(KeyCode.Mouse1) && PlayerHasSwordInHand() && player.skill.swordThrow.swordUnlocked)
+        {
+            if (player.skill.swordThrow.CanUseSkill())
+            {
                 stateMachine.ChangeState(player.aimSwordState);
+            }
+
         }
 
         if (Input.GetKeyDown(KeyCode.R) && player.skill.blackhole.blackholeUnlocked)
