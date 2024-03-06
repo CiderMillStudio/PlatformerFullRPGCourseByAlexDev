@@ -15,4 +15,5 @@ MonoBehaviour:
   itemType: 0
   itemName: Wood
   icon: {fileID: 2005540724, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
-  dropChance: 51.1
+  itemId: aefb0878c84b4ec419e7d4072dc07106
+  dropChance: 33

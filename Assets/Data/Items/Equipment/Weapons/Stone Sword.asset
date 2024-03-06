@@ -15,13 +15,17 @@ MonoBehaviour:
   itemType: 1
   itemName: Stone Sword
   icon: {fileID: 1526008332, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: 2addda0fb8f9fc3489de4ca9448c1cad
   dropChance: 23
+  itemCooldown: 0
+  itemEffects: []
+  itemEffectDescription: 
   equipmentType: 0
-  strength: 4
-  agility: 5
+  strength: 0
+  agility: 0
   intelligence: 0
   vitality: 0
-  damage: 10
+  damage: 12
   critChance: 7
   critPower: 0
   maxHealth: 0
@@ -35,4 +39,4 @@ MonoBehaviour:
   - data: {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
     stackSize: 1
   - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 1
+    stackSize: 3

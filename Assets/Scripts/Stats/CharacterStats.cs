@@ -172,6 +172,11 @@ public class CharacterStats : MonoBehaviour
         if (TargetCanAvoidAttack(_targetStats))
             return;
 
+        if (this.GetComponent<Enemy>() != null)
+        {
+            AudioManager.instance.PlaySFX(Random.Range(119, 123), null);
+        }
+
         int totalDamage = damage.GetValue() + strength.GetValue();
 
         totalDamage = CheckTargetArmor(_targetStats, totalDamage);

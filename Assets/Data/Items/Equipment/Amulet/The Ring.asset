@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
+  m_Name: The Ring
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: The Ring
+  icon: {fileID: -878758905, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: 0b2bf93af1cf998428d059f67485c409
+  dropChance: 0
+  itemCooldown: 0
+  itemEffects: []
+  itemEffectDescription: may slowly corrupt its bearer
+  equipmentType: 2
+  strength: 20
+  agility: 0
+  intelligence: 0
+  vitality: 10
+  damage: 0
+  critChance: 0
+  critPower: 0
+  maxHealth: 0
+  armor: 0
+  evasion: 0
+  magicResistance: 0
+  fireDamage: 5
+  iceDamage: 5
+  lightningDamage: 5
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: d6086d77f0aad144e80d400df8a61bcb, type: 2}
+    stackSize: 4
+  - data: {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
+    stackSize: 1

@@ -30,7 +30,7 @@ MonoBehaviour:
   critChance: 0
   critPower: 0
   maxHealth: 0
-  armor: 12
+  armor: 6
   evasion: 4
   magicResistance: 0
   fireDamage: 0

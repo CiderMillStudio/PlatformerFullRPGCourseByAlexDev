@@ -134,6 +134,8 @@ public class Player : Entity
             Debug.Log("jumping!");
 
         }
+
+    
     }
 
     public override void SlowEntityBy(float _slowPercentage, float _slowDuration)

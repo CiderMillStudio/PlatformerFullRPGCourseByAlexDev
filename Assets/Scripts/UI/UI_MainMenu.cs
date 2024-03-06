@@ -23,7 +23,7 @@ public class UI_MainMenu : MonoBehaviour
             fadeScreen.FadeIn();
         }
 
-        AudioManager.instance.FadeInBgmVolume(6, 10f);
+        AudioManager.instance.FadeInBgmVolume(1, 10f);
     }
 
     public void ContinueGame()

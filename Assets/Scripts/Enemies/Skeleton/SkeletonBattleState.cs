@@ -43,6 +43,12 @@ public class SkeletonBattleState : EnemyState
             return;
         }
 
+        if ((enemy.IsWallDetected() || !enemy.IsGroundDetected()) && !enemy.IsPlayerDetected())
+        {
+            enemy.Flip();
+            stateMachine.ChangeState(enemy.idleState);
+        }
+
         if (enemy.IsPlayerDetected())
         {
             stateTimer = enemy.battleTime;
@@ -78,6 +84,9 @@ public class SkeletonBattleState : EnemyState
 
         enemy.SetVelocity(enemy.attackSpeedModifier * enemy.moveSpeed * moveDirection, 
             rb.velocity.y);
+
+
+
 
 
     }

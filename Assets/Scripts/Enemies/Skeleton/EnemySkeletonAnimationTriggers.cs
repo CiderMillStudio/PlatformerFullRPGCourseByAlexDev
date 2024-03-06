@@ -45,4 +45,9 @@ public class EnemySkeletonAnimationTriggers : MonoBehaviour
         enemy.CloseCounterAttackWindow();
     }
 
+    private void SkeletonAttackSFX()
+    {
+        AudioManager.instance.PlaySFX(Random.Range(107, 110), transform);
+    }
+
 }

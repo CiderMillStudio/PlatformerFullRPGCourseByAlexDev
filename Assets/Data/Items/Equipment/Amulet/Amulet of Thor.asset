@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
-  m_Name: Amulet of God
+  m_Name: Amulet of Thor
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Amulet of God
+  itemName: Amulet of Thor
   icon: {fileID: -245851270, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 824b53ba279d19b4596e55d6d4f6f0ea
   dropChance: 0.5
@@ -22,14 +22,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e43c77b929135a4b8c336a46c76ed99, type: 2}
   itemEffectDescription: Summon heavenly thunder each time you hit an enemy.
   equipmentType: 2
-  strength: 0
+  strength: 5
   agility: 0
-  intelligence: 0
-  vitality: 0
+  intelligence: 3
+  vitality: 5
   damage: 0
   critChance: 0
   critPower: 0
-  maxHealth: 20
+  maxHealth: 0
   armor: 0
   evasion: 0
   magicResistance: 15
@@ -38,8 +38,8 @@ MonoBehaviour:
   lightningDamage: 10
   craftingMaterials:
   - data: {fileID: 11400000, guid: 099c0a9ba9ab3b64b9d34c929d353d05, type: 2}
-    stackSize: 100
-  - data: {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
-    stackSize: 200
-  - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
-    stackSize: 10
+    stackSize: 5
+  - data: {fileID: 11400000, guid: 5bb41d44a4588b4458f6f4a516770c4e, type: 2}
+    stackSize: 12
+  - data: {fileID: 11400000, guid: d6086d77f0aad144e80d400df8a61bcb, type: 2}
+    stackSize: 1

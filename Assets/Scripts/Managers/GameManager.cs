@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
     {
 
         player = PlayerManager.instance.player.transform;
+        AudioManager.instance.FadeInSfxVolume(114, 10f);
     }
     public void RestartCurrentScene()
     {

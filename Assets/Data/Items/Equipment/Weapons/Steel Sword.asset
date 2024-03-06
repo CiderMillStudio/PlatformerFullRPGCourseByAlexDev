@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
+  m_Name: Steel Sword
+  m_EditorClassIdentifier: 
+  itemType: 1
+  itemName: Steel Sword
+  icon: {fileID: -671158514, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: 57d614344a39f7441b9bdce03000149a
+  dropChance: 0
+  itemCooldown: 0
+  itemEffects:
+  - {fileID: 11400000, guid: 85d8af4e9980344429c6969fcbbc2fd6, type: 2}
+  itemEffectDescription: It's heavy but somehow it's also light for its size. Briefly
+    increases critical power on each consecutive hit.
+  equipmentType: 0
+  strength: 0
+  agility: 0
+  intelligence: 0
+  vitality: 0
+  damage: 25
+  critChance: 7
+  critPower: 4
+  maxHealth: 0
+  armor: 0
+  evasion: 5
+  magicResistance: 0
+  fireDamage: 0
+  iceDamage: 0
+  lightningDamage: 0
+  craftingMaterials:
+  - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
+    stackSize: 9
+  - data: {fileID: 11400000, guid: 03d0f22245c9b49448bfb12f5636d537, type: 2}
+    stackSize: 2
+  - data: {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
+    stackSize: 1
+  - data: {fileID: 11400000, guid: 725c66047cbfb7b45bcc6c51f3c3ee07, type: 2}
+    stackSize: 1

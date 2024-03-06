@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 09756dad23f12264098761beab9b8cd5, type: 3}
-  m_Name: Ice and Fire
+  m_Name: Sword of Ice and Fire
   m_EditorClassIdentifier: 
   itemType: 1
-  itemName: Ice and Fire
+  itemName: Sword of Ice and Fire
   icon: {fileID: 1398721256, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 5bed8d6ccfa28d341a3e61ba575416e0
-  dropChance: 6
+  dropChance: 0
   itemCooldown: 0
   itemEffects:
   - {fileID: 11400000, guid: 45fb5934059f89340b0d539d0c5f0624, type: 2}
   - {fileID: 11400000, guid: 331509cb3ae802e4f9ce44089b9aa62e, type: 2}
-  itemEffectDescription: 'If you rapidly attack an enemy, fire damage stacks. On
-    third hit, summons a magic ball of ice and fire. '
+  itemEffectDescription: 'On each hit, fire damage stat briefly increases. On a third
+    consecutive hit, this sword summons a terrifying cannonball of ice and fire. '
   equipmentType: 0
-  strength: 0
+  strength: 5
   agility: 0
   intelligence: 0
   vitality: 0
@@ -40,6 +40,10 @@ MonoBehaviour:
   lightningDamage: 0
   craftingMaterials:
   - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 1
+    stackSize: 6
   - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
     stackSize: 1
+  - data: {fileID: 11400000, guid: 03d0f22245c9b49448bfb12f5636d537, type: 2}
+    stackSize: 3
+  - data: {fileID: 11400000, guid: e4f3779935f0aee4980baf81996f21e5, type: 2}
+    stackSize: 2

@@ -14,8 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 1
   itemName: Fishing Rod
-  icon: {fileID: 1870011191, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
-  dropChance: 2
+  icon: {fileID: 1980521470, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
+  itemId: e4ed9e81d1c355747a07b33a974c977f
+  dropChance: 0
+  itemCooldown: 0
+  itemEffects: []
+  itemEffectDescription: it yearns for a fresh catch!
   equipmentType: 0
   strength: 0
   agility: 3
@@ -23,7 +27,7 @@ MonoBehaviour:
   vitality: 0
   damage: 2
   critChance: 20
-  critPower: 500
+  critPower: 150
   maxHealth: 0
   armor: 0
   evasion: 0
@@ -36,5 +40,5 @@ MonoBehaviour:
     stackSize: 2
   - data: {fileID: 11400000, guid: eb40bbd8dbc69884d9cf0b1bf6302d3b, type: 2}
     stackSize: 2
-  - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
+  - data: {fileID: 11400000, guid: 8d37af0363a3be744ad0d0b45f281db9, type: 2}
     stackSize: 1

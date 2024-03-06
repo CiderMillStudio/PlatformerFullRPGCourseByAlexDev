@@ -22,11 +22,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 8e43c77b929135a4b8c336a46c76ed99, type: 2}
   itemEffectDescription: Summons a thunder strike on enemies when you hit them.
   equipmentType: 0
-  strength: 0
+  strength: 10
   agility: 0
   intelligence: 0
-  vitality: 0
-  damage: 10
+  vitality: 2
+  damage: 0
   critChance: 0
   critPower: 0
   maxHealth: 0
@@ -38,6 +38,10 @@ MonoBehaviour:
   lightningDamage: 5
   craftingMaterials:
   - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 4
+    stackSize: 6
   - data: {fileID: 11400000, guid: 099c0a9ba9ab3b64b9d34c929d353d05, type: 2}
+    stackSize: 2
+  - data: {fileID: 11400000, guid: 03d0f22245c9b49448bfb12f5636d537, type: 2}
+    stackSize: 2
+  - data: {fileID: 11400000, guid: 717cd75b5e0cc5d4cad2bf53ffce075b, type: 2}
     stackSize: 1

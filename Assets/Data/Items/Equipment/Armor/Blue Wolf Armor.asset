@@ -22,24 +22,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 437f7bca6bcfd3241b65e27b41085bdd, type: 2}
   itemEffectDescription: Enemies freeze for a brief duration if they harm you.
   equipmentType: 1
-  strength: 4
+  strength: 0
   agility: 0
   intelligence: 0
   vitality: 0
   damage: 0
   critChance: 0
   critPower: 0
-  maxHealth: 50
-  armor: 15
+  maxHealth: 0
+  armor: 16
   evasion: 0
-  magicResistance: 15
+  magicResistance: 7
   fireDamage: 0
-  iceDamage: 0
+  iceDamage: 2
   lightningDamage: 0
   craftingMaterials:
-  - data: {fileID: 11400000, guid: a1de7cf495ef4084594411db8f59586e, type: 2}
+  - data: {fileID: 11400000, guid: 099c0a9ba9ab3b64b9d34c929d353d05, type: 2}
     stackSize: 2
   - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
-    stackSize: 11
+    stackSize: 6
   - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 7
+    stackSize: 6

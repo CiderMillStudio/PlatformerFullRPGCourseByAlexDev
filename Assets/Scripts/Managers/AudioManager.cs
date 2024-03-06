@@ -37,7 +37,7 @@ public class AudioManager : MonoBehaviour
         else
         {
             if (!backgroundMusic[backgroundMusicIndex].isPlaying)
-                PlayBackgroundMusic(backgroundMusicIndex);
+                FadeInBgmVolume(backgroundMusicIndex, 10);
         }
     }
 
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
     public void EnableSFX()
     {
         canPlaySFX = true;
-        PlaySFX(114, null); //this is the ambient noise loop
+        FadeInSfxVolume(114, 10f); //this is the ambient noise loop
     }
 
     public void FadeOutSfxVolume(int _sfxIndex, float _rate)
@@ -173,6 +173,17 @@ public class AudioManager : MonoBehaviour
             }
 
         }
+    }
+
+    public void ThreeShortSoundsInARow(int _sound1sfxIndex, int _sound2sfxIndex, int _sound3sfxIndex, Transform _source)
+        //In order to use this, you need to edit 3 separate sounds that have varying levels of silence before the actual sound (use this for black smith pounding)
+    {
+        
+        PlaySFX(_sound1sfxIndex, _source);
+
+        PlaySFX(_sound2sfxIndex, _source);
+
+        PlaySFX(_sound3sfxIndex, _source );
     }
 
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Unity.VisualScripting;
 
 #if UNITY_EDITOR
@@ -347,6 +348,8 @@ public class Inventory : MonoBehaviour, ISaveManager
                     Debug.Log("You need " + difference.ToString() +  " more " + _requiredMaterials[i].data.itemName + 
                         " to craft " + _itemToCraft.itemName); //e.g. "You need 3 more Iron to craft Iron Armor"
 
+                    AudioManager.instance.PlaySFX(118, null);
+
                     return false;
                 }
                 else
@@ -358,10 +361,13 @@ public class Inventory : MonoBehaviour, ISaveManager
             else // if you have ZERO of the required materials (e.g. recipe calls for 5 stone, but you have zero!)
             {
                 Debug.Log("You don't have any " + _requiredMaterials[i].data.itemName + "s! Go find some!");
+                AudioManager.instance.PlaySFX(118, null);
                 return false;
             }
 
         }
+
+        
 
         for (int i = 0; i < materialsToRemove.Count; i++) 
         {
@@ -376,6 +382,8 @@ public class Inventory : MonoBehaviour, ISaveManager
         AddItem(_itemToCraft);
 
         Debug.Log("Here's your hand-crafted " + _itemToCraft.itemName);
+
+        AudioManager.instance.ThreeShortSoundsInARow(115, 116, 117, null);
 
         return true;
     }
@@ -498,6 +506,7 @@ public class Inventory : MonoBehaviour, ISaveManager
         }
 
     }
+
 
 #if UNITY_EDITOR
     [ContextMenu("Fill Up ItemDatabase")]
