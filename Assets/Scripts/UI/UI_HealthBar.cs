@@ -13,8 +13,6 @@ public class UI_HealthBar : MonoBehaviour
 
     private CharacterStats myStats;
 
-    private bool flipUiAdded = false;
-
     private void Start()
     {
         entity = GetComponentInParent<Entity>();

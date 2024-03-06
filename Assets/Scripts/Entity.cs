@@ -96,7 +96,6 @@ public class Entity : MonoBehaviour
 
         if (_totalDamageDone >= superKnockbackThreshold)
         {
-            Debug.Log("super knockback enabled this hit!");
             superKnockbackEnabled = true;
         }
 
@@ -202,7 +201,7 @@ public class Entity : MonoBehaviour
 
 
 
-    public virtual void Die()
+    public virtual void DieFromPlayerScript()
     {
         //overridden in player and in enemy scripts
         if (GetComponent<Player>() == null)

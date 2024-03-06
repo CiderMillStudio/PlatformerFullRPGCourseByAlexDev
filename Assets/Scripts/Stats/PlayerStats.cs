@@ -22,13 +22,14 @@ public class PlayerStats : CharacterStats
 
     }
 
-    protected override void Die()
+    protected override void Die(bool _killedByDeadZone)
     {
-        base.Die();
+        base.Die(_killedByDeadZone);
 
-        player.Die();
+        player.DieFromPlayerScript();
 
         GameManager.instance.lostCurrencyAmount = PlayerManager.instance.currency; 
+        GameManager.instance.killedByDeadZone = _killedByDeadZone;
         PlayerManager.instance.currency = 0;
 
         myPlayerItemDropSystem.GenerateDropUponDeath();

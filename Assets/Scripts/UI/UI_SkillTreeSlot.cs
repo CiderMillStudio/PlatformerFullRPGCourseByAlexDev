@@ -51,8 +51,8 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void UnlockSkillSlot()
     {
-        if (PlayerManager.instance.HaveEnoughMoney(skillCost) == false)
-            return;
+        
+        
 
         for (int i = 0; i < shouldBeUnlocked.Length; i++)
         {
@@ -71,7 +71,11 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 return;
             }
         }
+        
+        if (PlayerManager.instance.HaveEnoughMoney(skillCost) == false)
+            return;
 
+        ui.SetSkillTreeCurrencyText();
         unlocked = true;
         AudioManager.instance.PlaySFX(99, null);
         skillImage.color = Color.white;

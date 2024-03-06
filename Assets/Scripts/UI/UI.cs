@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -43,6 +44,11 @@ public class UI : MonoBehaviour, ISaveManager
     [Header("Toggle Settings")]
     [SerializeField] private HardcoreModeToggleButton hardCoreModeToggleButton;
     [SerializeField] private PlayerHealthBarToggleButton playerHealthModeToggleButton;
+
+    [Space]
+    [Header("Other Info")]
+    [SerializeField] private TextMeshProUGUI currencyTextInSkillTree;
+
 
     
 
@@ -92,10 +98,15 @@ public class UI : MonoBehaviour, ISaveManager
             UiMenuPanels[i].gameObject.SetActive(false);
         }
 
+        
+
         if (_menu != null)
         {
             _menu.SetActive(true);
             AudioManager.instance.PlaySFX(7, null);
+
+            if (Time.time > 0.2f && _menu == skilltreePanel)
+                SetSkillTreeCurrencyText();
 
             if (_menu != inGameUi)
             {
@@ -109,6 +120,16 @@ public class UI : MonoBehaviour, ISaveManager
 
 
         
+    }
+
+    public void SetSkillTreeCurrencyText()
+    {
+        if (PlayerManager.instance.GetCurrentCurrency() <= 0)
+        {
+            currencyTextInSkillTree.text = "$0";
+        }
+        else
+            currencyTextInSkillTree.text = "$" + PlayerManager.instance.GetCurrentCurrency().ToString("#,#");
     }
 
     public void ToggleUiMenu()
@@ -144,6 +165,10 @@ public class UI : MonoBehaviour, ISaveManager
         }
 
         _specificMenu.SetActive(true);
+
+        if (_specificMenu == skilltreePanel)
+            SetSkillTreeCurrencyText();
+            
         AudioManager.instance.PlaySFX(7, null);
     }
 
@@ -163,6 +188,7 @@ public class UI : MonoBehaviour, ISaveManager
         else if (Input.GetKeyUp(KeyCode.V))
         {
             ToggleToSpecificUIMenuWithShortcut(skilltreePanel); //UiPanels[0] is SkillTree Panel
+            SetSkillTreeCurrencyText();
             CheckForInGameUI();
         }
 

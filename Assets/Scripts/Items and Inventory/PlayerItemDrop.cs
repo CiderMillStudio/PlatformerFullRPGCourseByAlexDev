@@ -29,7 +29,6 @@ public class PlayerItemDrop : ItemDrop
 
         Inventory inventory = Inventory.instance;
 
-        Debug.Log("Custom Generate Drop, BEWARE!");
 
         //list of equipment (via inventory)
 

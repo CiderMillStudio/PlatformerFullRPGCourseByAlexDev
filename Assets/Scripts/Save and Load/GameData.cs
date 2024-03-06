@@ -20,6 +20,7 @@ public class GameData  //DOES NOT inherit from Monobehavior
     public float lostCurrencyX;
     public float lostCurrencyY;
     public int lostCurrencyAmount;
+    public bool killedByDeadZone;
 
     public float sfxVolume;
     public float backgroundMusicVolume;
@@ -30,6 +31,7 @@ public class GameData  //DOES NOT inherit from Monobehavior
 
     public bool playerHealthBarEnabled;
     public bool enabledPlayerHealthBar;
+    
 
     public GameData()
     {
@@ -53,6 +55,7 @@ public class GameData  //DOES NOT inherit from Monobehavior
         enableHardCoreMode = false;
         playerHealthBarEnabled = false;
         enabledPlayerHealthBar = true;
+        killedByDeadZone = false;
 
 
 

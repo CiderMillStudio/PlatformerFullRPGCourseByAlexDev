@@ -6,10 +6,12 @@ public class DeadZone : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        Player player = PlayerManager.instance.player;
         if (collision.GetComponent<Entity>() != null)
         {
-            collision.GetComponent<CharacterStats>().KillEntity();
-            collision.GetComponent<Entity>().Die();
+            collision.GetComponent<CharacterStats>().KillEntity(true);
+            collision.GetComponent<Entity>().DieFromPlayerScript();
+            GameManager.instance.SetLostCurrencyXYCoords(player.transform.position.x, player.transform.position.y);
         }
     }
 }

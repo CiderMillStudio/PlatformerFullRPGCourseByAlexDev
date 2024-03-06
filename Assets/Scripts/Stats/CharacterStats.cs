@@ -212,7 +212,7 @@ public class CharacterStats : MonoBehaviour
 
         if (currentHealth <= 0 && !isDead)
         {
-            Die();
+            Die(false);
         }
     }
 
@@ -261,14 +261,15 @@ public class CharacterStats : MonoBehaviour
 
 
 
-    protected virtual void Die()
+    protected virtual void Die(bool _killedByDeadZone)
     {
         isDead = true;
     }
 
-    public void KillEntity()
+    public void KillEntity(bool _killedByDeadZone)
     {
-        Die();
+        Die(_killedByDeadZone);
+        
     }
 
     #region Magical Damage and Ailments
@@ -414,7 +415,7 @@ public class CharacterStats : MonoBehaviour
 
             if (currentHealth <= 0 && !isDead)
             {
-                Die();
+                Die(false);
             }
 
             igniteDamageTimer = igniteDamageCooldown;

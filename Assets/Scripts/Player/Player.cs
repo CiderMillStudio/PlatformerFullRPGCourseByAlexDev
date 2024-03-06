@@ -131,7 +131,6 @@ public class Player : Entity
         if (Input.GetKeyDown(KeyCode.Space) && IsGroundDetected())
         {
             StartCoroutine(Jump(jumpDelay));
-            Debug.Log("jumping!");
 
         }
 
@@ -226,9 +225,9 @@ public class Player : Entity
     }
     #endregion
 
-    public override void Die()
+    public override void DieFromPlayerScript()
     {
-        base.Die();
+        base.DieFromPlayerScript();
         stateMachine.ChangeState(deadState);
     }
 

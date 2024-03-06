@@ -55,9 +55,9 @@ public class EnemySkeleton : Enemy
         return false;
     }
 
-    public override void Die()
+    public override void DieFromPlayerScript()
     {
-        base.Die();
+        base.DieFromPlayerScript();
 
         stateMachine.ChangeState(deadState);
         

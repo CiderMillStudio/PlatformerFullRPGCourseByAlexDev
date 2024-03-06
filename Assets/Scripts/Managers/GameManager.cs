@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
     public int lostCurrencyAmount;
     [SerializeField] private float lostCurrencyXPosition;
     [SerializeField] private float lostCurrencyYPosition;
+    public bool killedByDeadZone;
+    [SerializeField] private Transform[] ledgePositions;
 
     [Space]
     [Header("Options & Settings")]
@@ -99,15 +101,57 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
     {
         lostCurrencyAmount = _data.lostCurrencyAmount;
         lostCurrencyXPosition = _data.lostCurrencyX;
-        lostCurrencyYPosition = _data.lostCurrencyY;
+       
 
-        if (lostCurrencyAmount > 0)
+        lostCurrencyYPosition = _data.lostCurrencyY;
+        
+
+        killedByDeadZone = _data.killedByDeadZone;
+
+        if (lostCurrencyAmount > 0 && !killedByDeadZone)
         {
             GameObject newLostCurrency = Instantiate(lostCurrencyPrefab, new Vector3(lostCurrencyXPosition, lostCurrencyYPosition), Quaternion.identity);
             newLostCurrency.GetComponent<LostCurrencyController>().currency = lostCurrencyAmount;
         }
 
+        else if (lostCurrencyAmount > 0 && killedByDeadZone)
+        {
+           
+            Transform closestLedge = GetClosestLedge();
+
+            GameObject newLostCurrency = Instantiate(lostCurrencyPrefab, closestLedge.position, Quaternion.identity);
+            newLostCurrency.GetComponent<LostCurrencyController>().currency = lostCurrencyAmount;
+
+
+        }
+
         lostCurrencyAmount = 0;
+        killedByDeadZone = false;
+
+    }
+
+    private Transform GetClosestLedge()
+    {
+        Transform closestLedge = null;
+        float closestLedgeDistance = Mathf.Infinity;
+
+        Vector3 playerPos = new Vector3(lostCurrencyXPosition, lostCurrencyYPosition);
+
+        foreach (Transform ledge in ledgePositions)
+        {
+            float measuredDistance = Vector3.Distance(ledge.position, playerPos);
+          
+
+            if (measuredDistance < closestLedgeDistance)
+            {
+                closestLedge = ledge;
+                closestLedgeDistance = measuredDistance;
+               
+            }
+
+        }
+       
+        return closestLedge;
     }
 
     private IEnumerator LoadWithDelay(GameData _data)
@@ -120,8 +164,6 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
 
         enabledHardCoreMode = _data.enableHardCoreMode;
         enabledPlayerHealthBar = _data.enabledPlayerHealthBar;
-        Debug.Log("Loading HardCoreMode: " + enabledHardCoreMode);
-        Debug.Log("Loading playerbar toggle: " + enabledPlayerHealthBar);
 
         yield return new WaitForSeconds(0.1f);
         LoadCheckpoints(_data);
@@ -133,6 +175,12 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
         
         
 
+    }
+
+    public void SetLostCurrencyXYCoords(float _x, float _y)
+    {
+        lostCurrencyYPosition = _y;
+        lostCurrencyXPosition = _x;
     }
 
     public void SaveData(ref GameData _data)
@@ -148,14 +196,25 @@ public class GameManager : MonoBehaviour, ISaveManager //DON'T FORGET TO IMPLEME
         _data.closestCheckpointId = FindClosestCheckpoint()?.checkpointId;
 
         _data.lostCurrencyAmount = lostCurrencyAmount;
-        _data.lostCurrencyX = player.position.x;
-        _data.lostCurrencyY = player.position.y;
+
+        if (!killedByDeadZone)
+        {
+            _data.lostCurrencyX = player.position.x;
+            _data.lostCurrencyY = player.position.y;
+        }
+        else
+        {
+            _data.lostCurrencyX = lostCurrencyXPosition;
+            Debug.Log("SAVED lost currency x pos: " + _data.lostCurrencyX);
+            _data.lostCurrencyY = lostCurrencyYPosition;
+            Debug.Log("SAVED lost currency y pos: " + _data.lostCurrencyY);
+        }
+
+        _data.killedByDeadZone = killedByDeadZone;
 
         _data.enableHardCoreMode = enabledHardCoreMode;
         _data.enabledPlayerHealthBar = enabledPlayerHealthBar;
 
-        Debug.Log("Saving HArdCore Mode: " + _data.enableHardCoreMode);
-        Debug.Log("saving playerbar toggle: " + _data.enabledPlayerHealthBar);
 
 /*        _data.backgroundMusicVolume = currentBgmVolume;
         _data.sfxVolume = currentSfxVolume;*/

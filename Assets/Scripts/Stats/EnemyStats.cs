@@ -53,13 +53,15 @@ public class EnemyStats : CharacterStats
         
     }
 
-    protected override void Die()
+    protected override void Die(bool _killedByDeadZone)
     {
-        base.Die();
-        enemy.Die();
+        base.Die(_killedByDeadZone);
+        enemy.DieFromPlayerScript();
 
         myDropSystem.GenerateDropUponDeath();
 
-        PlayerManager.instance.currency += soulsDropAmount.GetValue();
+        
+        if (!_killedByDeadZone)
+            PlayerManager.instance.currency += soulsDropAmount.GetValue();
     }
 }
