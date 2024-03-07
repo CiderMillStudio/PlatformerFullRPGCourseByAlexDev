@@ -5771,7 +5771,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8726194649960137963, guid: 7b8753ea4f63cb24d84777b636771435, type: 3}
       propertyPath: encryptData
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

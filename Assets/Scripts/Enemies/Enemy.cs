@@ -105,7 +105,7 @@ public class Enemy : Entity
     public virtual void OpenCounterAttackWindow() // doing public virtual void just in case we need to override it later.
     {
         canBeStunned = true;
-        counterImage.SetActive(true);
+        counterImage.SetActive(false); //eventually should delete this image altogethter, but i'm feeling lazy today lol
     }
 
     public virtual void CloseCounterAttackWindow()

@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Feather
   icon: {fileID: 2140525551, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: e4f3779935f0aee4980baf81996f21e5
-  dropChance: 2
+  dropChance: 6

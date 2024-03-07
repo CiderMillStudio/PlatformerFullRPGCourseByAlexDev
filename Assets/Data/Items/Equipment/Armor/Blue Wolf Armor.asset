@@ -17,10 +17,10 @@ MonoBehaviour:
   icon: {fileID: 288293509, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 4f7bf41649cb15544b489eca43c11115
   dropChance: 0
-  itemCooldown: 5
+  itemCooldown: 3
   itemEffects:
   - {fileID: 11400000, guid: 437f7bca6bcfd3241b65e27b41085bdd, type: 2}
-  itemEffectDescription: Enemies freeze for a brief duration if they harm you.
+  itemEffectDescription: Enemies may freeze for a brief duration if they harm you.
   equipmentType: 1
   strength: 0
   agility: 0
@@ -42,4 +42,6 @@ MonoBehaviour:
   - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
     stackSize: 6
   - data: {fileID: 11400000, guid: 5a4ec1c2862edb947b00c6346397bbde, type: 2}
-    stackSize: 6
+    stackSize: 8
+  - data: {fileID: 11400000, guid: 58f3cc3e798506442bacc9139354c5be, type: 2}
+    stackSize: 1

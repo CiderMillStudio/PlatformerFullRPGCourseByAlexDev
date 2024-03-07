@@ -40,7 +40,9 @@ MonoBehaviour:
   iceDamage: 0
   lightningDamage: 0
   craftingMaterials:
-  - data: {fileID: 11400000, guid: 24d0ec0f566218545bb89a49290e5eca, type: 2}
+  - data: {fileID: 11400000, guid: f9a32f588c0e49348ae468e00034b535, type: 2}
     stackSize: 1
-  - data: {fileID: 11400000, guid: aefb0878c84b4ec419e7d4072dc07106, type: 2}
+  - data: {fileID: 11400000, guid: 03d0f22245c9b49448bfb12f5636d537, type: 2}
     stackSize: 1
+  - data: {fileID: 11400000, guid: 5bb41d44a4588b4458f6f4a516770c4e, type: 2}
+    stackSize: 3

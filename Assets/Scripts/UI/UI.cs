@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class UI : MonoBehaviour, ISaveManager
@@ -48,6 +49,7 @@ public class UI : MonoBehaviour, ISaveManager
     [Space]
     [Header("Other Info")]
     [SerializeField] private TextMeshProUGUI currencyTextInSkillTree;
+    private bool hasInitializedSkillTreeCurrencyText = false;
 
 
     
@@ -64,6 +66,7 @@ public class UI : MonoBehaviour, ISaveManager
 
     private void Start()
     {
+        hasInitializedSkillTreeCurrencyText = false;
 
         optionsPanel.SetActive(true);
         playerEntityStatusAndHealthBar.SetActive(true);
@@ -91,6 +94,49 @@ public class UI : MonoBehaviour, ISaveManager
 
         }
     }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (!hasInitializedSkillTreeCurrencyText)
+            {
+                skilltreePanel.SetActive(true);
+                SetSkillTreeCurrencyText();
+                skilltreePanel.SetActive(false);
+                hasInitializedSkillTreeCurrencyText = true;
+            }
+
+            ToggleUiMenu();
+        }
+
+        else if (Input.GetKeyUp(KeyCode.C))
+        {
+            ToggleToSpecificUIMenuWithShortcut(characterPanel); //UiPanels[0] is Character Panel
+            CheckForInGameUI();
+        }
+
+        else if (Input.GetKeyUp(KeyCode.V))
+        {
+            ToggleToSpecificUIMenuWithShortcut(skilltreePanel); //UiPanels[0] is SkillTree Panel
+            SetSkillTreeCurrencyText();
+            hasInitializedSkillTreeCurrencyText = true;
+            CheckForInGameUI();
+        }
+
+        else if (Input.GetKeyUp(KeyCode.B))
+        {
+            ToggleToSpecificUIMenuWithShortcut(craftPanel); //UiPanels[2] is Craft Panel
+            
+            CheckForInGameUI();
+        }
+
+        else if (Input.GetKeyUp(KeyCode.N))
+        {
+            ToggleToSpecificUIMenuWithShortcut(optionsPanel); //UiPanels[3] is Options Panel
+            CheckForInGameUI();
+        }
+
+    }
     public void SwitchTo(GameObject _menu)
     {
         for (int i = 0; i < UiMenuPanels.Length; i++)
@@ -105,7 +151,7 @@ public class UI : MonoBehaviour, ISaveManager
             _menu.SetActive(true);
             AudioManager.instance.PlaySFX(7, null);
 
-            if (Time.time > 0.2f && _menu == skilltreePanel)
+            if (hasInitializedSkillTreeCurrencyText && _menu == skilltreePanel)
                 SetSkillTreeCurrencyText();
 
             if (_menu != inGameUi)
@@ -124,6 +170,7 @@ public class UI : MonoBehaviour, ISaveManager
 
     public void SetSkillTreeCurrencyText()
     {
+
         if (PlayerManager.instance.GetCurrentCurrency() <= 0)
         {
             currencyTextInSkillTree.text = "$0";
@@ -172,40 +219,6 @@ public class UI : MonoBehaviour, ISaveManager
         AudioManager.instance.PlaySFX(7, null);
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            ToggleUiMenu();
-        }
-
-        else if (Input.GetKeyUp(KeyCode.C))
-        {
-            ToggleToSpecificUIMenuWithShortcut(characterPanel); //UiPanels[0] is Character Panel
-            CheckForInGameUI();
-        }
-
-        else if (Input.GetKeyUp(KeyCode.V))
-        {
-            ToggleToSpecificUIMenuWithShortcut(skilltreePanel); //UiPanels[0] is SkillTree Panel
-            SetSkillTreeCurrencyText();
-            CheckForInGameUI();
-        }
-
-        else if (Input.GetKeyUp(KeyCode.B))
-        {
-            ToggleToSpecificUIMenuWithShortcut(craftPanel); //UiPanels[2] is Craft Panel
-            
-            CheckForInGameUI();
-        }
-
-        else if (Input.GetKeyUp(KeyCode.N))
-        {
-            ToggleToSpecificUIMenuWithShortcut(optionsPanel); //UiPanels[3] is Options Panel
-            CheckForInGameUI();
-        }
-
-    }
 
     private void CheckForInGameUI()
     {

@@ -16,4 +16,4 @@ MonoBehaviour:
   itemName: Nautilus Shell
   icon: {fileID: -898912707, guid: a9ca9a41598dd2e44b125928045c518f, type: 3}
   itemId: 58f3cc3e798506442bacc9139354c5be
-  dropChance: 1
+  dropChance: 2
