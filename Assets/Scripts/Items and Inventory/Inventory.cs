@@ -135,8 +135,8 @@ public class Inventory : MonoBehaviour, ISaveManager
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            AddItem(oldEquipment); //"AddItem" refers to adding the oldEquipment (the stick) back to our inventory, from its equipment slot
         }
+
         
 
             equipment.Add(newItem);
@@ -150,16 +150,21 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     public void UnequipItem(ItemDataEquipment itemToRemove) //Changed this method to PUBLIC from PRIVATE 2/1/24 at 6:02pm
     {
-        if (!CanAddItem())
-        {
-            Debug.Log("Inventory is full, cannot unequip item");
-            return;
-        }
-        else if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
+        if (!CanAddItem() && equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value))
         {
             equipment.Remove(value);
             itemToRemove.RemoveModifiers();
             equipmentDictionary.Remove(itemToRemove);
+            PlayerManager.instance.player.GetComponent<PlayerItemDrop>().SingleItemDrop(itemToRemove, false);
+            return;
+        }
+        else if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem value2))
+        {
+            equipment.Remove(value2);
+            itemToRemove.RemoveModifiers();
+            equipmentDictionary.Remove(itemToRemove);
+            AddItem(itemToRemove); //"AddItem" refers to adding the oldEquipment (the stick) back to our inventory, from its equipment slot
+
             //UpdateSlotUI(); //DELETE MAYBE --> Yes definitely, was resulting in an error. Error resolved once this was commented out.
         }
     }
@@ -336,6 +341,7 @@ public class Inventory : MonoBehaviour, ISaveManager
 
     public bool CanCraft(ItemDataEquipment _itemToCraft, List<InventoryItem> _requiredMaterials)
     {
+        
         List<InventoryItem> materialsToRemove = new List<InventoryItem>();
 
         for (int i = 0; i < _requiredMaterials.Count; i++)
@@ -343,7 +349,7 @@ public class Inventory : MonoBehaviour, ISaveManager
             if (stashDictionary.TryGetValue(_requiredMaterials[i].data, out InventoryItem stashValue))
             {
                 if (stashValue.stackSize < _requiredMaterials[i].stackSize) //this line saved me many lines of code
-                {
+                {   
                     int difference = _requiredMaterials[i].stackSize - stashValue.stackSize;
                     Debug.Log("You need " + difference.ToString() +  " more " + _requiredMaterials[i].data.itemName + 
                         " to craft " + _itemToCraft.itemName); //e.g. "You need 3 more Iron to craft Iron Armor"
@@ -352,6 +358,7 @@ public class Inventory : MonoBehaviour, ISaveManager
 
                     return false;
                 }
+
                 else
                 {
                     materialsToRemove.Add(_requiredMaterials[i]); //just fixed this!
@@ -379,7 +386,12 @@ public class Inventory : MonoBehaviour, ISaveManager
             
         }
 
-        AddItem(_itemToCraft);
+        if (CanAddItem())
+            AddItem(_itemToCraft);
+        else
+        {
+            PlayerManager.instance.player.GetComponent<PlayerItemDrop>().SingleItemDrop(_itemToCraft, false);
+        }
 
         Debug.Log("Here's your hand-crafted " + _itemToCraft.itemName);
 

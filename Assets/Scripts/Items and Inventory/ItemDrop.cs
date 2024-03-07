@@ -61,6 +61,13 @@ public class ItemDrop : MonoBehaviour
 
     }
 
+    public virtual void DropItemNoVelocity(ItemData _itemData)
+    {
+        GameObject newDrop = Instantiate(dropPrefab, transform.position, Quaternion.identity);
+        StartCoroutine("PlayDropSFX", newDrop.transform);
+        newDrop.GetComponent<ItemObject>().SetupItem(_itemData, Vector2.zero);
+    }
+
     private IEnumerator PlayDropSFX(Transform _itemDropTransform)
     {
         yield return new WaitForSeconds(Random.Range(0.7f, 1.2f));

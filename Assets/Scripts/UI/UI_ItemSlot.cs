@@ -70,7 +70,7 @@ public class UI_ItemSlot : MonoBehaviour , IPointerDownHandler, IPointerEnterHan
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            playerItemDropSystem.SingleItemDrop(item.data);
+            playerItemDropSystem.SingleItemDrop(item.data, true);
             Inventory.instance.RemoveItem(item.data);
             return;
         }

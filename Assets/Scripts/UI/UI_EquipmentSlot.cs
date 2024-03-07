@@ -22,7 +22,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
 
         if (Input.GetKey(KeyCode.LeftControl))
         {
-            playerItemDropSystem.SingleItemDrop(item.data);
+            playerItemDropSystem.SingleItemDrop(item.data, true);
             Inventory.instance.UnequipItem(item.data as ItemDataEquipment);
             CleanUpSlot();
             return;
@@ -40,7 +40,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
         //different mechanic, such that flasks aren't consumed, but can be used repeatitively based on a cooldown.
 
         Inventory.instance.UnequipItem(item.data as ItemDataEquipment);
-        Inventory.instance.AddItem(item.data as ItemDataEquipment); //added this line at 6:08pm because we want to only use
+        //Inventory.instance.AddItem(item.data as ItemDataEquipment); //added this line at 6:08pm because we want to only use
                                                                     //"AddItem" when we definitely will need it. We want to
                                                                     //save "UnequipItem" for situations where items get
                                                                     //removed, and maybe even when we die we "unequip items"

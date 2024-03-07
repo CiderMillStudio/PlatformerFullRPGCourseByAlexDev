@@ -11,12 +11,18 @@ public class PlayerItemDrop : ItemDrop
     [Range(0, 100)]
     [SerializeField] private float chanceToLoseMaterials;
 
-    
 
 
-    public void SingleItemDrop(ItemData _itemToBeDropped) 
+
+    public void SingleItemDrop(ItemData _itemToBeDropped, bool _withForwardVelocity) 
     {
-        DropItem(_itemToBeDropped, true);
+        if (_withForwardVelocity)
+        {
+            DropItem(_itemToBeDropped, true);
+        }
+
+        else
+            DropItemNoVelocity(_itemToBeDropped);
 
         //This is wady's custom script that allows players to
         //remove items from their inventory and stash, and
