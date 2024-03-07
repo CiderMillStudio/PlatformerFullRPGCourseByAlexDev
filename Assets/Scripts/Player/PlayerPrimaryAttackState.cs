@@ -8,6 +8,9 @@ public class PlayerPrimaryAttackState : PlayerState
     public int comboCounter; //  2/5/2023 just set this to PUBLIC from PRIVATE! (so we can access it from IceAndFireEffect.cs)
 
     private float lastTimeAttacked; //how long ago was the last attack?
+
+    private bool inAir;
+
     public PlayerPrimaryAttackState(Player _player, PlayerStateMachine _stateMachine, 
         string _animBoolName) : base(_player, _stateMachine, _animBoolName)
     {
@@ -22,7 +25,13 @@ public class PlayerPrimaryAttackState : PlayerState
                         code (I never had a bug!) but I don't think this could possibly 
                         hurt in anyway. */
 
-        player.SetZeroVelocity();
+        if (player.IsGroundDetected())
+            player.SetZeroVelocity();
+        else
+        {
+            inAir = true;
+            player.SetVelocity(rb.velocity.x, rb.velocity.y);
+        }
 
         if (comboCounter > 2 || Time.time - lastTimeAttacked >= player.attackComboWindow)
         {
@@ -44,6 +53,16 @@ public class PlayerPrimaryAttackState : PlayerState
     {
         base.Update();
 
+        if (player.IsGroundDetected() && inAir)
+        {
+            inAir = false;
+            player.SetZeroVelocity();
+        }
+        else if (!player.IsGroundDetected() && inAir)
+        {
+            player.SetVelocity(rb.velocity.x, rb.velocity.y);
+        }
+
         if (middleTrigger1Called)
         {
             middleTrigger1Called = false;
@@ -61,7 +80,7 @@ public class PlayerPrimaryAttackState : PlayerState
             stateMachine.ChangeState(player.idleState);
         }
 
-        if (stateTimer < 0)
+        if (stateTimer < 0 && player.IsGroundDetected())
             player.SetVelocity(0, 0);
 
         if (player.stats.isDead)

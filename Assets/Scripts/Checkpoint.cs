@@ -68,6 +68,12 @@ public class Checkpoint : MonoBehaviour
             ActivateCheckpoint();
         }
 
+        if (checkpointCanvasRect.gameObject.activeSelf && (Input.GetKeyDown(KeyCode.E) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.V) || Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.N)))
+        {
+            checkpointCanvasRect.gameObject.SetActive(false);
+            playerCanActivateCheckpoint = false;
+        }
+
     }
 
     [ContextMenu("Generate Checkpoint Id")]

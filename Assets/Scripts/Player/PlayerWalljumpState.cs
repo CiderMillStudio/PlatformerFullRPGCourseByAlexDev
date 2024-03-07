@@ -62,5 +62,11 @@ public class PlayerWalljumpState : PlayerState
             }
 
         }
+
+        if (Input.GetKey(KeyCode.Mouse0) && !Input.GetKey(KeyCode.LeftControl) && Time.timeScale != 0) //if player is removing items, they will not enter attack state!!!
+        {
+            stateMachine.ChangeState(player.primaryAttackState);
+            return;
+        }
     }
 }

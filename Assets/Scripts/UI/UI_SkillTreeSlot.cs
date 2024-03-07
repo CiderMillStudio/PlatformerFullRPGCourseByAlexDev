@@ -73,6 +73,11 @@ public class UI_SkillTreeSlot : MonoBehaviour, IPointerEnterHandler, IPointerExi
                 return;
             }
         }
+
+        if (unlocked)
+        {
+            return;
+        }
         
         if (PlayerManager.instance.HaveEnoughMoney(skillCost) == false)
         {

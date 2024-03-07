@@ -19,6 +19,8 @@ public class TutorialObject : MonoBehaviour
     private bool playerCanActivateTutorial;
     private bool inExitCoroutine;
 
+    private bool canPressT;
+
     [SerializeField] private GameObject tutorialWindow;
 
    
@@ -27,11 +29,13 @@ public class TutorialObject : MonoBehaviour
     {
        
         tutorialWindow.SetActive(false);
+
         if (tutorialCanvasRect.gameObject.activeSelf)
             tutorialCanvasRect.gameObject.SetActive(false);
             
         tutorialReadyParticleSystemLoop.Play();
 
+        canPressT = false;
     }
 
     private void Update()
@@ -49,7 +53,7 @@ public class TutorialObject : MonoBehaviour
             activateTutorialButtonRect.anchoredPosition = tutorialCandlabraScreenPos + new Vector2(0, buttonYOffset);
         }
 
-        if (playerCanActivateTutorial && Input.GetKeyDown(KeyCode.T))
+        if (playerCanActivateTutorial && Input.GetKeyDown(KeyCode.T) && canPressT)
         {
             ActivateTutorial();
         }
@@ -62,11 +66,12 @@ public class TutorialObject : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
 
-        if (collision.GetComponent<Player>() != null && !inExitCoroutine)
+        if (collision.GetComponent<Player>() != null /*&& !inExitCoroutine*/)
         {
             tutorialCanvasRect.gameObject.SetActive(true);
             activateTutorialButtonRect.GetComponent<UI_CheckpointActivationButton>().FadeIn();
             playerCanActivateTutorial = true;
+            canPressT = true;
 
 
         }
@@ -81,6 +86,8 @@ public class TutorialObject : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
+        canPressT = false;
+
         if (collision.GetComponent<Player>() != null && !inExitCoroutine && tutorialCanvasRect.gameObject.activeSelf &&
                 !PlayerManager.instance.player.stats.isDead)
         {
