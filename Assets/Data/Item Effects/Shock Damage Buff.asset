@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Shock Damage Buff
   m_EditorClassIdentifier: 
   buffType: 13
-  buffAmount: 12
+  buffAmount: 15
   buffDuration: 10

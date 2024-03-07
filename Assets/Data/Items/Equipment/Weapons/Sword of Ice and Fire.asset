@@ -28,7 +28,7 @@ MonoBehaviour:
   agility: 0
   intelligence: 0
   vitality: 0
-  damage: 0
+  damage: 12
   critChance: 0
   critPower: 0
   maxHealth: 0

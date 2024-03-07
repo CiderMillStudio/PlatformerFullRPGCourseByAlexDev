@@ -15,4 +15,5 @@ MonoBehaviour:
   itemType: 0
   itemName: Glass
   icon: {fileID: 158665842, guid: be55291aae08d434db3da3b59db3ab4a, type: 3}
-  dropChance: 17.8
+  itemId: f9a32f588c0e49348ae468e00034b535
+  dropChance: 27

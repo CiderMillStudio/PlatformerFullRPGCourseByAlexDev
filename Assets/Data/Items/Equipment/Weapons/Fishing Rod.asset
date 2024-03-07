@@ -24,10 +24,10 @@ MonoBehaviour:
   strength: 0
   agility: 3
   intelligence: 0
-  vitality: 0
-  damage: 2
+  vitality: 8
+  damage: 4
   critChance: 20
-  critPower: 150
+  critPower: 200
   maxHealth: 0
   armor: 0
   evasion: 0

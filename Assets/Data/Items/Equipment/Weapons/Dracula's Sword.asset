@@ -26,7 +26,7 @@ MonoBehaviour:
   agility: 0
   intelligence: 0
   vitality: 0
-  damage: 15
+  damage: 19
   critChance: 15
   critPower: 200
   maxHealth: 0
@@ -43,3 +43,5 @@ MonoBehaviour:
     stackSize: 2
   - data: {fileID: 11400000, guid: 0f7adda8b8dd90745b5bc59aba8eb3a0, type: 2}
     stackSize: 2
+  - data: {fileID: 11400000, guid: 717cd75b5e0cc5d4cad2bf53ffce075b, type: 2}
+    stackSize: 1
